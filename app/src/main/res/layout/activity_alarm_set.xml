@@ -7,20 +7,20 @@
     tools:context=".AlarmSet">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/alarmTitleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:text="Tratament nou"
+        android:text="@string/alarm_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/medNameTxt"
+        android:id="@+id/medNameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -29,25 +29,25 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:ems="10"
-        android:hint="Denumire Medicament"
+        android:hint="@string/medName_hint"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/alarmTitleTextView" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/alarmFreq_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
-        android:text="Frecventa tratament:"
+        android:text="@string/alarmFreq"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/medNameTxt" />
+        app:layout_constraintTop_toBottomOf="@+id/medNameText" />
 
     <RadioGroup
-        android:id="@+id/treatmentRadioGroup"
+        android:id="@+id/alarmFreq_RadioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -60,75 +60,75 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4">
+        app:layout_constraintTop_toBottomOf="@+id/alarmFreq_textView">
 
         <RadioButton
             android:id="@+id/dailyRadioBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Zilnic" />
+            android:text="@string/daily" />
 
         <RadioButton
             android:id="@+id/weeklyRadioBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Saptamanal" />
+            android:text="@string/weekly" />
 
         <RadioButton
             android:id="@+id/monthlyRadioBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Lunar" />
+            android:text="@string/monthly" />
 
         <RadioButton
             android:id="@+id/customRadioBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Altfel" />
+            android:text="@string/custom" />
     </RadioGroup>
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/alarmDuration_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
-        android:text="Durata tratament:"
+        android:text="@string/alarmDuration"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/treatmentRadioGroup" />
+        app:layout_constraintTop_toBottomOf="@+id/alarmFreq_RadioGroup" />
 
     <ToggleButton
-        android:id="@+id/durationToggBtn"
+        android:id="@+id/alarmDurationToggleBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:textAllCaps="false"
-        android:textOff="Continuu"
-        android:textOn="Fix"
+        android:textOff="@string/durationOff"
+        android:textOn="@string/durationOn"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintTop_toBottomOf="@+id/alarmDuration_textView" />
 
     <EditText
-        android:id="@+id/nrOfTreatmentsText"
-        android:layout_width="50dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
+        android:id="@+id/alarmsNumber_Text"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="24dp"
         android:ems="10"
-        android:hint="Nr"
+        android:hint="@string/alarmsNum"
         android:inputType="number"
         android:singleLine="true"
         android:visibility="invisible"
-        app:layout_constraintStart_toEndOf="@+id/durationToggBtn"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintStart_toEndOf="@+id/alarmDurationToggleBtn"
+        app:layout_constraintTop_toBottomOf="@+id/alarmDuration_textView" />
 
     <Spinner
         android:id="@+id/treatmentLengthSpinner"
@@ -136,13 +136,12 @@
         android:layout_height="25dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:entries="@array/Treatment_length"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/nrOfTreatmentsText"
-        app:layout_constraintTop_toTopOf="@+id/nrOfTreatmentsText" />
+        app:layout_constraintStart_toEndOf="@+id/alarmsNumber_Text"
+        app:layout_constraintTop_toTopOf="@+id/alarmsNumber_Text" />
 
 </android.support.constraint.ConstraintLayout>

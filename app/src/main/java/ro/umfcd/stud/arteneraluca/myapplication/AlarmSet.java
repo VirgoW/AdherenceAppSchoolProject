@@ -15,20 +15,20 @@ public class AlarmSet extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm_set);
 
-        ToggleButton durationToggBtn = (ToggleButton) findViewById(R.id.durationToggBtn);
-        final TextView nrOfTreatmentsText = (TextView) findViewById(R.id.nrOfTreatmentsText);
+        ToggleButton alarmDurationToggleBtn = (ToggleButton) findViewById(R.id.alarmDurationToggleBtn);
+        final TextView alarmsNumber_Text = (TextView) findViewById(R.id.alarmsNumber_Text);
         final Spinner treatmentLengthSpinner = (Spinner) findViewById(R.id.treatmentLengthSpinner);
 
-            durationToggBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            alarmDurationToggleBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if(isChecked) {
-                        nrOfTreatmentsText.setVisibility(View.VISIBLE);
+                        alarmsNumber_Text.setVisibility(View.VISIBLE);
                         treatmentLengthSpinner.setVisibility(View.VISIBLE);
                     }
                     else
                     {
-                        nrOfTreatmentsText.setVisibility(View.INVISIBLE);
+                        alarmsNumber_Text.setVisibility(View.INVISIBLE);
                         treatmentLengthSpinner.setVisibility(View.INVISIBLE);
                     }
                 }
