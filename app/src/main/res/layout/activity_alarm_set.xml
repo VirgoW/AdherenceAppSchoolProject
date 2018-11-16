@@ -116,7 +116,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <EditText
-        android:id="@+id/nrOfTreatmentsTxt"
+        android:id="@+id/nrOfTreatmentsText"
         android:layout_width="50dp"
         android:layout_height="47dp"
         android:layout_marginStart="8dp"
@@ -131,7 +131,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <Spinner
-        android:id="@+id/treatmentLgthSpinn"
+        android:id="@+id/treatmentLengthSpinner"
         android:layout_width="147dp"
         android:layout_height="25dp"
         android:layout_marginStart="8dp"
@@ -142,7 +142,7 @@
         android:entries="@array/Treatment_length"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/nrOfTreatmentsTxt"
-        app:layout_constraintTop_toTopOf="@+id/nrOfTreatmentsTxt" />
+        app:layout_constraintStart_toEndOf="@+id/nrOfTreatmentsText"
+        app:layout_constraintTop_toTopOf="@+id/nrOfTreatmentsText" />
 
 </android.support.constraint.ConstraintLayout>
