@@ -22,7 +22,8 @@ public class NotificationsApp extends Application {
             NotificationChannel channel1 = new NotificationChannel(
                     CHANNEL_1_ID,
                     "alarms",
-                    NotificationManager.IMPORTANCE_MAX
+                    NotificationManager.IMPORTANCE_HIGH
+
             );
             channel1.enableVibration(true);
             channel1.setDescription("this is for the alarms notifications");
