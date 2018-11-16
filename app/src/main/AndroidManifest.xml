@@ -18,7 +18,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".Page1ChooseOption" />
-        <activity android:name=".SeeAndSetAlarms"></activity>
+        <activity android:name=".AlarmsPage" />
+        <activity android:name=".AlarmSet"></activity>
     </application>
 
 </manifest>

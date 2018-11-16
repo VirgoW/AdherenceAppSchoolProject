@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">My Application</string>
+    
+    <string-array name="Treatment_length">
+        <item>Zile</item>
+        <item>Saptamani</item>
+        <item>Luni</item>
+        <item>Ani</item>
+
+    </string-array>
 </resources>

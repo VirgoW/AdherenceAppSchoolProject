@@ -17,8 +17,8 @@ public class MainActivity extends AppCompatActivity {
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent toPage1 = new Intent(getApplicationContext(), Page1ChooseOption.class);
-                startActivity(toPage1);
+                Intent toMainPage = new Intent(getApplicationContext(), AlarmsPage.class);
+                startActivity(toMainPage);
             }
         });
 
