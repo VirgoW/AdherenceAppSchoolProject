@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import java.io.File;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -21,6 +23,15 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(toMainPage);
             }
         });
+
+
+    }
+
+    private void CreateFileSave()
+    {
+        File directory;
+        String filename = getText(R.string.testSave).toString();
+        directory = getDir(filename, MODE_PRIVATE);
 
     }
 }
