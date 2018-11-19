@@ -17,15 +17,15 @@
 
     //Alarm frequency radio group names
 
-        <string name="daily">Zilnic</string>
-        <string name="weekly">Saptamanal</string>
-        <string name="monthly">Lunar</string>
-        <string name="custom">Altfel</string>
+    <string name="daily">Zilnic</string>
+    <string name="weekly">Saptamanal</string>
+    <string name="monthly">Lunar</string>
+    <string name="custom">Altfel</string>
 
 
     //Toggle button on/off text for alarm duration
-        <string name="durationOff">Continuu</string>
-        <string name="durationOn">Fix</string>
+    <string name="durationOff">Continuu</string>
+    <string name="durationOn">Fix</string>
 
     //Files - Storage
     <string name="testSave">Fisier00</string>
