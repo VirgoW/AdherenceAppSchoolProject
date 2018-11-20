@@ -12,13 +12,14 @@ import android.widget.TimePicker;
 public class AlarmsPage extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
 
     Context m_context;
+    View m_view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarms_page);
         m_context = this;
-
+        m_view = findViewById(android.R.id.content);
         Button setAlarm_btn = (Button) findViewById(R.id.setAlarm_btn);
         setAlarm_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,7 +52,7 @@ public class AlarmsPage extends AppCompatActivity implements TimePickerDialog.On
 
     public void SaveValueToFile()
     {
-        SaveManager.getInstance().SaveData(this.findViewById(android.R.id.content), m_context);
+        SaveManager.getInstance().TestSaveData(m_view, m_context);
 
         //alarmTriggeredNumber ++;
         //alarmDrugConsumedConfirmedNumber ++
@@ -82,7 +83,7 @@ public class AlarmsPage extends AppCompatActivity implements TimePickerDialog.On
 
     public void LoadValueFromFile()
     {
-        SaveManager.getInstance().LoadData(this.findViewById(android.R.id.content), m_context);
+        SaveManager.getInstance().ParseXmlFile(m_view, m_context);
     }
 
 

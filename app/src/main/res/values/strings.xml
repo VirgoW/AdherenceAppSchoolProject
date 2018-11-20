@@ -14,6 +14,7 @@
     <string name="alarmFreq">Frecventa tratamentului:</string>
     <string name="alarmDuration">Durata tratamentului:</string>
     <string name="alarmsNum">Nr</string>
+    <string name="alarmSaveButtonName">Salveaza</string>
 
     //Alarm frequency radio group names
 

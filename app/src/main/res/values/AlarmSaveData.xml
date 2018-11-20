@@ -1,4 +1,4 @@
 <resources>
-    <String>[MedName]</String>
-    <int>[DaysNumber]</>
+    <string>[MedName]</string>
+    <string>[DaysNumber]</string>
 </resources>

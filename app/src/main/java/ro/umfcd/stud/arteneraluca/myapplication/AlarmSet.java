@@ -1,20 +1,25 @@
 package ro.umfcd.stud.arteneraluca.myapplication;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
 public class AlarmSet extends AppCompatActivity {
+    Context m_context;
+    View m_view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm_set);
-
+        m_context = this;
+        m_view = findViewById(android.R.id.content);
         ToggleButton alarmDurationToggleBtn = (ToggleButton) findViewById(R.id.alarmDurationToggleBtn);
         final TextView alarmsNumber_Text = (TextView) findViewById(R.id.alarmsNumber_Text);
         final Spinner treatmentLengthSpinner = (Spinner) findViewById(R.id.treatmentLengthSpinner);
@@ -33,5 +38,18 @@ public class AlarmSet extends AppCompatActivity {
                     }
                 }
             });
+        Button saveAlarm = (Button) findViewById(R.id.alarmSetButton);
+        saveAlarm.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                SaveAlarm(v);
+            }
+        });
+    }
+
+    private void SaveAlarm(View v)
+    {
+        SaveManager.getInstance().SaveDataAlarmSet(m_view, m_context);
     }
 }

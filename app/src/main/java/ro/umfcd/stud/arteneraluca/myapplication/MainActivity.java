@@ -12,6 +12,7 @@ import java.io.File;
 public class MainActivity extends AppCompatActivity {
 
     Context m_context;
+    View m_view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
