@@ -32,6 +32,9 @@ public class AlarmsPage extends AppCompatActivity implements TimePickerDialog.On
             }
         });
 
+
+        //De ce nu-l gaseste?
+
         Button saveTestTextBtn = (Button) findViewById(R.id.testTextInputButton);
         Button loadTestTextBtn = (Button) findViewById(R.id.testTextOutputButton);
         saveTestTextBtn.setOnClickListener(new View.OnClickListener()

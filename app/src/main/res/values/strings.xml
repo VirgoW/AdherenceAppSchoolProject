@@ -9,6 +9,17 @@
 
     </string-array>
 
+    <string-array name="perDay_freq">
+        <item>1x/zi</item>
+        <item>2x/zi</item>
+        <item>3x/zi</item>
+        <item>4x/zi</item>
+        <item>5x/zi</item>
+        <item>6x/zi</item>
+        <item>7x/zi</item>
+        <item>8x/zi</item>
+    </string-array>
+
     <string name="alarm_title">Alarma noua</string>
     <string name="medName_hint">Denumire Medicament</string>
     <string name="alarmFreq">Frecventa tratamentului:</string>
