@@ -43,13 +43,13 @@ public class AlarmSet extends AppCompatActivity {
         {
             @Override
             public void onClick(View v) {
-                SaveAlarm(v);
+                SaveAlarm();
             }
         });
     }
 
-    private void SaveAlarm(View v)
+    private void SaveAlarm()
     {
-        SaveManager.getInstance().SaveDataAlarmSet(m_view, m_context);
+        SaveManager.getInstance().AddNewAlarm(m_view, m_context);
     }
 }

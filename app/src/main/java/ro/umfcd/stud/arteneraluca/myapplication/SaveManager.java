@@ -1,6 +1,7 @@
 package ro.umfcd.stud.arteneraluca.myapplication;
 
 import android.content.Context;
+import android.util.Log;
 import android.util.Xml;
 import android.view.View;
 import android.widget.TextView;
@@ -11,8 +12,10 @@ import org.xmlpull.v1.XmlSerializer;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStreamWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -22,6 +25,8 @@ public class SaveManager {
     private XmlPullParserFactory m_XmlFactoryObject;
     private XmlPullParser m_XmlParser;
     private boolean m_XmlParserInitialized;
+
+    private ArrayList<Alarm> m_alarmList;
 
     String m_testFile;
 
@@ -34,82 +39,119 @@ public class SaveManager {
         try {
             m_XmlFactoryObject = XmlPullParserFactory.newInstance();
             m_XmlParser = m_XmlFactoryObject.newPullParser();
+            m_alarmList = new ArrayList<>();
         }
         catch(Exception e)
         {
-            System.out.println(e);
+            Log.e("ArteneApp", "Exception occured in SaveManager constructor: ", e);
         }
-        //instantiate XMLPullParser
+
     }
 
-    String test;
-
-    public void CreateFileSave(Context context)
+    public void InitSave(Context context)
     {
-        File directory;
         m_testFile = context.getText(R.string.testSave).toString();
-        directory = context.getDir(m_testFile, MODE_PRIVATE);
+
+        File path = context.getFilesDir();
+        File file = new File(path, m_testFile);
+
+        //Check and create the save file if it does not exist.
+        if(file.exists())
+        {
+            ParseXmlFile(context);
+        }
+        else
+        {
+            try{
+                OutputStreamWriter os = new OutputStreamWriter (context.openFileOutput(m_testFile, MODE_PRIVATE));
+                os.close();
+            }
+            catch(Exception e)
+            {
+                Log.e("ArteneApp", "Exception occured in SaveManager while creating / opening the save file: ", e);
+            }
+        }
+
+
     }
 
-    void TestSaveData(View v, Context context)
-    {
-        String testTxtToSave = ((TextView)v.findViewById(R.id.testTextInput)).getText().toString();
-        try
-        {
-            FileOutputStream fo = context.openFileOutput(m_testFile, MODE_PRIVATE);
-            fo.write(testTxtToSave.getBytes());
-            fo.close();
-        }
-        catch(Exception e)
-        {
-            System.out.println(e);
-        }
-    }
-
-    void SaveDataAlarmSet(View v, Context context)
+    void SaveDataToXml(Context context)
     {
         try
         {
-            String medName = ((TextView)v.findViewById(R.id.medNameText)).getText().toString();
-
             XmlSerializer serializer = Xml.newSerializer();
             StringWriter writer = new StringWriter();
+
             serializer.setOutput(writer);
             //Start document writing
             serializer.startDocument("UTF-8", true);
-            serializer.startTag("","Alarm");
+            for(int index = 0; index < m_alarmList.size(); index++)
+            {
+                serializer.startTag("","Alarm");
 
-            serializer.startTag("", "MedName");
-            serializer.attribute("", "name", medName);
-            serializer.endTag("", "MedName");
+                AddNewTag(serializer, context.getText(R.string.medNameTag).toString(), "name", m_alarmList.get(index).m_medName);
 
-            serializer.endTag("","Alarm");
+                serializer.endTag("","Alarm");
+            }
             serializer.endDocument();
             //End document writing
             String result = writer.toString();
 
-            FileOutputStream fo = context.openFileOutput(m_testFile, MODE_PRIVATE);
-            fo.write(result.getBytes());
+            OutputStreamWriter  os = new OutputStreamWriter (context.openFileOutput(m_testFile, MODE_PRIVATE));
+            os.write(result);
             System.out.println("Wrote xml file with value: " + result);
-            fo.close();
+            os.close();
+
+
+            InputStream is = context.openFileInput(m_testFile);
+            if(is != null)
+            {
+                Scanner scan = new Scanner(is);
+                System.out.println("reading save file: ");
+                while(scan.hasNext())
+                {
+                    String print = scan.next();
+                    System.out.println("_"+print);
+                }
+            }
+            is.close();
         }
         catch (Exception e)
         {
-            System.out.println(e.getStackTrace());
+            Log.e("ArteneApp", "Exception occured while writing the XML: ", e);
         }
     }
 
-    void ParseXmlFile(View v, Context context)
+    void AddNewAlarm(View v, Context context)
     {
-        String loadText = "";
+        String medName = ((TextView)v.findViewById(R.id.medNameText)).getText().toString();
+        m_alarmList.add(new Alarm(medName));
+        SaveDataToXml(context);
+    }
+
+    void ParseXmlFile(Context context)
+    {
+        m_alarmList.clear();
+
         try{
+            InputStream is = context.openFileInput(m_testFile);
+            if(is != null)
+            {
+                Scanner scan = new Scanner(is);
+                System.out.println("reading save file: ");
+                while(scan.hasNext())
+                {
+                    String print = scan.next();
+                    System.out.println("_"+print);
+                }
+            }
+
             FileInputStream fs = context.openFileInput(m_testFile);
             m_XmlParser.setInput(fs, null);
-            System.out.println("Begining xml parsing");
             int event = m_XmlParser.getEventType();
             while( event != XmlPullParser.END_DOCUMENT)
             {
-                System.out.println("Event "+ event);
+                Alarm newAlarm = new Alarm();
                 String name = m_XmlParser.getName();
                 System.out.println(name);
 
@@ -118,48 +160,45 @@ public class SaveManager {
                     case XmlPullParser.START_TAG:
                     break;
                     case XmlPullParser.END_TAG:
-                        if(name.equals("MedName"))
+                        if(name.equals(context.getText(R.string.medNameTag).toString()))
                         {
-                            System.out.println("Number of attributes: " + m_XmlParser.getAttributeCount());
-                            loadText = m_XmlParser.getAttributeValue(null,"name");
+                            newAlarm.m_medName = m_XmlParser.getAttributeValue(null,"name");
                         }
                 }
-
                 event = m_XmlParser.next();
-            }
-            System.out.println("Xml parsing finished");
-
-            if(!loadText.isEmpty())
-            {
-                ((TextView) v.findViewById(R.id.testOutputText)).setText(loadText);
+                if(!newAlarm.m_medName.isEmpty())
+                {
+                    m_alarmList.add(newAlarm);
+                }
             }
         }
         catch (Exception e)
         {
-            System.out.println(e);
+            Log.e("ArteneApp", "Exception while adding parsing XML: ", e);
         }
     }
 
-    void TestLoadData(View v, Context context)
+    void AddNewTag(XmlSerializer serializer, String tagName, String attributeName, String attributeValue)
     {
-        String content = "";
-        try
-        {
-            FileInputStream fs = context.openFileInput(m_testFile);
-            Scanner scan = new Scanner(fs);
-            content = scan.next();
-            scan.close();
-            System.out.println(" Content of file is : " + content);
-            if(!content.isEmpty())
-            {
-                ((TextView) v.findViewById(R.id.testOutputText)).setText(content);
-            }
+        try{
+            serializer.startTag("", tagName);
+            serializer.attribute("", attributeName, attributeValue);
+            serializer.endTag("", tagName);
         }
-        catch   (Exception e)
+        catch(Exception e)
         {
-            System.out.println(e);
+            Log.e("ArteneApp", "Exception while adding new tag: ", e);
         }
     }
 
+    int GetNumberOfSavedAlarms()
+    {
+        return m_alarmList.size();
+    }
+
+    String GetAlarm(int index)
+    {
+        return m_alarmList.get(index).m_medName;
+    }
 
 }

@@ -40,6 +40,8 @@
     <string name="durationOn">Fix</string>
 
     //Files - Storage
-    <string name="testSave">Fisier00</string>
+    <string name="testSave">Fisier021</string>
+
+    <string name="medNameTag">MedName</string>
 
 </resources>

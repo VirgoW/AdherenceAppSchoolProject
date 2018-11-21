@@ -7,13 +7,15 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.TimePicker;
 
 public class AlarmsPage extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
 
     Context m_context;
     View m_view;
-
+    GridView gridView;
+    AlarmAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,63 +34,16 @@ public class AlarmsPage extends AppCompatActivity implements TimePickerDialog.On
             }
         });
 
-
-        //De ce nu-l gaseste?
-
-        Button saveTestTextBtn = (Button) findViewById(R.id.testTextInputButton);
-        Button loadTestTextBtn = (Button) findViewById(R.id.testTextOutputButton);
-        saveTestTextBtn.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v) {
-                SaveValueToFile();
-            }
-        });
-        loadTestTextBtn.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v) {
-                LoadValueFromFile();
-            }
-        });
+        gridView = (GridView) findViewById(R.id.gridViewTest);
+        adapter = new AlarmAdapter(this);
+        gridView.setAdapter(adapter);
     }
 
-    public void SaveValueToFile()
-    {
-        SaveManager.getInstance().TestSaveData(m_view, m_context);
-
-        //alarmTriggeredNumber ++;
-        //alarmDrugConsumedConfirmedNumber ++
-        /*
-        struct
-        {
-         Name
-         Hour
-
-         Frequency
-            Day
-            Week
-            Month
-            Other combo
-
-         For how long
-            always
-                or
-           number of
-                    Days
-                    Weeks
-                    Months
-                    Years
-            }
-         */
-
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        adapter.notifyDataSetChanged();
     }
-
-    public void LoadValueFromFile()
-    {
-        SaveManager.getInstance().ParseXmlFile(m_view, m_context);
-    }
-
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
