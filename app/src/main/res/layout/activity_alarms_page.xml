@@ -9,8 +9,10 @@
     <GridView
         android:id="@+id/gridViewTest"
         android:layout_width="match_parent"
-        android:layout_height="328dp"
+        android:layout_height="wrap_content"
+        android:background="#F8F8F8"
         android:gravity="center"
+        android:verticalSpacing="10dp"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -1,6 +1,7 @@
 package ro.umfcd.stud.arteneraluca.myapplication;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -44,6 +45,9 @@ public class AlarmSet extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 SaveAlarm();
+                Intent toMainPage = new Intent(getApplicationContext(), AlarmsPage.class);
+                startActivity(toMainPage);
+                finish();
             }
         });
     }

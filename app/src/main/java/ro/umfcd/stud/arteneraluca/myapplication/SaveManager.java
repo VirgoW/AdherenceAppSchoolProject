@@ -21,22 +21,27 @@ import java.util.Scanner;
 import static android.content.Context.MODE_PRIVATE;
 
 public class SaveManager {
+
     private static final SaveManager ourInstance = new SaveManager();
     private XmlPullParserFactory m_XmlFactoryObject;
     private XmlPullParser m_XmlParser;
-    private boolean m_XmlParserInitialized;
 
     private ArrayList<Alarm> m_alarmList;
+    String m_saveFile;
 
-    String m_testFile;
+    /*
+    This class an instance -> It can be called from anywhere and it does not require you to create an object of this class
+    We make it an instance because we need to access the save data from everywhere, but most importantly, we want it to be the SAME data.
 
-
+    Code tip: static members of a class are blocks of memory that are shared across all object of that class.
+     */
     public static SaveManager getInstance() {
         return ourInstance;
     }
 
     private SaveManager() {
         try {
+            //Initialize all objects
             m_XmlFactoryObject = XmlPullParserFactory.newInstance();
             m_XmlParser = m_XmlFactoryObject.newPullParser();
             m_alarmList = new ArrayList<>();
@@ -50,20 +55,22 @@ public class SaveManager {
 
     public void InitSave(Context context)
     {
-        m_testFile = context.getText(R.string.testSave).toString();
+        m_saveFile = context.getText(R.string.testSave).toString();
 
         File path = context.getFilesDir();
-        File file = new File(path, m_testFile);
+        File file = new File(path, m_saveFile);
 
         //Check and create the save file if it does not exist.
         if(file.exists())
         {
+            //If it exist, read it and cache the alarms in m_alarmList.
             ParseXmlFile(context);
         }
         else
         {
+            //If the file does not exit, create it by opening it for writing
             try{
-                OutputStreamWriter os = new OutputStreamWriter (context.openFileOutput(m_testFile, MODE_PRIVATE));
+                OutputStreamWriter os = new OutputStreamWriter (context.openFileOutput(m_saveFile, MODE_PRIVATE));
                 os.close();
             }
             catch(Exception e)
@@ -71,8 +78,13 @@ public class SaveManager {
                 Log.e("ArteneApp", "Exception occured in SaveManager while creating / opening the save file: ", e);
             }
         }
+    }
 
-
+    void AddNewAlarm(View v, Context context)
+    {
+        String medName = ((TextView)v.findViewById(R.id.medNameText)).getText().toString();
+        m_alarmList.add(new Alarm(medName));
+        SaveDataToXml(context);
     }
 
     void SaveDataToXml(Context context)
@@ -88,8 +100,10 @@ public class SaveManager {
             for(int index = 0; index < m_alarmList.size(); index++)
             {
                 serializer.startTag("","Alarm");
-
-                AddNewTag(serializer, context.getText(R.string.medNameTag).toString(), "name", m_alarmList.get(index).m_medName);
+                //Add a new tag - specify the serializer, the tag name, the attribute name and the tag value
+                //Currently we have only 1 attribute per tag..
+                AddNewTag(serializer, context.getText(R.string.medNameTag).toString(), "name", m_alarmList.get(index).GetMedName());
+                //To add all elements
 
                 serializer.endTag("","Alarm");
             }
@@ -97,24 +111,10 @@ public class SaveManager {
             //End document writing
             String result = writer.toString();
 
-            OutputStreamWriter  os = new OutputStreamWriter (context.openFileOutput(m_testFile, MODE_PRIVATE));
+            OutputStreamWriter  os = new OutputStreamWriter (context.openFileOutput(m_saveFile, MODE_PRIVATE));
             os.write(result);
             System.out.println("Wrote xml file with value: " + result);
             os.close();
-
-
-            InputStream is = context.openFileInput(m_testFile);
-            if(is != null)
-            {
-                Scanner scan = new Scanner(is);
-                System.out.println("reading save file: ");
-                while(scan.hasNext())
-                {
-                    String print = scan.next();
-                    System.out.println("_"+print);
-                }
-            }
-            is.close();
         }
         catch (Exception e)
         {
@@ -122,39 +122,20 @@ public class SaveManager {
         }
     }
 
-    void AddNewAlarm(View v, Context context)
-    {
-        String medName = ((TextView)v.findViewById(R.id.medNameText)).getText().toString();
-        m_alarmList.add(new Alarm(medName));
-        SaveDataToXml(context);
-    }
-
     void ParseXmlFile(Context context)
     {
         m_alarmList.clear();
 
         try{
-            InputStream is = context.openFileInput(m_testFile);
-            if(is != null)
-            {
-                Scanner scan = new Scanner(is);
-                System.out.println("reading save file: ");
-                while(scan.hasNext())
-                {
-                    String print = scan.next();
-                    System.out.println("_"+print);
-                }
-            }
-
-            FileInputStream fs = context.openFileInput(m_testFile);
+            //Open an input stream for readit from the file
+            FileInputStream fs = context.openFileInput(m_saveFile);
             m_XmlParser.setInput(fs, null);
+
             int event = m_XmlParser.getEventType();
-            while( event != XmlPullParser.END_DOCUMENT)
+            while(event != XmlPullParser.END_DOCUMENT)
             {
                 Alarm newAlarm = new Alarm();
                 String name = m_XmlParser.getName();
-                System.out.println(name);
-
                 switch(event)
                 {
                     case XmlPullParser.START_TAG:
@@ -162,15 +143,20 @@ public class SaveManager {
                     case XmlPullParser.END_TAG:
                         if(name.equals(context.getText(R.string.medNameTag).toString()))
                         {
-                            newAlarm.m_medName = m_XmlParser.getAttributeValue(null,"name");
+                            newAlarm.SetMedName(m_XmlParser.getAttributeValue(null,"name"));
                         }
                 }
+
                 event = m_XmlParser.next();
-                if(!newAlarm.m_medName.isEmpty())
+
+                //TODO - improve this method for better Alarm managing
+                //Add Check for Alarm tag start and end
+                if(newAlarm.IsValid())
                 {
                     m_alarmList.add(newAlarm);
                 }
             }
+            fs.close();
         }
         catch (Exception e)
         {
@@ -196,9 +182,31 @@ public class SaveManager {
         return m_alarmList.size();
     }
 
+    //Temporary method - TODO replace method with more advanced version possibly using a struct to get all the info that is supposed to be displayed in the UI
     String GetAlarm(int index)
     {
-        return m_alarmList.get(index).m_medName;
+        return m_alarmList.get(index).GetMedName();
     }
 
+    void Debug_PrintFileContents(Context context)
+    {
+        try
+        {
+            InputStream is = context.openFileInput(m_saveFile);
+            if(is != null)
+            {
+                Scanner scan = new Scanner(is);
+                System.out.println("reading save file: ");
+                while(scan.hasNext())
+                {
+                    String print = scan.next();
+                    System.out.println("_"+print);
+                }
+            }
+        }
+        catch(Exception e)
+        {
+            Log.e("ArteneApp", "Exception in Debug file print: ", e);
+        }
+    }
 }

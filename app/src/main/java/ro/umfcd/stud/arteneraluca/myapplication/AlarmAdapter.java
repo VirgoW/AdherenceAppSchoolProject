@@ -1,6 +1,7 @@
 package ro.umfcd.stud.arteneraluca.myapplication;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -36,8 +37,11 @@ public class AlarmAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent)
     {
         final TextView textView = new TextView(m_context);
-
+        //Temporary - TODO Improve this method to get all the info we need from the alarms
+        //textView.setLayoutParams(new GridView.LayoutParams(150, 150));
+        //textView.setPadding(1,1,1,1);
         textView.setText(SaveManager.getInstance().GetAlarm(position));
+        textView.setBackgroundColor(Color.WHITE);
         return textView;
     }
 }
