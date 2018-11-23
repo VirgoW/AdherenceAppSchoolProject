@@ -1,17 +1,17 @@
 package ro.umfcd.stud.arteneraluca.myapplication;
 
+import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TimePicker;
 
-public class AlarmsPage extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
+public class AlarmsPage extends Activity implements TimePickerDialog.OnTimeSetListener {
 
     Context m_context;
     View m_view;
@@ -23,7 +23,7 @@ public class AlarmsPage extends AppCompatActivity implements TimePickerDialog.On
         setContentView(R.layout.activity_alarms_page);
         m_context = this;
         m_view = findViewById(android.R.id.content);
-        Button setAlarm_btn = (Button) findViewById(R.id.setAlarm_btn);
+        Button setAlarm_btn = (Button) findViewById(R.id.alarmSetButton);
         setAlarm_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

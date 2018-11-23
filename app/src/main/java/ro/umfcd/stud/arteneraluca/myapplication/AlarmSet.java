@@ -1,17 +1,17 @@
 package ro.umfcd.stud.arteneraluca.myapplication;
 
+import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-public class AlarmSet extends AppCompatActivity {
+public class AlarmSet extends Activity {
     Context m_context;
     View m_view;
 
@@ -44,12 +44,26 @@ public class AlarmSet extends AppCompatActivity {
         {
             @Override
             public void onClick(View v) {
-                SaveAlarm();
-                Intent toMainPage = new Intent(getApplicationContext(), AlarmsPage.class);
-                startActivity(toMainPage);
-                finish();
+                TrySaveAlarm();
             }
         });
+    }
+
+    private void TrySaveAlarm()
+    {
+        TextView medName = (TextView) m_view.findViewById(R.id.medNameText);
+        if(medName.getText().toString().isEmpty())
+        {
+            TextView medNameError = (TextView ) m_view.findViewById(R.id.errorMedName);
+            medNameError.setVisibility(View.VISIBLE);
+            ((ScrollView) m_view.findViewById(R.id.scroll_bar)).fullScroll(View.FOCUS_UP);
+        }
+        else
+        {
+            SaveAlarm();
+            onBackPressed();
+            finish();
+        }
     }
 
     private void SaveAlarm()
