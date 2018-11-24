@@ -33,7 +33,6 @@ public class DayFragment extends Fragment {
         return view;
     }
 
-
     public void NotifyAdapterDataSetChanged()
     {
         m_alarmAdapter.notifyDataSetChanged();

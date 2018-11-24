@@ -6,13 +6,63 @@
     android:layout_height="match_parent"
     tools:context=".AlarmsPage">
 
-    <android.support.design.widget.TabLayout
-        app:tabTextAppearance="@style/CustomTaLayout"
-        app:tabBackground="@drawable/tab_color_selector"
-        android:id="@+id/topTabLayout"
+    <LinearLayout
+        android:id="@+id/headerLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabMode="fixed"></android.support.design.widget.TabLayout>
+        app:layout_constraintBottom_toTopOf="@+id/viewpager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/viewpager"
+        android:background="@color/colorPrimary"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/monthWidget"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <ImageButton
+                android:id="@+id/prevMonth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toStartOf="@+id/testDate"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@android:drawable/arrow_down_float" />
+
+            <TextView
+                android:id="@+id/testDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Month"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/nextMonth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/testDate"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@android:drawable/arrow_up_float" />
+
+        </LinearLayout>
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/topTabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabBackground="@drawable/tab_color_selector"
+            app:tabMode="fixed"
+            app:tabTextAppearance="@style/CustomTaLayout"></android.support.design.widget.TabLayout>
+    </LinearLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
@@ -23,31 +73,10 @@
         android:layout_marginEnd="1dp"
         android:layout_marginRight="1dp"
         android:visibility="visible"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintBottom_toTopOf="@id/guideline_vertical_grid_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/topTabLayout" />
-
-    <GridView
-        android:id="@+id/gridViewTest"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginLeft="1dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginRight="1dp"
-        android:background="#F8F8F8"
-        android:gravity="center"
-        android:verticalSpacing="10dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@id/guideline_vertical_grid_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"></GridView>
+        app:layout_constraintTop_toBottomOf="@id/headerLayout" />
 
     <ImageView
         android:id="@+id/imageFooter"
@@ -57,7 +86,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gridViewTest" />
+        app:layout_constraintTop_toBottomOf="@+id/viewpager" />
 
     <Button
         android:id="@+id/alarmSetButton"
@@ -71,7 +100,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/imageFooter"
         app:layout_constraintStart_toStartOf="@id/guideline_button_setAlarm"
-        app:layout_constraintTop_toBottomOf="@+id/gridViewTest" />
+        app:layout_constraintTop_toBottomOf="@+id/viewpager" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline_button_setAlarm"
