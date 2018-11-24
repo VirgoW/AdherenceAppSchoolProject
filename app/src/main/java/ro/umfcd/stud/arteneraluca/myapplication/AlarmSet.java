@@ -1,8 +1,8 @@
 package ro.umfcd.stud.arteneraluca.myapplication;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -11,7 +11,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-public class AlarmSet extends Activity {
+public class AlarmSet extends AppCompatActivity {
     Context m_context;
     View m_view;
 

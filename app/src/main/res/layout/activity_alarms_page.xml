@@ -6,6 +6,28 @@
     android:layout_height="match_parent"
     tools:context=".AlarmsPage">
 
+    <android.support.design.widget.TabLayout
+        app:tabTextAppearance="@style/CustomTaLayout"
+        app:tabBackground="@drawable/tab_color_selector"
+        android:id="@+id/topTabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabMode="fixed"></android.support.design.widget.TabLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginRight="1dp"
+        android:visibility="visible"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintBottom_toTopOf="@id/guideline_vertical_grid_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topTabLayout" />
 
     <GridView
         android:id="@+id/gridViewTest"
@@ -19,7 +41,7 @@
         android:background="#F8F8F8"
         android:gravity="center"
         android:verticalSpacing="10dp"
-        android:visibility="visible"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@id/guideline_vertical_grid_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -31,8 +53,7 @@
         android:id="@+id/imageFooter"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/ic_launcher_background"
-        android:src="@android:color/holo_blue_dark"
+        android:src="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

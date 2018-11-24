@@ -1,22 +1,25 @@
 package ro.umfcd.stud.arteneraluca.myapplication;
 
-import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.TimePicker;
 
-public class AlarmsPage extends Activity implements TimePickerDialog.OnTimeSetListener {
-
+public class AlarmsPage extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
+//TODO Check if AppCompatActivity is ok
     Context m_context;
     View m_view;
-    GridView gridView;
-    AlarmAdapter adapter;
+    DayFragmentAdapter m_alarmPageAdapter;
+    ViewPager m_dayFragmentViewer;
+    TabLayout m_tabLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,16 +38,13 @@ public class AlarmsPage extends Activity implements TimePickerDialog.OnTimeSetLi
             }
         });
 
-        //TODO improve gridview layout to account for more than one string per view
-        gridView = (GridView) findViewById(R.id.gridViewTest);
-        adapter = new AlarmAdapter(this);
-        gridView.setAdapter(adapter);
+        SetupView();
     }
 
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        adapter.notifyDataSetChanged();
+        m_alarmPageAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -67,5 +67,26 @@ public class AlarmsPage extends Activity implements TimePickerDialog.OnTimeSetLi
     public void onBackPressed()
     {
         moveTaskToBack(true); // Idk what it does exactly, but i think it puts the app in the background, which is exactly what i want the functionality to be.
+    }
+
+
+    private void SetupView()
+    {
+        m_dayFragmentViewer = (ViewPager) findViewById(R.id.viewpager);
+        AddDayTabs(m_dayFragmentViewer);
+
+        m_tabLayout = (TabLayout) findViewById(R.id.topTabLayout);
+        m_tabLayout.setupWithViewPager(m_dayFragmentViewer);
+    }
+
+    private void AddDayTabs(ViewPager viewPager)
+    {
+        m_alarmPageAdapter = new DayFragmentAdapter(getSupportFragmentManager());
+        String[] dayNames = getResources().getStringArray(R.array.dayNames);
+        for(int index = 0; index < 7; index ++)
+        {
+            m_alarmPageAdapter.addDayTitle(new DayFragment(), dayNames[index]);
+        }
+        viewPager.setAdapter(m_alarmPageAdapter);
     }
 }

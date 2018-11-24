@@ -44,8 +44,6 @@ public class AlarmAdapter extends BaseAdapter {
         {
             //Get layout from xml file using the inflater
             gridView = inflater.inflate(R.layout.grid_view_item, null);
-            final TextView textView = (TextView) gridView.findViewById(R.id.grid_item_medicament);
-            textView.setText(SaveManager.getInstance().GetAlarm(position));
         }
         else
         {
@@ -56,6 +54,12 @@ public class AlarmAdapter extends BaseAdapter {
         //textView.setPadding(1,1,1,1);
         //textView.setText(SaveManager.getInstance().GetAlarm(position));
         //textView.setBackgroundColor(Color.WHITE);
+
+        //Populate the gridview items with each item value
+        //Code tip: FINAL keyword is used to create a constant. That forces the variable to not allow to be changed
+        final TextView medName = (TextView) gridView.findViewById(R.id.grid_item_medicament);
+        medName.setText(SaveManager.getInstance().GetAlarm(position));
+
         return gridView;
     }
 }
