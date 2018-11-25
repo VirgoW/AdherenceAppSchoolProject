@@ -97,6 +97,9 @@ public class AlarmsPage extends AppCompatActivity implements TimePickerDialog.On
     private void SetupView()
     {
         m_dayFragmentViewer = (ViewPager) findViewById(R.id.viewpager);
+        m_alarmPageAdapter = new DayFragmentAdapter(getSupportFragmentManager(), m_context);
+        m_dayFragmentViewer.setAdapter(m_alarmPageAdapter);
+
         AddDayTabs(m_dayFragmentViewer);
 
         m_tabLayout = (TabLayout) findViewById(R.id.topTabLayout);
@@ -110,14 +113,11 @@ public class AlarmsPage extends AppCompatActivity implements TimePickerDialog.On
 
     private void AddDayTabs(ViewPager viewPager)
     {
-        m_alarmPageAdapter = new DayFragmentAdapter(getSupportFragmentManager());
-        m_alarmPageAdapter.SetContext(m_context);
         String[] dayNames = getResources().getStringArray(R.array.dayNames);
         for(int index = 0; index < 7; index ++)
         {
             m_alarmPageAdapter.addDayTitle(new DayFragment(), dayNames[index], "00");
         }
-        viewPager.setAdapter(m_alarmPageAdapter);
     }
 
 

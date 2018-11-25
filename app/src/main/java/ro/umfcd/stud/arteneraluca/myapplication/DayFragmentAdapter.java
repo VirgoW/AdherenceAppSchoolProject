@@ -2,9 +2,10 @@ package ro.umfcd.stud.arteneraluca.myapplication;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -12,16 +13,17 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DayFragmentAdapter extends FragmentStatePagerAdapter
+public class DayFragmentAdapter extends FragmentPagerAdapter
 {
     private final List<Fragment> m_fragmentList = new ArrayList<>();
     private final List<String> m_fragmentDayNameList = new ArrayList<>();
     private final List<String> m_fragmentDayValueList = new ArrayList<>();
     private Context m_context;
 
-    public DayFragmentAdapter(FragmentManager manager)
+    public DayFragmentAdapter(FragmentManager manager, Context context)
     {
         super(manager);
+        m_context = context;
     }
 
     public void SetContext(Context context)
@@ -37,6 +39,12 @@ public class DayFragmentAdapter extends FragmentStatePagerAdapter
     @Override
     public int getCount() {
         return m_fragmentList.size();
+    }
+
+    @Nullable
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return m_fragmentDayNameList.get(position);
     }
 
     @Override
