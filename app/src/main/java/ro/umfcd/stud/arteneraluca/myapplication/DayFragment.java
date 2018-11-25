@@ -13,6 +13,11 @@ public class DayFragment extends Fragment {
 
     AlarmAdapter m_alarmAdapter;
 
+    public static DayFragment newInstance()
+    {
+        return new DayFragment(); //TODO I might need to pass data info on this constructor to handle fragment info
+    }
+
     public DayFragment()
     {
 
@@ -33,8 +38,12 @@ public class DayFragment extends Fragment {
         return view;
     }
 
-    public void NotifyAdapterDataSetChanged()
-    {
-        m_alarmAdapter.notifyDataSetChanged();
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(m_alarmAdapter != null)
+        {
+            m_alarmAdapter.notifyDataSetChanged();
+        }
     }
 }

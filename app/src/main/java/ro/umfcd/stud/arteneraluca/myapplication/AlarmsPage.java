@@ -20,9 +20,11 @@ public class AlarmsPage extends AppCompatActivity implements TimePickerDialog.On
 //TODO Check if AppCompatActivity is ok
     Context m_context;
     View m_view;
+
     DayFragmentAdapter m_alarmPageAdapter;
     ViewPager m_dayFragmentViewer;
     TabLayout m_tabLayout;
+
     Calendar m_cal;
 
     @Override
@@ -67,12 +69,6 @@ public class AlarmsPage extends AppCompatActivity implements TimePickerDialog.On
     }
 
     @Override
-    protected void onPostResume() {
-        super.onPostResume();
-        m_alarmPageAdapter.notifyDataSetChanged();
-    }
-
-    @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
     }
@@ -96,14 +92,18 @@ public class AlarmsPage extends AppCompatActivity implements TimePickerDialog.On
 
     private void SetupView()
     {
+        //Get the ViewPager and set the adapter so it can display items
         m_dayFragmentViewer = (ViewPager) findViewById(R.id.viewpager);
         m_alarmPageAdapter = new DayFragmentAdapter(getSupportFragmentManager(), m_context);
         m_dayFragmentViewer.setAdapter(m_alarmPageAdapter);
 
+        //Populate the adapter data with days name and value
         AddDayTabs(m_dayFragmentViewer);
 
+        //Give the TabLayout the ViewPager to use
         m_tabLayout = (TabLayout) findViewById(R.id.topTabLayout);
         m_tabLayout.setupWithViewPager(m_dayFragmentViewer);
+
         for(int index = 0; index < 7; index ++)
         {
             TabLayout.Tab tab = m_tabLayout.getTabAt(index);
@@ -116,7 +116,7 @@ public class AlarmsPage extends AppCompatActivity implements TimePickerDialog.On
         String[] dayNames = getResources().getStringArray(R.array.dayNames);
         for(int index = 0; index < 7; index ++)
         {
-            m_alarmPageAdapter.addDayTitle(new DayFragment(), dayNames[index], "00");
+            m_alarmPageAdapter.addDayTitle(new DayFragment(), dayNames[index], Integer.toString(index));
         }
     }
 

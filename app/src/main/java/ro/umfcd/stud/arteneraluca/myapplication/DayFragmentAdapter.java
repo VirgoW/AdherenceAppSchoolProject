@@ -33,18 +33,18 @@ public class DayFragmentAdapter extends FragmentPagerAdapter
 
     @Override
     public Fragment getItem(int index) {
-        return m_fragmentList.get(index);
+        return DayFragment.newInstance();//m_fragmentList.get(index);
     }
 
     @Override
     public int getCount() {
-        return m_fragmentList.size();
+        return 7;//m_fragmentList.size();
     }
 
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return m_fragmentDayNameList.get(position);
+        return null;
     }
 
     @Override
@@ -66,8 +66,8 @@ public class DayFragmentAdapter extends FragmentPagerAdapter
         View tabView = inflater.inflate(R.layout.tab_item_layout,null);
         TextView day = (TextView) tabView.findViewById(R.id.dayValueTabItem);
         TextView dayName = (TextView) tabView.findViewById(R.id.dayNameTabItem);
-        //day.setText(m_fragmentDayValueList.get(position));
-        //dayName.setText(m_fragmentDayNameList.get(position));
+        day.setText(m_fragmentDayValueList.get(position));
+        dayName.setText(m_fragmentDayNameList.get(position));
         return tabView;
     }
 }
