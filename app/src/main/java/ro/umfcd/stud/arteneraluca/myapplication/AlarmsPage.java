@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -22,7 +21,7 @@ public class AlarmsPage extends AppCompatActivity implements TimePickerDialog.On
     View m_view;
 
     DayFragmentAdapter m_alarmPageAdapter;
-    ViewPager m_dayFragmentViewer;
+    CustomViewPager m_dayFragmentViewer;
     TabLayout m_tabLayout;
 
     Calendar m_cal;
@@ -62,10 +61,19 @@ public class AlarmsPage extends AppCompatActivity implements TimePickerDialog.On
             }
         });
 
+        m_cal = Calendar.getInstance();
         SetupView();
         //TODO Improve cal
-        m_cal = Calendar.getInstance();
         Test(0);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(m_alarmPageAdapter != null)
+        {
+            m_alarmPageAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -93,12 +101,10 @@ public class AlarmsPage extends AppCompatActivity implements TimePickerDialog.On
     private void SetupView()
     {
         //Get the ViewPager and set the adapter so it can display items
-        m_dayFragmentViewer = (ViewPager) findViewById(R.id.viewpager);
-        m_alarmPageAdapter = new DayFragmentAdapter(getSupportFragmentManager(), m_context);
+        m_dayFragmentViewer = (CustomViewPager) findViewById(R.id.viewpager);
+        m_dayFragmentViewer.SetCal(m_cal);
+        m_alarmPageAdapter = new DayFragmentAdapter(getSupportFragmentManager(), m_context, m_cal);
         m_dayFragmentViewer.setAdapter(m_alarmPageAdapter);
-
-        //Populate the adapter data with days name and value
-        AddDayTabs(m_dayFragmentViewer);
 
         //Give the TabLayout the ViewPager to use
         m_tabLayout = (TabLayout) findViewById(R.id.topTabLayout);
@@ -110,16 +116,6 @@ public class AlarmsPage extends AppCompatActivity implements TimePickerDialog.On
             tab.setCustomView(m_alarmPageAdapter.getTabView(index));
         }
     }
-
-    private void AddDayTabs(ViewPager viewPager)
-    {
-        String[] dayNames = getResources().getStringArray(R.array.dayNames);
-        for(int index = 0; index < 7; index ++)
-        {
-            m_alarmPageAdapter.addDayTitle(new DayFragment(), dayNames[index], Integer.toString(index));
-        }
-    }
-
 
     private void Test(int plus)
     {

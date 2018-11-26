@@ -5,7 +5,7 @@ import android.util.AttributeSet;
 import android.widget.GridView;
 
 
-//TEST only
+// TEST only - remove at the end if not used yet
 
 
 public class MyGridView extends GridView {
