@@ -25,13 +25,14 @@
 
             <ImageButton
                 android:id="@+id/prevMonth"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
                 app:layout_constraintEnd_toStartOf="@+id/testDate"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@android:drawable/arrow_down_float" />
+                android:background="@drawable/arrow_left"
+                android:layout_gravity="center_vertical"/>
 
             <TextView
                 android:id="@+id/testDate"
@@ -45,23 +46,53 @@
 
             <ImageButton
                 android:id="@+id/nextMonth"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/testDate"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@android:drawable/arrow_up_float" />
+                android:background="@drawable/arrow_right"
+                android:layout_gravity="center_vertical"/>
 
         </LinearLayout>
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/topTabLayout"
+        <LinearLayout
+            android:id="@+id/tabLayoutWidget"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabBackground="@drawable/tab_color_selector"
-            app:tabMode="fixed"
-            app:tabTextAppearance="@style/CustomTaLayout"></android.support.design.widget.TabLayout>
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/previousWeek"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="30dp"
+                android:background="@drawable/arrow_left"
+                android:gravity="center"
+                app:layout_constraintEnd_toStartOf="@+id/topTabLayout"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/topTabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tabBackground="@drawable/tab_color_selector"
+                app:tabMode="fixed"
+                app:tabTextAppearance="@style/CustomTaLayout"></android.support.design.widget.TabLayout>
+
+            <ImageButton
+                android:id="@+id/nextWeek"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="30dp"
+                android:background="@drawable/arrow_right"
+                android:gravity="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/topTabLayout"
+                app:layout_constraintTop_toTopOf="parent" />
+        </LinearLayout>
     </LinearLayout>
 
     <ro.umfcd.stud.arteneraluca.myapplication.CustomViewPager
