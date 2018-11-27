@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -21,7 +22,7 @@ public class AlarmsPage extends AppCompatActivity implements TimePickerDialog.On
     View m_view;
 
     DayFragmentAdapter m_alarmPageAdapter;
-    CustomViewPager m_dayFragmentViewer;
+    ViewPager m_dayFragmentViewer;
     TabLayout m_tabLayout;
 
     Calendar m_cal;
@@ -47,6 +48,8 @@ public class AlarmsPage extends AppCompatActivity implements TimePickerDialog.On
 
         ImageButton prevMonth = (ImageButton) findViewById(R.id.prevMonth);
         ImageButton nextMonth = (ImageButton) findViewById(R.id.nextMonth);
+        ImageButton prevWeek = (ImageButton) findViewById(R.id.previousWeek);
+        ImageButton nextWeek = (ImageButton) findViewById(R.id.nextWeek);
 
         prevMonth.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +63,21 @@ public class AlarmsPage extends AppCompatActivity implements TimePickerDialog.On
                 Test(1);
             }
         });
+
+        prevWeek.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AddWeek(-1);
+            }
+        });
+
+        nextWeek.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AddWeek(1);
+            }
+        });
+
 
         m_cal = Calendar.getInstance();
         SetupView();
@@ -101,8 +119,7 @@ public class AlarmsPage extends AppCompatActivity implements TimePickerDialog.On
     private void SetupView()
     {
         //Get the ViewPager and set the adapter so it can display items
-        m_dayFragmentViewer = (CustomViewPager) findViewById(R.id.viewpager);
-        m_dayFragmentViewer.SetCal(m_cal);
+        m_dayFragmentViewer = (ViewPager) findViewById(R.id.viewpager);
         m_alarmPageAdapter = new DayFragmentAdapter(getSupportFragmentManager(), m_context, m_cal);
         m_dayFragmentViewer.setAdapter(m_alarmPageAdapter);
 
@@ -129,5 +146,17 @@ public class AlarmsPage extends AppCompatActivity implements TimePickerDialog.On
         //Date.from(ZonedDateTime.now().minusMonths(1).toInstant());
         //String strDateFormat = "M";
         //SimpleDateFormat sdf = new SimpleDateFormat(strDateFormat);
+    }
+    private void AddWeek(int direction)
+    {
+        m_cal.add(Calendar.WEEK_OF_MONTH, direction);
+        m_alarmPageAdapter.notifyDataSetChanged();
+        m_dayFragmentViewer.setAdapter(null);
+        m_dayFragmentViewer.setAdapter(m_alarmPageAdapter);
+        for(int index = 0; index < 7; index ++)
+        {
+            TabLayout.Tab tab = m_tabLayout.getTabAt(index);
+            tab.setCustomView(m_alarmPageAdapter.getTabView(index));
+        }
     }
 }
