@@ -131,7 +131,7 @@
                 android:layout_height="wrap_content"
                 app:barrierDirection="bottom"
                 app:constraint_referenced_ids="treatmentLengthSpinner,alarmsNumber_Text"
-                />
+                tools:layout_editor_absoluteY="133dp" />
 
             <TextView
                 android:id="@+id/startDate_textView"
@@ -208,17 +208,6 @@
                     android:text="@string/custom" />
             </RadioGroup>
 
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="64dp"
-                android:layout_marginLeft="64dp"
-                android:layout_marginTop="8dp"
-                android:text="Repetare: "
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/alarmFreq_RadioGroup" />
-
             <CheckBox
                 android:id="@+id/checkBox"
                 android:layout_width="wrap_content"
@@ -226,8 +215,8 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
-                android:text="CheckX7"
-                app:layout_constraintStart_toEndOf="@+id/textView3"
+                android:button="@drawable/checkbox"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/alarmFreq_RadioGroup" />
 
             <Spinner
