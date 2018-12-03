@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ScrollView;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -21,11 +22,11 @@ public class AlarmSet extends AppCompatActivity {
         setContentView(R.layout.activity_alarm_set);
         m_context = this;
         m_view = findViewById(android.R.id.content);
-        ToggleButton alarmDurationToggleBtn = (ToggleButton) findViewById(R.id.alarmDurationToggleBtn);
+        Switch alarmDuration_switch = (Switch) findViewById(R.id.alarmDuration_switch);
         final TextView alarmsNumber_Text = (TextView) findViewById(R.id.alarmsNumber_Text);
         final Spinner treatmentLengthSpinner = (Spinner) findViewById(R.id.treatmentLengthSpinner);
 
-            alarmDurationToggleBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            alarmDuration_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if(isChecked) {
@@ -34,8 +35,8 @@ public class AlarmSet extends AppCompatActivity {
                     }
                     else
                     {
-                        alarmsNumber_Text.setVisibility(View.INVISIBLE);
-                        treatmentLengthSpinner.setVisibility(View.INVISIBLE);
+                        alarmsNumber_Text.setVisibility(View.GONE);
+                        treatmentLengthSpinner.setVisibility(View.GONE);
                     }
                 }
             });

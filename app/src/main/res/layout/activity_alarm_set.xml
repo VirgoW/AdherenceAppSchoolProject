@@ -13,7 +13,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="5dp"
+        android:layout_marginEnd="0dp"
         android:layout_marginRight="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,59 +24,158 @@
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+            android:layout_height="match_parent">
 
-
-            <TextView
-                android:id="@+id/alarmTitleTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:text="@string/alarm_title"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
                 android:id="@+id/medNameText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginLeft="4dp"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="8dp"
                 android:ems="10"
                 android:hint="@string/medName_hint"
                 android:inputType="text"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/alarmTitleTextView" />
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/errorMedName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="16dp"
+                android:text="@string/errorMedNameMandatory"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="10sp"
+                android:textStyle="italic"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toTopOf="@+id/DosageInput_Text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/medNameText" />
+
+            <TextView
+                android:id="@+id/dosage_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:text="@string/dosage_txt"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="@+id/DosageInput_Text"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/medNameText" />
+
+            <EditText
+                android:id="@+id/DosageInput_Text"
+                android:layout_width="105dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="68dp"
+                android:layout_marginRight="68dp"
+                android:ems="10"
+                android:hint="@string/dosageHint"
+                android:inputType="text"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/dosage_textView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/dosage_textView" />
+
+            <Switch
+                android:id="@+id/alarmDuration_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:showText="true"
+                android:text="@string/alarmDuration"
+                android:textOff="@string/durationOff"
+                android:textOn="@string/durationOn"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/DosageInput_Text"
+                tools:checked="false" />
+
+            <EditText
+                android:id="@+id/alarmsNumber_Text"
+                android:layout_width="52dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:ems="10"
+                android:hint="@string/alarmsNum"
+                android:inputType="number"
+                android:singleLine="true"
+                android:textSize="12sp"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/alarmDuration_switch" />
+
+            <Spinner
+                android:id="@+id/treatmentLengthSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/Treatment_length"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/alarmsNumber_Text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.15"
+                app:layout_constraintStart_toEndOf="@+id/alarmsNumber_Text"
+                app:layout_constraintTop_toTopOf="@+id/alarmsNumber_Text" />
+
+            <android.support.constraint.Barrier
+                android:id="@+id/alarmDuration_barrier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="treatmentLengthSpinner,alarmsNumber_Text"
+                />
+
+            <TextView
+                android:id="@+id/startDate_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/startDate"
+                android:visibility="visible"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/alarmDuration_barrier" />
+
+            <EditText
+                android:id="@+id/startDateSelection"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="__/__/____"
+                android:inputType="date"
+                android:singleLine="true"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="@+id/startDate_textView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/startDate_textView"
+                app:layout_constraintTop_toTopOf="@+id/startDate_textView" />
 
             <TextView
                 android:id="@+id/alarmFreq_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/alarmFreq"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editText2" />
+                app:layout_constraintTop_toBottomOf="@+id/startDateSelection" />
 
             <RadioGroup
                 android:id="@+id/alarmFreq_RadioGroup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
                 android:checkedButton="@+id/dailyRadioBtn"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/alarmFreq_textView">
 
@@ -108,120 +207,6 @@
                     android:layout_weight="1"
                     android:text="@string/custom" />
             </RadioGroup>
-
-            <TextView
-                android:id="@+id/alarmDuration_textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/alarmDuration"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-            <ToggleButton
-                android:id="@+id/alarmDurationToggleBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:textAllCaps="false"
-                android:textOff="@string/durationOff"
-                android:textOn="@string/durationOn"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/alarmDuration_textView" />
-
-            <EditText
-                android:id="@+id/alarmsNumber_Text"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:ems="10"
-                android:hint="@string/alarmsNum"
-                android:inputType="number"
-                android:singleLine="true"
-                android:visibility="invisible"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/alarmDurationToggleBtn" />
-
-            <Spinner
-                android:id="@+id/treatmentLengthSpinner"
-                android:layout_width="147dp"
-                android:layout_height="25dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:entries="@array/Treatment_length"
-                android:visibility="invisible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.15"
-                app:layout_constraintStart_toEndOf="@+id/alarmsNumber_Text"
-                app:layout_constraintTop_toBottomOf="@+id/alarmDurationToggleBtn" />
-
-            <Button
-                android:id="@+id/alarmSetButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="32dp"
-                android:layout_marginRight="32dp"
-                android:text="@string/alarmSaveButtonName"
-                android:visibility="visible"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editText4" />
-
-            <EditText
-                android:id="@+id/editText"
-                android:layout_width="107dp"
-                android:layout_height="46dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginRight="24dp"
-                android:ems="10"
-                android:hint="Capsula, mL, etc."
-                android:inputType="text"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/medNameText" />
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:text="Unitatea de dozare"
-                app:layout_constraintEnd_toStartOf="@+id/editText"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/medNameText" />
-
-            <EditText
-                android:id="@+id/editText2"
-                android:layout_width="93dp"
-                android:layout_height="32dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="24dp"
-                android:ems="10"
-                android:inputType="date"
-                app:layout_constraintStart_toEndOf="@+id/textView2"
-                app:layout_constraintTop_toBottomOf="@+id/treatmentLengthSpinner" />
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:text="Incepand cu:"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/editText2" />
 
             <TextView
                 android:id="@+id/textView3"
@@ -276,30 +261,30 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
+                android:layout_marginEnd="11dp"
+                android:layout_marginRight="11dp"
                 android:ems="10"
                 android:hint="Note"
                 android:inputType="textMultiLine|textLongMessage"
+                android:lineSpacingExtra="8sp"
+                android:singleLine="false"
+                android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editText3" />
 
-            <TextView
-                android:id="@+id/errorMedName"
+            <Button
+                android:id="@+id/alarmSetButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="16dp"
-                android:text="@string/errorMedNameMandatory"
-                android:textColor="@android:color/holo_red_dark"
-                android:textSize="10sp"
-                android:textStyle="italic"
-                android:visibility="invisible"
-                app:layout_constraintBottom_toTopOf="@+id/editText"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginRight="32dp"
+                android:text="@string/alarmSaveButtonName"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/medNameText" />
+                app:layout_constraintTop_toBottomOf="@+id/editText4" />
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
