@@ -208,27 +208,81 @@
                     android:text="@string/custom" />
             </RadioGroup>
 
-            <CheckBox
-                android:id="@+id/checkBox"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:button="@drawable/checkbox"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/alarmFreq_RadioGroup" />
+                android:orientation="horizontal"
+                tools:layout_editor_absoluteX="28dp"
+                tools:layout_editor_absoluteY="274dp"
+                android:padding="5dp">
+
+                <CheckBox
+                    android:id="@+id/checkBox_Mo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="0dp"
+                    android:button="@drawable/checkbox" />
+                <CheckBox
+                    android:id="@+id/checkBox_Tu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="0dp"
+                    android:button="@drawable/checkbox" />
+                <CheckBox
+                    android:id="@+id/checkBox_We"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="0dp"
+                    android:button="@drawable/checkbox" />
+                <CheckBox
+                    android:id="@+id/checkBox_Th"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="0dp"
+                    android:button="@drawable/checkbox" />
+                <CheckBox
+                    android:id="@+id/checkBox_Fr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="0dp"
+                    android:button="@drawable/checkbox" />
+                <CheckBox
+                    android:id="@+id/checkBox_Sa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="0dp"
+                    android:button="@drawable/checkbox" />
+                <CheckBox
+                    android:id="@+id/checkBox_Su"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="0dp"
+                    android:button="@drawable/checkbox" />
+
+            </LinearLayout>
+
 
             <Spinner
                 android:id="@+id/spinner"
                 android:layout_width="227dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
                 android:entries="@array/perDay_freq"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/checkBox" />
+                tools:layout_editor_absoluteX="36dp"
+                tools:layout_editor_absoluteY="343dp" />
 
             <EditText
                 android:id="@+id/editText3"
