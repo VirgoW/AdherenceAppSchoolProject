@@ -143,13 +143,11 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/alarmDuration_barrier" />
 
-            <EditText
+            <TextView
                 android:id="@+id/startDateSelection"
-                android:layout_width="100dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="__/__/____"
-                android:inputType="date"
                 android:singleLine="true"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="@+id/startDate_textView"
