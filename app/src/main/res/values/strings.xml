@@ -57,7 +57,7 @@
     <string name="startDate">Începând cu: </string>
     <string name="alarmFreq">Frecvența tratamentului:</string>
     <string name="alarmsNum">Nr</string>
-    <string name="hour_picker_hint">Oră</string>
+    <string name="hour_picker_hint">Selectează ora </string>
     <string name="other_details_hint">Detalii suplimentare</string>
     <string name="alarmSaveButtonName">Salvează</string>
     <string name="set_alarm_button_value">Setează Alarma</string>

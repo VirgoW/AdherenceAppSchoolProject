@@ -1,6 +1,7 @@
 package ro.umfcd.stud.arteneraluca.myapplication;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,16 +18,24 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.ToggleButton;
 
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
     Context m_context;
     View m_view;
     DialogFragment datePicker;
+    TextView hourPicker1;
+    TextView hourPicker2;
+    DialogFragment timePicker;
+
+    TextView currentSelectedHourPicker;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +43,7 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
         setContentView(R.layout.activity_alarm_set);
         m_context = this;
         m_view = findViewById(android.R.id.content);
-        Calendar calendar = Calendar.getInstance();
+
 
 //Tratament continuu/fix switch
 
@@ -60,6 +69,7 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
 //Date picker textView
 
         TextView alarm_startDate = (TextView) findViewById(R.id.startDateSelection);
+        Calendar calendar = Calendar.getInstance();
         String currentDateString = DateFormat.getDateInstance().format(calendar.getTime());
         alarm_startDate.setText(currentDateString);
 
@@ -95,11 +105,34 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
             }
         });
 
+        //Hour pickers
+        hourPicker1 = (TextView) findViewById(R.id.hour_picker_1);
+        hourPicker2 = (TextView) findViewById(R.id.hour_picker_2);
+
+        timePicker = new TimePickerFragment();
+
+        hourPicker1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentSelectedHourPicker = hourPicker1;
+                timePicker.show(getSupportFragmentManager(), "timePicker");
+            }
+        });
+
+        hourPicker2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                timePicker.show(getSupportFragmentManager(), "timePicker");
+                currentSelectedHourPicker = hourPicker2;
+            }
+        });
 
 
 
 
 
+
+//Save alarm button
 
         Button saveAlarm = (Button) findViewById(R.id.alarmSetButton);
         saveAlarm.setOnClickListener(new View.OnClickListener()
@@ -111,6 +144,15 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
         });
     }
 
+
+
+
+
+
+
+
+
+//on Date set for DatePicker
     @Override
     public void onDateSet (DatePicker view , int year, int month, int dayOfMonth){
         Calendar c = Calendar.getInstance();
@@ -122,6 +164,20 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
         alarm_startDate.setText(setDateString);
     }
 
+// on time set for TimePicker
+
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute)
+    {
+        Calendar currentTime = Calendar.getInstance();
+        currentTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
+        currentTime.set(Calendar.MINUTE, minute);
+        String setTimeString = DateFormat.getTimeInstance(DateFormat.SHORT).format(currentTime.getTime());
+        currentSelectedHourPicker.setText(setTimeString);
+    }
+
+
+//Save alarm method
 
     private void TrySaveAlarm()
     {

@@ -313,22 +313,27 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/alarmFreq_RadioGroup" />
 
-            <EditText
+            <TextView
                 android:id="@+id/hour_picker_1"
-                android:layout_width="98dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:ems="10"
                 android:hint="@string/hour_picker_hint"
-                android:inputType="time"
                 android:singleLine="true"
                 android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/freq_perDay_spinner" />
+
+            <TextView
+                android:id="@+id/hour_picker_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="120dp"
+                android:hint="@string/hour_picker_hint"
+                app:layout_constraintBottom_toTopOf="@+id/other_details"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/hour_picker_1" />
 
             <EditText
                 android:id="@+id/other_details"
@@ -336,7 +341,6 @@
                 android:layout_height="125dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="32dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
                 android:ems="10"
@@ -345,22 +349,20 @@
                 android:lineSpacingExtra="8sp"
                 android:singleLine="false"
                 android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@+id/alarmSetButton"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/hour_picker_1" />
+                app:layout_constraintStart_toStartOf="parent" />
 
             <Button
                 android:id="@+id/alarmSetButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="32dp"
                 android:layout_marginRight="32dp"
                 android:text="@string/alarmSaveButtonName"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/other_details" />
+                app:layout_constraintEnd_toEndOf="parent" />
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
