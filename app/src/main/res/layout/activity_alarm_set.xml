@@ -207,6 +207,7 @@
                 android:layout_marginRight="8dp"
                 android:orientation="horizontal"
                 android:padding="5dp"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -313,27 +314,18 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/alarmFreq_RadioGroup" />
 
-            <TextView
-                android:id="@+id/hour_picker_1"
+            <LinearLayout
+                android:id="@+id/hourPickers_LinearLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
-                android:hint="@string/hour_picker_hint"
-                android:singleLine="true"
-                android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/freq_perDay_spinner" />
-
-            <TextView
-                android:id="@+id/hour_picker_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="120dp"
-                android:hint="@string/hour_picker_hint"
+                android:layout_marginBottom="8dp"
+                android:orientation="vertical"
                 app:layout_constraintBottom_toTopOf="@+id/other_details"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/hour_picker_1" />
+                app:layout_constraintTop_toBottomOf="@+id/freq_perDay_spinner" />
 
             <EditText
                 android:id="@+id/other_details"

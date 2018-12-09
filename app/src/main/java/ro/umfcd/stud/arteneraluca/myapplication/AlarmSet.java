@@ -5,8 +5,10 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
@@ -25,8 +27,6 @@ import java.util.Calendar;
 public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
     Context m_context;
     View m_view;
-    DialogFragment datePicker;
-
 
     TextView currentSelectedHourPicker;
 
@@ -48,7 +48,7 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
         InitialiseFrequencyRadioGroup();
 
         //Hour pickers
-        InitialiseHourPickers();
+        InitialiseHourPickerLayout();
 
         //Save alarm button
 
@@ -89,7 +89,7 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
         alarm_startDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                datePicker = new DatePickerFragment();
+                DialogFragment datePicker = new DatePickerFragment();
                 datePicker.show(getSupportFragmentManager(),"date picker");
 
             }
@@ -132,28 +132,48 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
         });
     }
 
-    private void InitialiseHourPickers()
+    private void InitialiseHourPickerLayout()
     {
-        final TextView hourPicker1 = (TextView) findViewById(R.id.hour_picker_1);
-        final TextView hourPicker2 = (TextView) findViewById(R.id.hour_picker_2);
-
+        final LinearLayout hourPickersLayout = (LinearLayout) findViewById(R.id.hourPickers_LinearLayout);
+        final Spinner perDaySpinner = (Spinner) findViewById(R.id.freq_perDay_spinner);
         final DialogFragment timePicker = new TimePickerFragment();
 
-        hourPicker1.setOnClickListener(new View.OnClickListener() {
+        perDaySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onClick(View v) {
-                currentSelectedHourPicker = hourPicker1;
-                timePicker.show(getSupportFragmentManager(), "timePicker");
-            }
-        });
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-        hourPicker2.setOnClickListener(new View.OnClickListener() {
+                ClearLayout(hourPickersLayout);
+
+                int perDayAlarms = perDaySpinner.getSelectedItemPosition();
+                for (int i = 0; i <= perDayAlarms ; i++)
+                {
+                    final TextView hourPicker = new TextView(m_context);
+                    hourPickersLayout.addView(hourPicker);
+                    hourPicker.setText(R.string.hour_picker_hint);
+
+                    hourPicker.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            currentSelectedHourPicker = hourPicker;
+                            timePicker.show(getSupportFragmentManager(),"time picker");
+                        }
+                    });
+                }
+            }
+
             @Override
-            public void onClick(View v) {
-                timePicker.show(getSupportFragmentManager(), "timePicker");
-                currentSelectedHourPicker = hourPicker2;
+            public void onNothingSelected(AdapterView<?> parent) {
+                //Do nothing
             }
         });
+    }
+
+    private void ClearLayout(LinearLayout linearLayout)
+    {
+        if (linearLayout.getChildCount() > 0)
+        {
+            linearLayout.removeAllViews();
+        }
     }
 
     // on time set for TimePicker
