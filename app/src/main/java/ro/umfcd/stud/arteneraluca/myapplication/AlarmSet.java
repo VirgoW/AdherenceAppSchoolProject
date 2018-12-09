@@ -4,7 +4,6 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -19,23 +18,17 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.ToggleButton;
 
 import java.text.DateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
     Context m_context;
     View m_view;
     DialogFragment datePicker;
-    TextView hourPicker1;
-    TextView hourPicker2;
-    DialogFragment timePicker;
+
 
     TextView currentSelectedHourPicker;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,45 +38,78 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
         m_view = findViewById(android.R.id.content);
 
 
-//Tratament continuu/fix switch
+        //Tratament continuu/fix switch
+        InitialiseSwitch();
 
+        //Date picker textView
+        InitialiseDatePicker();
+
+        //Treatment radioGroup
+        InitialiseFrequencyRadioGroup();
+
+        //Hour pickers
+        InitialiseHourPickers();
+
+        //Save alarm button
+
+        Button saveAlarm = (Button) findViewById(R.id.alarmSetButton);
+        saveAlarm.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                TrySaveAlarm();
+            }
+        });
+    }
+
+    //Methods
+    private void InitialiseSwitch()
+    {
         Switch alarmDuration_switch = (Switch) findViewById(R.id.alarmDuration_switch);
         final TextView alarmsNumber_Text = (TextView) findViewById(R.id.alarmsNumber_Text);
         final Spinner treatmentLengthSpinner = (Spinner) findViewById(R.id.treatmentLengthSpinner);
 
-            alarmDuration_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if(isChecked) {
-                        alarmsNumber_Text.setVisibility(View.VISIBLE);
-                        treatmentLengthSpinner.setVisibility(View.VISIBLE);
-                    }
-                    else
-                    {
-                        alarmsNumber_Text.setVisibility(View.GONE);
-                        treatmentLengthSpinner.setVisibility(View.GONE);
-                    }
+        alarmDuration_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    alarmsNumber_Text.setVisibility(View.VISIBLE);
+                    treatmentLengthSpinner.setVisibility(View.VISIBLE);
+                } else {
+                    alarmsNumber_Text.setVisibility(View.GONE);
+                    treatmentLengthSpinner.setVisibility(View.GONE);
                 }
-            });
+            }
+        });
+    }
 
-//Date picker textView
-
+    private  void InitialiseDatePicker()
+    {
         TextView alarm_startDate = (TextView) findViewById(R.id.startDateSelection);
-        Calendar calendar = Calendar.getInstance();
-        String currentDateString = DateFormat.getDateInstance().format(calendar.getTime());
-        alarm_startDate.setText(currentDateString);
-
         alarm_startDate.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    datePicker = new DatePickerFragment();
-                    datePicker.show(getSupportFragmentManager(),"date picker");
+            @Override
+            public void onClick(View v) {
+                datePicker = new DatePickerFragment();
+                datePicker.show(getSupportFragmentManager(),"date picker");
 
-                }
-            });
+            }
+        });
+    }
 
-//Treatment radioGroup
+    //on Date set for DatePicker
+    @Override
+    public void onDateSet (DatePicker view , int year, int month, int dayOfMonth){
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.YEAR, year);
+        c.set(Calendar.MONTH, month);
+        c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+        String setDateString = DateFormat.getDateInstance().format(c.getTime());
+        TextView alarm_startDate = (TextView) findViewById(R.id.startDateSelection);
+        alarm_startDate.setText(setDateString);
+    }
 
+    private void InitialiseFrequencyRadioGroup()
+    {
         RadioGroup alarmFreq_radioGroup = (RadioGroup) findViewById(R.id.alarmFreq_RadioGroup);
         final LinearLayout checkboxes_layout = (LinearLayout) findViewById(R.id.checkboxes_layout);
         alarmFreq_radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -104,12 +130,14 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
                 }
             }
         });
+    }
 
-        //Hour pickers
-        hourPicker1 = (TextView) findViewById(R.id.hour_picker_1);
-        hourPicker2 = (TextView) findViewById(R.id.hour_picker_2);
+    private void InitialiseHourPickers()
+    {
+        final TextView hourPicker1 = (TextView) findViewById(R.id.hour_picker_1);
+        final TextView hourPicker2 = (TextView) findViewById(R.id.hour_picker_2);
 
-        timePicker = new TimePickerFragment();
+        final DialogFragment timePicker = new TimePickerFragment();
 
         hourPicker1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,46 +154,9 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
                 currentSelectedHourPicker = hourPicker2;
             }
         });
-
-
-
-
-
-
-//Save alarm button
-
-        Button saveAlarm = (Button) findViewById(R.id.alarmSetButton);
-        saveAlarm.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v) {
-                TrySaveAlarm();
-            }
-        });
     }
 
-
-
-
-
-
-
-
-
-//on Date set for DatePicker
-    @Override
-    public void onDateSet (DatePicker view , int year, int month, int dayOfMonth){
-        Calendar c = Calendar.getInstance();
-        c.set(Calendar.YEAR, year);
-        c.set(Calendar.MONTH, month);
-        c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-        String setDateString = DateFormat.getDateInstance().format(c.getTime());
-        TextView alarm_startDate = (TextView) findViewById(R.id.startDateSelection);
-        alarm_startDate.setText(setDateString);
-    }
-
-// on time set for TimePicker
-
+    // on time set for TimePicker
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute)
     {
@@ -177,7 +168,7 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
     }
 
 
-//Save alarm method
+    //Save alarm method
 
     private void TrySaveAlarm()
     {
