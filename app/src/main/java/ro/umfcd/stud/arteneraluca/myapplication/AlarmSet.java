@@ -3,12 +3,16 @@ package ro.umfcd.stud.arteneraluca.myapplication;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -22,6 +26,7 @@ import java.util.Date;
 public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     Context m_context;
     View m_view;
+    DialogFragment datePicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +35,8 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
         m_context = this;
         m_view = findViewById(android.R.id.content);
         Calendar calendar = Calendar.getInstance();
+
+//Tratament continuu/fix switch
 
         Switch alarmDuration_switch = (Switch) findViewById(R.id.alarmDuration_switch);
         final TextView alarmsNumber_Text = (TextView) findViewById(R.id.alarmsNumber_Text);
@@ -50,6 +57,7 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
                 }
             });
 
+//Date picker textView
 
         TextView alarm_startDate = (TextView) findViewById(R.id.startDateSelection);
         String currentDateString = DateFormat.getDateInstance().format(calendar.getTime());
@@ -58,15 +66,34 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
         alarm_startDate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    DialogFragment datePicker = new DatePickerFragment();
+                    datePicker = new DatePickerFragment();
                     datePicker.show(getSupportFragmentManager(),"date picker");
 
                 }
             });
 
+//Treatment radioGroup
 
-
-
+        RadioGroup alarmFreq_radioGroup = (RadioGroup) findViewById(R.id.alarmFreq_RadioGroup);
+        final LinearLayout checkboxes_layout = (LinearLayout) findViewById(R.id.checkboxes_layout);
+        alarmFreq_radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                // This will get the radiobutton that has changed in its check state
+                RadioButton weeklyRadioBtn = (RadioButton)group.findViewById(R.id.weeklyRadioBtn);
+                // This puts the value (true/false) into the variable
+                boolean isChecked = weeklyRadioBtn.isChecked();
+                // If the radiobutton that has changed in check state is now checked...
+                if (isChecked)
+                {
+                    checkboxes_layout.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    checkboxes_layout.setVisibility(View.GONE);
+                }
+            }
+        });
 
 
 
