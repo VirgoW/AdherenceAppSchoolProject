@@ -10,11 +10,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="00"
+        android:textColor="@color/tab_item_text_color"
         android:gravity="center" />
     <TextView
         android:id="@+id/dayNameTabItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/tab_item_text_color"
         android:text="Lu"
         android:gravity="center"/>
 

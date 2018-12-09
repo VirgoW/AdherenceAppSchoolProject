@@ -7,4 +7,6 @@
     <color name="tab_backgroundSelected">@color/colorPrimary</color>
     <color name="tab_backgroundUnelected">@color/colorPrimaryDark</color>
 
+    <color name="tab_item_text_color">#FFFFFF</color>
+
 </resources>

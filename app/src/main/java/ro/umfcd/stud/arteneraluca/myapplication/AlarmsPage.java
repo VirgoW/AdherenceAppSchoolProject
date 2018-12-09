@@ -17,7 +17,7 @@ import android.widget.TimePicker;
 import java.util.Calendar;
 
 public class AlarmsPage extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
-//TODO Check if AppCompatActivity is ok
+    //TODO Check if AppCompatActivity is ok
     Context m_context;
     View m_view;
 
@@ -45,6 +45,13 @@ public class AlarmsPage extends AppCompatActivity implements TimePickerDialog.On
             }
         });
 
+        Button resetToTodayBtn = (Button) findViewById(R.id.resetToCurrentDay);
+        resetToTodayBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                InstantiateCalToCurrentDay();
+            }
+        });
 
         ImageButton prevMonth = (ImageButton) findViewById(R.id.prevMonth);
         ImageButton nextMonth = (ImageButton) findViewById(R.id.nextMonth);
@@ -54,13 +61,15 @@ public class AlarmsPage extends AppCompatActivity implements TimePickerDialog.On
         prevMonth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Test(-1);
+                AddMonth(-1);
+                UpdateFragment();
             }
         });
         nextMonth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Test(1);
+                AddMonth(1);
+                UpdateFragment();
             }
         });
 
@@ -68,6 +77,7 @@ public class AlarmsPage extends AppCompatActivity implements TimePickerDialog.On
             @Override
             public void onClick(View v) {
                 AddWeek(-1);
+                UpdateFragment();
             }
         });
 
@@ -75,6 +85,7 @@ public class AlarmsPage extends AppCompatActivity implements TimePickerDialog.On
             @Override
             public void onClick(View v) {
                 AddWeek(1);
+                UpdateFragment();
             }
         });
 
@@ -82,14 +93,12 @@ public class AlarmsPage extends AppCompatActivity implements TimePickerDialog.On
         m_cal = Calendar.getInstance();
         SetupView();
         //TODO Improve cal
-        Test(0);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if(m_alarmPageAdapter != null)
-        {
+        if (m_alarmPageAdapter != null) {
             m_alarmPageAdapter.notifyDataSetChanged();
         }
     }
@@ -100,63 +109,80 @@ public class AlarmsPage extends AppCompatActivity implements TimePickerDialog.On
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (Integer.parseInt(android.os.Build.VERSION.SDK) > 5
                 && keyCode == KeyEvent.KEYCODE_BACK
-                && event.getRepeatCount() == 0)
-        {
+                && event.getRepeatCount() == 0) {
             onBackPressed();
             return true;
         }
         return super.onKeyDown(keyCode, event);
     }
+
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
         moveTaskToBack(true); // Idk what it does exactly, but i think it puts the app in the background, which is exactly what i want the functionality to be.
     }
 
-    private void SetupView()
-    {
+    private void SetupView() {
         //Get the ViewPager and set the adapter so it can display items
         m_dayFragmentViewer = (ViewPager) findViewById(R.id.viewpager);
         m_alarmPageAdapter = new DayFragmentAdapter(getSupportFragmentManager(), m_context, m_cal);
-        m_dayFragmentViewer.setAdapter(m_alarmPageAdapter);
-
         //Give the TabLayout the ViewPager to use
         m_tabLayout = (TabLayout) findViewById(R.id.topTabLayout);
+        m_dayFragmentViewer.setAdapter(m_alarmPageAdapter);
         m_tabLayout.setupWithViewPager(m_dayFragmentViewer);
-
-        for(int index = 0; index < 7; index ++)
-        {
-            TabLayout.Tab tab = m_tabLayout.getTabAt(index);
-            tab.setCustomView(m_alarmPageAdapter.getTabView(index));
-        }
+        InstantiateCalToCurrentDay();
     }
 
-    private void Test(int plus)
-    {
-        int calDate;
+    private void AddMonth(int plus) {
+        int calDay;
         m_cal.add(Calendar.MONTH, plus);
-        String[] monthNames = getResources().getStringArray(R.array.monthNames);
-        calDate = m_cal.get(Calendar.MONTH);
-        ((TextView) findViewById(R.id.testDate)).setText(monthNames[calDate]);
-
+        calDay = m_cal.get(Calendar.DAY_OF_MONTH);
+        m_cal.add(Calendar.DAY_OF_MONTH, -calDay + 1);
         //LocalDate date;
         //Date.from(ZonedDateTime.now().minusMonths(1).toInstant());
         //String strDateFormat = "M";
         //SimpleDateFormat sdf = new SimpleDateFormat(strDateFormat);
     }
-    private void AddWeek(int direction)
+    private void UpdateMonthTextView()
     {
+        int calMonth;
+        calMonth = m_cal.get(Calendar.MONTH);
+        String[] monthNames = getResources().getStringArray(R.array.monthNames);
+        ((TextView) findViewById(R.id.testDate)).setText(monthNames[calMonth]);
+    }
+
+    private void AddWeek(int direction) {
         m_cal.add(Calendar.WEEK_OF_MONTH, direction);
+    }
+
+    private void UpdateFragment()
+    {
+        UpdateMonthTextView(); // TODO update month better per week changed
         m_alarmPageAdapter.notifyDataSetChanged();
         m_dayFragmentViewer.setAdapter(null);
         m_dayFragmentViewer.setAdapter(m_alarmPageAdapter);
-        for(int index = 0; index < 7; index ++)
-        {
+        for (int index = 0; index < 7; index++) {
             TabLayout.Tab tab = m_tabLayout.getTabAt(index);
             tab.setCustomView(m_alarmPageAdapter.getTabView(index));
         }
+    }
+
+    private void InstantiateCalToCurrentDay()
+    {
+        m_cal = Calendar.getInstance();
+        m_cal.add(Calendar.WEEK_OF_MONTH, -1); // Week of month starts at position zero for us
+        m_alarmPageAdapter.UpdateCalendar(m_cal);
+        int calMonth;
+        calMonth = m_cal.get(Calendar.MONTH);
+        String[] monthNames = getResources().getStringArray(R.array.monthNames);
+        ((TextView) findViewById(R.id.testDate)).setText(monthNames[calMonth]);
+
+        UpdateFragment();
+
+        int dayOfWeek = 5 - (m_cal.get(Calendar.DAY_OF_WEEK) - 2); // -1 to 5
+        TabLayout.Tab tab = m_tabLayout.getTabAt(dayOfWeek);
+        tab.select();
     }
 }

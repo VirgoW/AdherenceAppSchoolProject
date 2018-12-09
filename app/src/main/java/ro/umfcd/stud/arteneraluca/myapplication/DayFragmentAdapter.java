@@ -35,6 +35,11 @@ public class DayFragmentAdapter extends FragmentPagerAdapter
         m_context = context;
     }
 
+    public void UpdateCalendar(Calendar cal)
+    {
+        m_cal = cal;
+    }
+
     @Override
     public Fragment getItem(int index) {
         return DayFragment.newInstance();//m_fragmentList.get(index);
@@ -42,7 +47,7 @@ public class DayFragmentAdapter extends FragmentPagerAdapter
 
     @Override
     public int getCount() {
-        return 7;//m_fragmentList.size();
+        return 7;
     }
 
     @Nullable
