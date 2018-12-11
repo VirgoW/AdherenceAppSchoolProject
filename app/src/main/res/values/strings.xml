@@ -61,6 +61,7 @@
     <string name="other_details_hint">Detalii suplimentare</string>
     <string name="alarmSaveButtonName">Salvează</string>
     <string name="set_alarm_button_value">Setează Alarma</string>
+    <string name="delete_alarm_button_value">Sterge</string>
 
     //Error messages
     <string name="errorMedNameMandatory">Medicament obligatoriu.</string>
@@ -72,7 +73,10 @@
     <string name="monthly">Lunar</string>
     <string name="custom">Altfel</string>
 
-
+    //Alarm Page Modes
+    <string name="alarmSetModeName">Mode</string>
+    <string name="alarmModeNew">New</string>
+    <string name="alarmModeEdit">Edit</string>
 
     //Empty messages
     <string name="blankFragmentName">Gol</string>

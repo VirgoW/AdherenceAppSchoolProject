@@ -3,8 +3,6 @@ package ro.umfcd.stud.arteneraluca.myapplication;
 import android.content.Context;
 import android.util.Log;
 import android.util.Xml;
-import android.view.View;
-import android.widget.TextView;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -80,10 +78,21 @@ public class SaveManager {
         }
     }
 
-    void AddNewAlarm(View v, Context context)
+    void AddNewAlarm(Context context)
     {
-        String medName = ((TextView)v.findViewById(R.id.medNameText)).getText().toString();
-        m_alarmList.add(new Alarm(medName));
+        //m_alarmList.add(CompactAlarm());
+        //SaveDataToXml(context);
+    }
+
+    void SaveAlarm(int alarmIndex, Context context)
+    {
+        //m_alarmList.set(alarmIndex, CompactAlarm());
+        //SaveDataToXml(context);
+    }
+
+    void DeleteAlarm(int alarmIndex, Context context)
+    {
+        m_alarmList.remove(alarmIndex);
         SaveDataToXml(context);
     }
 
@@ -208,5 +217,11 @@ public class SaveManager {
         {
             Log.e("ArteneApp", "Exception in Debug file print: ", e);
         }
+    }
+
+    private Alarm CompactAlarm()
+    {
+        //TODO extract alarm page info into Alarm object
+        return null;
     }
 }

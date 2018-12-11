@@ -58,14 +58,14 @@ public class DayFragmentAdapter extends FragmentPagerAdapter
 
     @Override
     public int getItemPosition(@NonNull Object object) {
-        return POSITION_NONE; //TODO if necessary, improve this.
+        return POSITION_NONE;
     }
 
     @Override
     public void notifyDataSetChanged() {
         m_fragmentDayNameList.clear();
         m_fragmentDayValueList.clear();
-        UpdateDayTabs(); //TODO update tabs if not done already
+        UpdateDayTabs();
     }
 
     public View getTabView(int position)
@@ -96,7 +96,6 @@ public class DayFragmentAdapter extends FragmentPagerAdapter
             //TODO send cal info to tab content
 
             UpdateAddCal(Calendar.DAY_OF_MONTH, -dayOffset);
-
         }
     }
 

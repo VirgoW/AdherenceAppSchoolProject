@@ -38,6 +38,7 @@ public class AlarmsPage extends AppCompatActivity implements TimePickerDialog.On
             @Override
             public void onClick(View v) {
                 Intent setAlarm = new Intent(getApplicationContext(), AlarmSet.class);
+                setAlarm.putExtra(m_context.getString(R.string.alarmSetModeName), m_context.getString(R.string.alarmModeNew));
                 startActivity(setAlarm);
 
                 //DialogFragment timePicker = new TimePickerFragment();

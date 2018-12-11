@@ -1,6 +1,7 @@
 package ro.umfcd.stud.arteneraluca.myapplication;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,6 +60,16 @@ public class AlarmAdapter extends BaseAdapter {
         //Code tip: FINAL keyword is used to create a constant. That forces the variable to not allow to be changed
         final TextView medName = (TextView) gridView.findViewById(R.id.grid_item_medicament);
         medName.setText(SaveManager.getInstance().GetAlarm(position));
+        final int index = position;
+        gridView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent setAlarm = new Intent(m_context.getApplicationContext(), AlarmSet.class);
+                setAlarm.putExtra(m_context.getString(R.string.alarmSetModeName), m_context.getString(R.string.alarmModeEdit));
+                setAlarm.putExtra("index", index);
+                m_context.startActivity(setAlarm);
+            }
+        });
 
         return gridView;
     }

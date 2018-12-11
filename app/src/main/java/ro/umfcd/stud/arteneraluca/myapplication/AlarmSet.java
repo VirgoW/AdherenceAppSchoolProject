@@ -3,9 +3,9 @@ package ro.umfcd.stud.arteneraluca.myapplication;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -29,6 +29,8 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
     View m_view;
 
     TextView currentSelectedHourPicker;
+    String m_mode;
+    int m_alarmIndex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,7 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
         m_context = this;
         m_view = findViewById(android.R.id.content);
 
+        //TODO add mode
 
         //Tratament continuu/fix switch
         InitialiseSwitch();
@@ -60,6 +63,22 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
                 TrySaveAlarm();
             }
         });
+
+        Intent myIntent = getIntent();
+        m_mode = myIntent.getStringExtra(m_context.getString(R.string.alarmSetModeName));
+        m_alarmIndex = myIntent.getIntExtra("index", -1);
+        if(m_mode.equals(m_context.getString(R.string.alarmModeEdit)))
+        {
+            Button deleteAlarm = (Button) findViewById(R.id.alarmDeleteButton);
+            deleteAlarm.setVisibility(View.VISIBLE);
+            deleteAlarm.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v) {
+                    TryDeleteAlarm();
+                }
+            });
+        }
     }
 
     //Methods
@@ -201,14 +220,33 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
         }
         else
         {
-            SaveAlarm();
+            if(m_mode.equals(m_context.getString(R.string.alarmModeEdit)))
+            {
+                SaveAlarm();
+            }
+            else
+            {
+                AddNewAlarm();
+            }
+
             onBackPressed();
             finish();
         }
     }
 
+    private void AddNewAlarm()
+    {
+        SaveManager.getInstance().AddNewAlarm(m_context);
+    }
     private void SaveAlarm()
     {
-        SaveManager.getInstance().AddNewAlarm(m_view, m_context);
+        SaveManager.getInstance().SaveAlarm(m_alarmIndex, m_context);
+    }
+
+    private void TryDeleteAlarm()
+    {
+        SaveManager.getInstance().DeleteAlarm(m_alarmIndex, m_context);
+        onBackPressed();
+        finish();
     }
 }
