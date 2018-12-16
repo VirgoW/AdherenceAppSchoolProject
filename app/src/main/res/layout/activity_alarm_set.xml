@@ -39,20 +39,19 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/errorMedName"
+                android:id="@+id/errorInvalidForm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="8dp"
                 android:text="@string/errorMedNameMandatory"
                 android:textColor="@android:color/holo_red_dark"
-                android:textSize="10sp"
+                android:textSize="18sp"
                 android:textStyle="italic"
                 android:visibility="invisible"
-                app:layout_constraintBottom_toTopOf="@+id/DosageInput_Text"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/medNameText" />
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/dosage_textView"
@@ -353,7 +352,7 @@
                 android:layout_marginRight="32dp"
                 android:text="@string/alarmSaveButtonName"
                 android:visibility="visible"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/errorInvalidForm"
                 app:layout_constraintEnd_toEndOf="parent" />
 
             <Button
@@ -364,7 +363,7 @@
                 android:layout_marginLeft="32dp"
                 android:text="@string/delete_alarm_button_value"
                 android:visibility="invisible"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/errorInvalidForm"
                 app:layout_constraintStart_toStartOf="parent" />
 
         </android.support.constraint.ConstraintLayout>

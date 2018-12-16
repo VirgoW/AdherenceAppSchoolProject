@@ -1,26 +1,39 @@
 package ro.umfcd.stud.arteneraluca.myapplication;
 
+import java.util.Calendar;
+
 public class Alarm {
+
     private String m_medName;
-    private boolean m_isValid = false;
+    private String m_notes;
+    private String m_dose;
+    private String m_frequency;
+    private boolean m_fixedTreatment = false;
+    private Calendar m_StartCal;
+    //TODO add daily hour entries
+
 
     public Alarm()
     {
         m_medName = "";
-        m_isValid = false;
+        m_dose = "";
+        m_notes = "";
+        m_frequency = "";
+        m_StartCal = null;
     }
 
     public Alarm(String newMed)
     {
         m_medName = newMed;
-        m_isValid = true;
     }
 
     boolean IsValid()
     {
         //Code tip: In a normal project we would need a method to access the members of a class, to preserve the OOP principle called Incapsulation
         //Incapsulation: every object in a class must be hidden and only accessible from within the class. All external access must be granted through methods of the class
-        return m_isValid;
+
+        boolean isValid = !m_medName.isEmpty() && !m_dose.isEmpty() && !m_frequency.isEmpty() && m_StartCal != null;
+        return isValid;
     }
 
     public String GetMedName() {
@@ -29,7 +42,50 @@ public class Alarm {
 
     public void SetMedName(String medName) {
         m_medName = medName;
-        m_isValid = true;
+    }
+
+    public void SetNote(String note)
+    {
+        m_notes = note;
+    }
+
+    public String GetNote()
+    {
+        return m_notes;
+    }
+
+    public String GetDosage()
+    {
+        return m_dose;
+    }
+
+    public void SetDosage(String dose)
+    {
+        m_dose = dose;
+    }
+
+    public boolean IsfixedTreatment() {
+        return m_fixedTreatment;
+    }
+
+    public void SetFixedTreatment(boolean m_fixedTreatment) {
+        this.m_fixedTreatment = m_fixedTreatment;
+    }
+
+    public Calendar GetStartCal() {
+        return m_StartCal;
+    }
+
+    public void SetStartCal(Calendar m_StartCal) {
+        this.m_StartCal = m_StartCal;
+    }
+
+    public String GetFrequency() {
+        return m_frequency;
+    }
+
+    public void SetFrequency(String m_frequency) {
+        this.m_frequency = m_frequency;
     }
 
     /*

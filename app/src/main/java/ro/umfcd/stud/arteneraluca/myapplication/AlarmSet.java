@@ -211,11 +211,8 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
 
     private void TrySaveAlarm()
     {
-        TextView medName = (TextView) m_view.findViewById(R.id.medNameText);
-        if(medName.getText().toString().isEmpty())
+        if(!IsFormValid())
         {
-            TextView medNameError = (TextView ) m_view.findViewById(R.id.errorMedName);
-            medNameError.setVisibility(View.VISIBLE);
             ((ScrollView) m_view.findViewById(R.id.scroll_bar)).fullScroll(View.FOCUS_UP);
         }
         else
@@ -231,6 +228,37 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
 
             onBackPressed();
             finish();
+        }
+    }
+
+    private boolean IsFormValid() {
+        boolean medNameValid = true;
+        boolean dosageValid = true;
+        boolean startDateValid = true;
+        TextView medName = (TextView) findViewById(R.id.medNameText);
+        TextView dosage = (TextView) findViewById(R.id.DosageInput_Text);
+        TextView startDateSelection = (TextView) findViewById(R.id.startDateSelection);
+
+        if (medName.getText().toString().isEmpty()) {
+            medNameValid = false;
+        }
+        if (dosage.getText().toString().isEmpty()) {
+            dosageValid = false;
+        }
+        if (startDateSelection.getText().toString().isEmpty())
+        {
+            startDateValid = false;
+        }
+        //TODO Hour(s)
+
+        if(medNameValid && dosageValid && startDateValid) {
+            return true;
+        }
+        else
+        {
+            TextView formValidError = (TextView) m_view.findViewById(R.id.errorInvalidForm);
+            formValidError.setVisibility(View.VISIBLE);
+            return false;
         }
     }
 

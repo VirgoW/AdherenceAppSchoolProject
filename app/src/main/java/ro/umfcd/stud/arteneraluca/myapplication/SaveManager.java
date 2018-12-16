@@ -86,7 +86,7 @@ public class SaveManager {
 
     void SaveAlarm(int alarmIndex, Context context)
     {
-        //m_alarmList.set(alarmIndex, CompactAlarm());
+        //m_alarmList.set(alarmIndex, CompactAlarm(context));
         //SaveDataToXml(context);
     }
 
@@ -219,7 +219,7 @@ public class SaveManager {
         }
     }
 
-    private Alarm CompactAlarm()
+    private Alarm CompactAlarm(Context context)
     {
         //TODO extract alarm page info into Alarm object
         return null;
