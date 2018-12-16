@@ -88,5 +88,9 @@
     //Files - Storage
     <string name="testSave">Fisier02</string>
     <string name="medNameTag">MedName</string>
+    <string name="dosageTag">Dosage</string>
+    <string name="frequencyTag">Frequency</string>
+    <string name="dateTag">StartDate</string>
+    <string name="notesTag">Notes</string>
 
 </resources>

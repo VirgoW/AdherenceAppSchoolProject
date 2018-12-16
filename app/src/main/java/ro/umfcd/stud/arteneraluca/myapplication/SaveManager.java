@@ -3,6 +3,9 @@ package ro.umfcd.stud.arteneraluca.myapplication;
 import android.content.Context;
 import android.util.Log;
 import android.util.Xml;
+import android.view.View;
+import android.widget.Switch;
+import android.widget.TextView;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -13,7 +16,9 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.io.StringWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Scanner;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -78,16 +83,16 @@ public class SaveManager {
         }
     }
 
-    void AddNewAlarm(Context context)
+    void AddNewAlarm(Context context, View view)
     {
-        //m_alarmList.add(CompactAlarm());
-        //SaveDataToXml(context);
+        m_alarmList.add(CompactAlarm(context, view));
+        SaveDataToXml(context);
     }
 
-    void SaveAlarm(int alarmIndex, Context context)
+    void SaveAlarm(int alarmIndex, Context context, View view)
     {
-        //m_alarmList.set(alarmIndex, CompactAlarm(context));
-        //SaveDataToXml(context);
+        m_alarmList.set(alarmIndex, CompactAlarm(context, view));
+        SaveDataToXml(context);
     }
 
     void DeleteAlarm(int alarmIndex, Context context)
@@ -112,6 +117,12 @@ public class SaveManager {
                 //Add a new tag - specify the serializer, the tag name, the attribute name and the tag value
                 //Currently we have only 1 attribute per tag..
                 AddNewTag(serializer, context.getText(R.string.medNameTag).toString(), "name", m_alarmList.get(index).GetMedName());
+                AddNewTag(serializer, context.getText(R.string.dosageTag).toString(), "name", m_alarmList.get(index).GetDosage());
+                SimpleDateFormat format = new SimpleDateFormat("d MMM YYYY");
+                String startDate = format.format(m_alarmList.get(index).GetStartCal().getTime());
+                AddNewTag(serializer, context.getText(R.string.dateTag).toString(), "name", startDate);
+                AddNewTag(serializer, context.getText(R.string.frequencyTag).toString(), "name", m_alarmList.get(index).GetFrequency());
+                AddNewTag(serializer, context.getText(R.string.notesTag).toString(), "name", m_alarmList.get(index).GetNote());
                 //To add all elements
 
                 serializer.endTag("","Alarm");
@@ -141,9 +152,9 @@ public class SaveManager {
             m_XmlParser.setInput(fs, null);
 
             int event = m_XmlParser.getEventType();
+            Alarm newAlarm = new Alarm();
             while(event != XmlPullParser.END_DOCUMENT)
             {
-                Alarm newAlarm = new Alarm();
                 String name = m_XmlParser.getName();
                 switch(event)
                 {
@@ -154,6 +165,27 @@ public class SaveManager {
                         {
                             newAlarm.SetMedName(m_XmlParser.getAttributeValue(null,"name"));
                         }
+                        if(name.equals(context.getText(R.string.dosageTag).toString()))
+                        {
+                            newAlarm.SetDosage(m_XmlParser.getAttributeValue(null,"name"));
+                        }
+
+                        if(name.equals(context.getText(R.string.dateTag).toString()))
+                        {
+                            SimpleDateFormat format = new SimpleDateFormat("d MMM YYYY");
+                            String startDate = m_XmlParser.getAttributeValue(null,"name");
+                            Calendar date = Calendar.getInstance();
+                            date.setTime(format.parse(startDate));
+                            newAlarm.SetStartCal(date);
+                        }
+                        if(name.equals(context.getText(R.string.frequencyTag).toString()))
+                        {
+                            newAlarm.SetFrequency(m_XmlParser.getAttributeValue(null,"name"));
+                        }
+                        if(name.equals(context.getText(R.string.notesTag).toString()))
+                        {
+                            newAlarm.SetNote(m_XmlParser.getAttributeValue(null,"name"));
+                        }
                 }
 
                 event = m_XmlParser.next();
@@ -163,6 +195,7 @@ public class SaveManager {
                 if(newAlarm.IsValid())
                 {
                     m_alarmList.add(newAlarm);
+                    newAlarm = new Alarm();
                 }
             }
             fs.close();
@@ -192,9 +225,9 @@ public class SaveManager {
     }
 
     //Temporary method - TODO replace method with more advanced version possibly using a struct to get all the info that is supposed to be displayed in the UI
-    String GetAlarm(int index)
+    Alarm GetAlarm(int index)
     {
-        return m_alarmList.get(index).GetMedName();
+        return m_alarmList.get(index);
     }
 
     void Debug_PrintFileContents(Context context)
@@ -219,9 +252,37 @@ public class SaveManager {
         }
     }
 
-    private Alarm CompactAlarm(Context context)
+    private Alarm CompactAlarm(Context context, View view)
     {
         //TODO extract alarm page info into Alarm object
-        return null;
+        Alarm newAlarm = new Alarm();
+
+        String medName;
+        String dosage;
+        String notes;
+        String frequency;
+        Calendar startCal;
+
+        TextView nameValue = (TextView) view.findViewById(R.id.medNameText);
+        TextView dosageValue = (TextView) view.findViewById(R.id.DosageInput_Text);
+        TextView notesValue = (TextView) view.findViewById(R.id.other_details);
+        Switch frequncyValue = (Switch) view.findViewById(R.id.alarmDuration_switch);
+
+        newAlarm.SetMedName(nameValue.getText().toString());
+        newAlarm.SetDosage(dosageValue.getText().toString());
+        if(notesValue != null)
+        {
+            newAlarm.SetNote(notesValue.getText().toString());
+        }
+        if(frequncyValue.isChecked())
+        {
+            newAlarm.SetFrequency( context.getText(R.string.durationOn).toString());
+        }
+        else
+        {
+            newAlarm.SetFrequency( context.getText(R.string.durationOff).toString());
+        }
+        newAlarm.SetStartCal(Calendar.getInstance());
+        return newAlarm;
     }
 }

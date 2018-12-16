@@ -264,11 +264,11 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
 
     private void AddNewAlarm()
     {
-        SaveManager.getInstance().AddNewAlarm(m_context);
+        SaveManager.getInstance().AddNewAlarm(m_context, m_view);
     }
     private void SaveAlarm()
     {
-        SaveManager.getInstance().SaveAlarm(m_alarmIndex, m_context);
+        SaveManager.getInstance().SaveAlarm(m_alarmIndex, m_context, m_view);
     }
 
     private void TryDeleteAlarm()

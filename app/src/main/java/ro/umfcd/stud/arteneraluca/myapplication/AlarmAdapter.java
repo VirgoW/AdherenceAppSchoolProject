@@ -59,7 +59,12 @@ public class AlarmAdapter extends BaseAdapter {
         //Populate the gridview items with each item value
         //Code tip: FINAL keyword is used to create a constant. That forces the variable to not allow to be changed
         final TextView medName = (TextView) gridView.findViewById(R.id.grid_item_medicament);
-        medName.setText(SaveManager.getInstance().GetAlarm(position));
+        final TextView hour = (TextView) gridView.findViewById(R.id.grid_item_ora);
+        final TextView note = (TextView) gridView.findViewById(R.id.alarm_note);
+        Alarm alarm = SaveManager.getInstance().GetAlarm(position);
+        medName.setText(alarm.GetMedName());
+        hour.setText("00:00");
+        note.setText(alarm.GetNote());
         final int index = position;
         gridView.setOnClickListener(new View.OnClickListener() {
             @Override
