@@ -168,8 +168,10 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
                 {
                     final TextView hourPicker = new TextView(m_context);
                     hourPickersLayout.addView(hourPicker);
-                    hourPicker.setText(R.string.hour_picker_hint);
-
+                    //hourPicker.setText(R.string.hour_picker_hint);
+                    hourPicker.setHint(R.string.hour_picker_hint);
+                   // int hourPickerId = i+1;
+                   // hourPicker.setId(hourPickerId);
                     hourPicker.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -235,9 +237,11 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
         boolean medNameValid = true;
         boolean dosageValid = true;
         boolean startDateValid = true;
+        boolean hourPickersLayoutValid = true;
         TextView medName = (TextView) findViewById(R.id.medNameText);
         TextView dosage = (TextView) findViewById(R.id.DosageInput_Text);
         TextView startDateSelection = (TextView) findViewById(R.id.startDateSelection);
+        LinearLayout hourPickersLayout = (LinearLayout) findViewById(R.id.hourPickers_LinearLayout);
 
         if (medName.getText().toString().isEmpty()) {
             medNameValid = false;
@@ -250,8 +254,20 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
             startDateValid = false;
         }
         //TODO Hour(s)
+        //Is checking every child of the layout.
+        // If one of them is empty, the hourPickerLayoutValid becomes false
+        for (int i = 0; i < hourPickersLayout.getChildCount(); i++)
+        {
+            TextView hourPicker = (TextView) hourPickersLayout.getChildAt(i);
+            if(hourPicker.getText().toString().isEmpty())
+            {
+                hourPickersLayoutValid = false;
+                break;
+            }
+        }
 
-        if(medNameValid && dosageValid && startDateValid) {
+
+        if(medNameValid && dosageValid && startDateValid && hourPickersLayoutValid) {
             return true;
         }
         else
