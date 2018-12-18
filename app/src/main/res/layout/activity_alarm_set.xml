@@ -83,12 +83,14 @@
 
             <Switch
                 android:id="@+id/alarmDuration_switch"
+                style="@style/CustomSwitchTheme"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
                 android:showText="true"
+                android:switchPadding="20dp"
                 android:text="@string/alarmDuration"
                 android:textOff="@string/durationOff"
                 android:textOn="@string/durationOn"

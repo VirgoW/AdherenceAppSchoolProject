@@ -9,4 +9,6 @@
 
     <color name="tab_item_text_color">#FFFFFF</color>
 
+    <color name="switch_thumb">#f8f0eb</color>
+
 </resources>
