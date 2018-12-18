@@ -1,5 +1,6 @@
 package ro.umfcd.stud.arteneraluca.myapplication;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Alarm {
@@ -8,10 +9,10 @@ public class Alarm {
     private String m_notes;
     private String m_dose;
     private String m_frequency;
-    private boolean m_fixedTreatment = false;
+    private boolean m_dailyTreatment = false;
     private Calendar m_StartCal;
-    //TODO add daily hour entries
-
+    public ArrayList<String> m_dailyFrequency;
+    public ArrayList<Boolean> m_weeklyDayFrequency;
 
     public Alarm()
     {
@@ -20,6 +21,12 @@ public class Alarm {
         m_notes = "";
         m_frequency = "";
         m_StartCal = null;
+        m_weeklyDayFrequency = new ArrayList<>();
+        m_dailyFrequency = new ArrayList<>();
+        for(int i=0; i<7;i++)
+        {
+            m_weeklyDayFrequency.add(false);
+        }
     }
 
     public Alarm(String newMed)
@@ -31,8 +38,9 @@ public class Alarm {
     {
         //Code tip: In a normal project we would need a method to access the members of a class, to preserve the OOP principle called Incapsulation
         //Incapsulation: every object in a class must be hidden and only accessible from within the class. All external access must be granted through methods of the class
+        boolean isWeeklyTreatementValid = !m_dailyTreatment && m_weeklyDayFrequency.size() > 0;
+        boolean isValid = !m_medName.isEmpty() && !m_dose.isEmpty() && !m_frequency.isEmpty() && m_StartCal != null && m_dailyFrequency.size() > 0 && (m_dailyTreatment || isWeeklyTreatementValid) ;
 
-        boolean isValid = !m_medName.isEmpty() && !m_dose.isEmpty() && !m_frequency.isEmpty() && m_StartCal != null;
         return isValid;
     }
 
@@ -64,12 +72,12 @@ public class Alarm {
         m_dose = dose;
     }
 
-    public boolean IsfixedTreatment() {
-        return m_fixedTreatment;
+    public boolean IsDailyTreatment() {
+        return m_dailyTreatment;
     }
 
-    public void SetFixedTreatment(boolean m_fixedTreatment) {
-        this.m_fixedTreatment = m_fixedTreatment;
+    public void SetDailyTreatment(boolean m_fixedTreatment) {
+        this.m_dailyTreatment = m_fixedTreatment;
     }
 
     public Calendar GetStartCal() {
@@ -88,26 +96,4 @@ public class Alarm {
         this.m_frequency = m_frequency;
     }
 
-    /*
-    struct
-    {
-        MedName
-                Hour
-
-        Frequency
-                Day
-        Week
-                Month
-        Other combo
-
-        For how long
-            always
-        or
-        number of
-        Days
-                Weeks
-        Months
-                Years
-    }
-    */
 }

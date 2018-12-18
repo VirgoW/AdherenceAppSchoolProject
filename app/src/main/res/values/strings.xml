@@ -55,7 +55,7 @@
     <string name="alarmDuration">Durata tratamentului:</string>
 
     <string name="startDate">Începând cu*: </string>
-    <string name="alarmFreq">Frecvența tratamentului:</string>
+    <string name="alarmFreq">Frecvența tratamentului *:</string>
     <string name="alarmsNum">Nr</string>
     <string name="hour_picker_hint">Selectează ora* </string>
     <string name="other_details_hint">Detalii suplimentare</string>
@@ -92,5 +92,9 @@
     <string name="frequencyTag">Frequency</string>
     <string name="dateTag">StartDate</string>
     <string name="notesTag">Notes</string>
+    <string name="dailyTreatmentTag">DailyTreatment</string>
+    <string name="dailyFrequencyHourTag">DailyFreqHour</string>
+    <string name="weeklyFrequencyDayTag">WeeklyDayFreq</string>
+
 
 </resources>

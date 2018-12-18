@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
@@ -22,6 +23,8 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
@@ -39,36 +42,13 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
         m_context = this;
         m_view = findViewById(android.R.id.content);
 
-        //TODO add mode
-
-        //Tratament continuu/fix switch
-        InitialiseSwitch();
-
-        //Date picker textView
-        InitialiseDatePicker();
-
-        //Treatment radioGroup
-        InitialiseFrequencyRadioGroup();
-
-        //Hour pickers
-        InitialiseHourPickerLayout();
-
-        //Save alarm button
-
-        Button saveAlarm = (Button) findViewById(R.id.alarmSetButton);
-        saveAlarm.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v) {
-                TrySaveAlarm();
-            }
-        });
-
         Intent myIntent = getIntent();
         m_mode = myIntent.getStringExtra(m_context.getString(R.string.alarmSetModeName));
         m_alarmIndex = myIntent.getIntExtra("index", -1);
-        if(m_mode.equals(m_context.getString(R.string.alarmModeEdit)))
+        boolean editMode = m_mode.equals(m_context.getString(R.string.alarmModeEdit));
+        if(editMode)
         {
+            FillFormFromCache();
             Button deleteAlarm = (Button) findViewById(R.id.alarmDeleteButton);
             deleteAlarm.setVisibility(View.VISIBLE);
             deleteAlarm.setOnClickListener(new View.OnClickListener()
@@ -79,10 +59,31 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
                 }
             });
         }
+        //Hour pickers
+        InitialiseHourPickerLayout();
+
+        //Tratament continuu/fix switch
+        InitialiseSwitch(editMode);
+
+        //Date picker textView
+        InitialiseDatePicker(editMode);
+
+        //Treatment radioGroup
+        InitialiseFrequencyRadioGroup(editMode);
+
+        //Save alarm button
+        Button saveAlarm = (Button) findViewById(R.id.alarmSetButton);
+        saveAlarm.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                TrySaveAlarm();
+            }
+        });
     }
 
     //Methods
-    private void InitialiseSwitch()
+    private void InitialiseSwitch(boolean editMode) //TODO
     {
         Switch alarmDuration_switch = (Switch) findViewById(R.id.alarmDuration_switch);
         final TextView alarmsNumber_Text = (TextView) findViewById(R.id.alarmsNumber_Text);
@@ -102,9 +103,15 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
         });
     }
 
-    private  void InitialiseDatePicker()
+    private  void InitialiseDatePicker(boolean editMode)
     {
         TextView alarm_startDate = (TextView) findViewById(R.id.startDateSelection);
+        if(editMode)
+        {
+            SimpleDateFormat format = new SimpleDateFormat("d MMM YYYY");
+            String startDate = format.format(SaveManager.getInstance().GetAlarm(m_alarmIndex).GetStartCal().getTime());
+            alarm_startDate.setText(startDate);
+        }
         alarm_startDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,7 +134,7 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
         alarm_startDate.setText(setDateString);
     }
 
-    private void InitialiseFrequencyRadioGroup()
+    private void InitialiseFrequencyRadioGroup(boolean editMode)
     {
         RadioGroup alarmFreq_radioGroup = (RadioGroup) findViewById(R.id.alarmFreq_RadioGroup);
         final LinearLayout checkboxes_layout = (LinearLayout) findViewById(R.id.checkboxes_layout);
@@ -149,6 +156,24 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
                 }
             }
         });
+        if(editMode)
+        {
+            Alarm editAlarm = SaveManager.getInstance().GetAlarm(m_alarmIndex);
+            int daily;
+            if(editAlarm.IsDailyTreatment())
+            {
+                daily = R.id.dailyRadioBtn;
+            }
+            else
+            {
+                daily = R.id.weeklyRadioBtn;
+                for(int i=0; i<7;i++)
+                {
+                    ((CheckBox) checkboxes_layout.getChildAt(i)).setChecked(editAlarm.m_weeklyDayFrequency.get(i));
+                }
+            }
+            alarmFreq_radioGroup.check(daily);
+        }
     }
 
     private void InitialiseHourPickerLayout()
@@ -179,6 +204,20 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
                             timePicker.show(getSupportFragmentManager(),"time picker");
                         }
                     });
+                }
+
+                if(m_mode.equals(m_context.getString(R.string.alarmModeEdit)))
+                {
+                    ArrayList<String> values = SaveManager.getInstance().GetAlarm(m_alarmIndex).m_dailyFrequency;
+                    for (int i = 0; i < hourPickersLayout.getChildCount() ; i++)
+                    {
+                        if(values.size() <= i)
+                        {
+                            break;
+                        }
+                        TextView hourPicker = (TextView) hourPickersLayout.getChildAt(i);
+                        hourPicker.setText(values.get(i));
+                    }
                 }
             }
 
@@ -238,10 +277,12 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
         boolean dosageValid = true;
         boolean startDateValid = true;
         boolean hourPickersLayoutValid = true;
+        boolean frequencyValid = true;
         TextView medName = (TextView) findViewById(R.id.medNameText);
         TextView dosage = (TextView) findViewById(R.id.DosageInput_Text);
         TextView startDateSelection = (TextView) findViewById(R.id.startDateSelection);
         LinearLayout hourPickersLayout = (LinearLayout) findViewById(R.id.hourPickers_LinearLayout);
+        RadioGroup alarmFrequency = (RadioGroup) findViewById(R.id.alarmFreq_RadioGroup);
 
         if (medName.getText().toString().isEmpty()) {
             medNameValid = false;
@@ -253,7 +294,6 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
         {
             startDateValid = false;
         }
-        //TODO Hour(s)
         //Is checking every child of the layout.
         // If one of them is empty, the hourPickerLayoutValid becomes false
         for (int i = 0; i < hourPickersLayout.getChildCount(); i++)
@@ -266,8 +306,24 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
             }
         }
 
+        //Weekly  frequency - check for selected days > 0
+        if(alarmFrequency.getCheckedRadioButtonId() != R.id.dailyRadioBtn)
+        {
+            LinearLayout dayPickerLayout = (LinearLayout) findViewById(R.id.checkboxes_layout);
+            int numberOfCheckedDays = 0;
+            for(int i=0; i < dayPickerLayout.getChildCount(); i++)
+            {
+                CheckBox dayPicker = (CheckBox) dayPickerLayout.getChildAt(i);
+                if(dayPicker.isChecked())
+                {
+                    numberOfCheckedDays++;
+                }
+            }
+            frequencyValid = numberOfCheckedDays > 0;
+        }
 
-        if(medNameValid && dosageValid && startDateValid && hourPickersLayoutValid) {
+        if(medNameValid && dosageValid && startDateValid && hourPickersLayoutValid && frequencyValid)
+        {
             return true;
         }
         else
@@ -292,5 +348,20 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
         SaveManager.getInstance().DeleteAlarm(m_alarmIndex, m_context);
         onBackPressed();
         finish();
+    }
+
+    private void FillFormFromCache()
+    {
+        Alarm editAlarm = SaveManager.getInstance().GetAlarm(m_alarmIndex);
+        TextView medName = (TextView) findViewById(R.id.medNameText);
+        TextView dosage = (TextView) findViewById(R.id.DosageInput_Text);
+        TextView notes = (TextView) findViewById(R.id.other_details);
+        RadioGroup alarmFrequency = (RadioGroup) findViewById(R.id.alarmFreq_RadioGroup);
+
+        medName.setText(editAlarm.GetMedName());
+        dosage.setText(editAlarm.GetDosage());
+        final Spinner perDaySpinner = (Spinner) findViewById(R.id.freq_perDay_spinner);
+        perDaySpinner.setSelection(editAlarm.m_dailyFrequency.size() - 1);
+        notes.setText(editAlarm.GetNote());
     }
 }

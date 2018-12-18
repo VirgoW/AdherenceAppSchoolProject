@@ -65,7 +65,7 @@ public class AlarmAdapter extends BaseAdapter {
         medName.setText(alarm.GetMedName());
         hour.setText("00:00");
         note.setText(alarm.GetNote());
-        final int index = position;
+        final int index = position; //TODO add index to alarm entries
         gridView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
