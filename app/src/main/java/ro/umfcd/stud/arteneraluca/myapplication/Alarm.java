@@ -13,6 +13,7 @@ public class Alarm {
     private Calendar m_StartCal;
     public ArrayList<String> m_dailyFrequency;
     public ArrayList<Boolean> m_weeklyDayFrequency;
+    public int m_id;
 
     public Alarm()
     {
@@ -96,4 +97,11 @@ public class Alarm {
         this.m_frequency = m_frequency;
     }
 
+    public int getId() {
+        return m_id;
+    }
+
+    public void setId(int m_id) {
+        this.m_id = m_id;
+    }
 }

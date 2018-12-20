@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -14,9 +14,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class DayFragmentAdapter extends FragmentPagerAdapter
+public class DayFragmentAdapter extends FragmentStatePagerAdapter
 {
-    private final List<Fragment> m_fragmentList = new ArrayList<>();
     private final List<String> m_fragmentDayNameList = new ArrayList<>();
     private final List<Integer> m_fragmentDayValueList = new ArrayList<>();
     private Context m_context;
@@ -27,6 +26,10 @@ public class DayFragmentAdapter extends FragmentPagerAdapter
         super(manager);
         m_context = context;
         m_cal = cal;
+        if(manager.getFragments() != null)
+        {
+            manager.getFragments().clear();
+        }
         UpdateDayTabs();
     }
 
@@ -42,7 +45,13 @@ public class DayFragmentAdapter extends FragmentPagerAdapter
 
     @Override
     public Fragment getItem(int index) {
-        return DayFragment.newInstance();//m_fragmentList.get(index);
+        int dayOfWeek = m_cal.get(Calendar.DAY_OF_WEEK) - 2; //Day of week starts at 1 and index starts at 0, and first day of the week is sunday
+        int dayOffset = index - dayOfWeek;
+         UpdateAddCal(Calendar.DAY_OF_MONTH, dayOffset);
+        Calendar newCal = (Calendar) m_cal.clone();
+        UpdateAddCal(Calendar.DAY_OF_MONTH, -dayOffset);
+
+        return DayFragment.newInstance(newCal, m_context); //TODO is not cleared on changing month?
     }
 
     @Override
@@ -92,8 +101,6 @@ public class DayFragmentAdapter extends FragmentPagerAdapter
             int day = m_cal.get(Calendar.DAY_OF_MONTH);
             m_fragmentDayNameList.add(dayNames[index]);
             m_fragmentDayValueList.add(day);
-
-            //TODO send cal info to tab content
 
             UpdateAddCal(Calendar.DAY_OF_MONTH, -dayOffset);
         }

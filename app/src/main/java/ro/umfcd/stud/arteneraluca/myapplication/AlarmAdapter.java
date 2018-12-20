@@ -2,24 +2,70 @@ package ro.umfcd.stud.arteneraluca.myapplication;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+
 public class AlarmAdapter extends BaseAdapter {
     private Context m_context;
+    private ArrayList<AlarmItem> m_alarmsToDisplay;
 
-    public AlarmAdapter(Context context)
+    class AlarmItem
+    {
+        public String medName;
+        public String hour;
+        public String note;
+        public int index;
+    }
+
+    class SortByHour implements Comparator<AlarmItem>
+    {
+        public int compare(AlarmItem a, AlarmItem b)
+        {
+            int result = 0;
+            try
+            {
+                SimpleDateFormat format = new SimpleDateFormat(m_context.getText(R.string.hourFormat).toString());
+                Date dateA = format.parse(a.hour);
+                Date dateB = format.parse(b.hour);
+                if(dateA.before(dateB))
+                {
+                    result = -1;
+                }
+                else
+                {
+                    result = 1;
+                }
+            }
+            catch (Exception e)
+            {
+                Log.e("ArteneApp", "Exception while comparing 2 dates: ", e);
+            }
+            return result;
+        }
+    }
+
+    public AlarmAdapter(Context context, Calendar cal)
     {
         m_context = context;
+        m_alarmsToDisplay = new ArrayList<>();
+        CreateAlarmList(cal);
     }
 
     @Override
     public int getCount()
     {
-        return SaveManager.getInstance().GetNumberOfSavedAlarms();
+        return m_alarmsToDisplay.size();
     }
 
     @Override
@@ -38,7 +84,6 @@ public class AlarmAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent)
     {
         View gridView;
-        //final TextView textView = new TextView(m_context);
         LayoutInflater inflater = (LayoutInflater) m_context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         if(convertView == null)
@@ -61,11 +106,11 @@ public class AlarmAdapter extends BaseAdapter {
         final TextView medName = (TextView) gridView.findViewById(R.id.grid_item_medicament);
         final TextView hour = (TextView) gridView.findViewById(R.id.grid_item_ora);
         final TextView note = (TextView) gridView.findViewById(R.id.alarm_note);
-        Alarm alarm = SaveManager.getInstance().GetAlarm(position);
-        medName.setText(alarm.GetMedName());
-        hour.setText("00:00");
-        note.setText(alarm.GetNote());
-        final int index = position; //TODO add index to alarm entries
+        AlarmItem alarm = m_alarmsToDisplay.get(position);
+        medName.setText(alarm.medName);
+        hour.setText(alarm.hour);
+        note.setText(alarm.note);
+        final int index = alarm.index;
         gridView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,5 +122,35 @@ public class AlarmAdapter extends BaseAdapter {
         });
 
         return gridView;
+    }
+
+    private void CreateAlarmList(Calendar cal)
+    {
+        int currentDay = cal.get(Calendar.DAY_OF_YEAR);
+
+        for(int i=0; i< SaveManager.getInstance().GetAlarmCount(); i++)
+        {
+            Alarm alarm = SaveManager.getInstance().GetAlarmByIndex(i);
+            int alarmStartDay = alarm.GetStartCal().get(Calendar.DAY_OF_YEAR);
+            if(currentDay >= alarmStartDay)
+            {
+                //TODO Check for weekly frequency
+
+                for(int j=0; j< alarm.m_dailyFrequency.size(); j++)
+                {
+                    AlarmItem item = new AlarmItem();
+                    item.hour = alarm.m_dailyFrequency.get(j);
+                    item.index = alarm.getId();
+                    item.medName = alarm.GetMedName();
+                    item.note = alarm.GetNote();
+                    m_alarmsToDisplay.add(item);
+                }
+            }
+            else
+            {
+                continue;
+            }
+        }
+        Collections.sort(m_alarmsToDisplay, new SortByHour());
     }
 }

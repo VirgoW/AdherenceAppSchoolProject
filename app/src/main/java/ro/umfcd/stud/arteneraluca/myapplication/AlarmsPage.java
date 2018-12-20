@@ -63,14 +63,14 @@ public class AlarmsPage extends AppCompatActivity implements TimePickerDialog.On
             @Override
             public void onClick(View v) {
                 AddMonth(-1);
-                UpdateFragment();
+                UpdateFragments();
             }
         });
         nextMonth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AddMonth(1);
-                UpdateFragment();
+                UpdateFragments();
             }
         });
 
@@ -78,7 +78,7 @@ public class AlarmsPage extends AppCompatActivity implements TimePickerDialog.On
             @Override
             public void onClick(View v) {
                 AddWeek(-1);
-                UpdateFragment();
+                UpdateFragments();
             }
         });
 
@@ -86,7 +86,7 @@ public class AlarmsPage extends AppCompatActivity implements TimePickerDialog.On
             @Override
             public void onClick(View v) {
                 AddWeek(1);
-                UpdateFragment();
+                UpdateFragments();
             }
         });
 
@@ -99,9 +99,7 @@ public class AlarmsPage extends AppCompatActivity implements TimePickerDialog.On
     @Override
     public void onResume() {
         super.onResume();
-        if (m_alarmPageAdapter != null) {
-            m_alarmPageAdapter.notifyDataSetChanged();
-        }
+        UpdateFragments();
     }
 
     @Override
@@ -126,13 +124,10 @@ public class AlarmsPage extends AppCompatActivity implements TimePickerDialog.On
     }
 
     private void SetupView() {
-        //Get the ViewPager and set the adapter so it can display items
+        //Get the ViewPager so it can display items
         m_dayFragmentViewer = (ViewPager) findViewById(R.id.viewpager);
-        m_alarmPageAdapter = new DayFragmentAdapter(getSupportFragmentManager(), m_context, m_cal);
         //Give the TabLayout the ViewPager to use
         m_tabLayout = (TabLayout) findViewById(R.id.topTabLayout);
-        m_dayFragmentViewer.setAdapter(m_alarmPageAdapter);
-        m_tabLayout.setupWithViewPager(m_dayFragmentViewer);
         InstantiateCalToCurrentDay();
     }
 
@@ -158,12 +153,15 @@ public class AlarmsPage extends AppCompatActivity implements TimePickerDialog.On
         m_cal.add(Calendar.WEEK_OF_MONTH, direction);
     }
 
-    private void UpdateFragment()
+    private void UpdateFragments()
     {
         UpdateMonthTextView(); // TODO update month better per week changed
-        m_alarmPageAdapter.notifyDataSetChanged();
+        //m_alarmPageAdapter.notifyDataSetChanged();
+        m_alarmPageAdapter = new DayFragmentAdapter(getSupportFragmentManager(), m_context, m_cal);
         m_dayFragmentViewer.setAdapter(null);
         m_dayFragmentViewer.setAdapter(m_alarmPageAdapter);
+        m_tabLayout.removeAllTabs();
+        m_tabLayout.setupWithViewPager(m_dayFragmentViewer);
         for (int index = 0; index < 7; index++) {
             TabLayout.Tab tab = m_tabLayout.getTabAt(index);
             tab.setCustomView(m_alarmPageAdapter.getTabView(index));
@@ -173,16 +171,16 @@ public class AlarmsPage extends AppCompatActivity implements TimePickerDialog.On
     private void InstantiateCalToCurrentDay()
     {
         m_cal = Calendar.getInstance();
-        m_cal.add(Calendar.WEEK_OF_MONTH, -1); // Week of month starts at position zero for us
-        m_alarmPageAdapter.UpdateCalendar(m_cal);
+        //m_cal.add(Calendar.WEEK_OF_MONTH, -1); // Week of month starts at position zero for us
+        //m_alarmPageAdapter.UpdateCalendar(m_cal);
         int calMonth;
         calMonth = m_cal.get(Calendar.MONTH);
         String[] monthNames = getResources().getStringArray(R.array.monthNames);
         ((TextView) findViewById(R.id.testDate)).setText(monthNames[calMonth]);
 
-        UpdateFragment();
+        UpdateFragments();
 
-        int dayOfWeek = 5 - (m_cal.get(Calendar.DAY_OF_WEEK) - 2); // -1 to 5
+        int dayOfWeek = (m_cal.get(Calendar.DAY_OF_WEEK) - 2); // -1 to 5
         TabLayout.Tab tab = m_tabLayout.getTabAt(dayOfWeek);
         tab.select();
     }

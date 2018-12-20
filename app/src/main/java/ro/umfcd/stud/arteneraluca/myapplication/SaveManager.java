@@ -16,13 +16,12 @@ import org.xmlpull.v1.XmlSerializer;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Scanner;
+import java.util.Date;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -88,19 +87,27 @@ public class SaveManager {
 
     void AddNewAlarm(Context context, View view)
     {
-        m_alarmList.add(CompactAlarm(context, view));
+        Alarm newAlarm = CompactAlarm(context, view);
+        newAlarm.setId(m_alarmList.size());
+        m_alarmList.add(newAlarm);
         SaveDataToXml(context);
     }
 
     void SaveAlarm(int alarmIndex, Context context, View view)
     {
-        m_alarmList.set(alarmIndex, CompactAlarm(context, view));
+        Alarm newAlarm = CompactAlarm(context, view);
+        m_alarmList.set(alarmIndex, newAlarm);
         SaveDataToXml(context);
     }
 
     void DeleteAlarm(int alarmIndex, Context context)
     {
         m_alarmList.remove(alarmIndex);
+
+        for(int i=0; i< m_alarmList.size(); i++)
+        {
+            m_alarmList.get(i).setId(i);
+        }
         SaveDataToXml(context);
     }
 
@@ -122,7 +129,7 @@ public class SaveManager {
                 //Currently we have only 1 attribute per tag..
                 AddNewTag(serializer, context.getText(R.string.medNameTag).toString(), "name", alarm.GetMedName());
                 AddNewTag(serializer, context.getText(R.string.dosageTag).toString(), "name", alarm.GetDosage());
-                SimpleDateFormat format = new SimpleDateFormat("d MMM YYYY");
+                SimpleDateFormat format = new SimpleDateFormat(context.getText(R.string.dateFormat).toString());
                 String startDate = format.format(alarm.GetStartCal().getTime());
                 AddNewTag(serializer, context.getText(R.string.dateTag).toString(), "name", startDate);
                 AddNewTag(serializer, context.getText(R.string.frequencyTag).toString(), "name", alarm.GetFrequency());
@@ -189,10 +196,11 @@ public class SaveManager {
 
                         if(name.equals(context.getText(R.string.dateTag).toString()))
                         {
-                            SimpleDateFormat format = new SimpleDateFormat("d MMM YYYY");
+                            SimpleDateFormat format = new SimpleDateFormat(context.getText(R.string.dateFormat).toString());
                             String startDate = m_XmlParser.getAttributeValue(null,"name");
+                            Date test = format.parse(startDate);
                             Calendar date = Calendar.getInstance();
-                            date.setTime(format.parse(startDate));
+                            date.setTime(test);
                             newAlarm.SetStartCal(date);
                         }
                         if(name.equals(context.getText(R.string.frequencyTag).toString()))
@@ -225,6 +233,7 @@ public class SaveManager {
                         }
                         if(name.equals("Alarm") && newAlarm.IsValid())
                         {
+                            newAlarm.setId(m_alarmList.size());
                             m_alarmList.add(newAlarm);
                             newAlarm = new Alarm();
                         }
@@ -253,37 +262,25 @@ public class SaveManager {
         }
     }
 
-    int GetNumberOfSavedAlarms()
-    {
-        return m_alarmList.size();
-    }
-
-    //Temporary method - TODO replace method with more advanced version possibly using a struct to get all the info that is supposed to be displayed in the UI
     Alarm GetAlarm(int index)
+    {
+        for(int i=0; i<m_alarmList.size();i++)
+        {
+            if(m_alarmList.get(i).getId() == index)
+            {
+                return m_alarmList.get(i);
+            }
+        }
+        return null;
+    }
+    Alarm GetAlarmByIndex(int index)
     {
         return m_alarmList.get(index);
     }
 
-    void Debug_PrintFileContents(Context context)
+    int GetAlarmCount()
     {
-        try
-        {
-            InputStream is = context.openFileInput(m_saveFile);
-            if(is != null)
-            {
-                Scanner scan = new Scanner(is);
-                System.out.println("reading save file: ");
-                while(scan.hasNext())
-                {
-                    String print = scan.next();
-                    System.out.println("_"+print);
-                }
-            }
-        }
-        catch(Exception e)
-        {
-            Log.e("ArteneApp", "Exception in Debug file print: ", e);
-        }
+        return m_alarmList.size();
     }
 
     private Alarm CompactAlarm(Context context, View view)
@@ -334,8 +331,20 @@ public class SaveManager {
                 }
             }
         }
-
-        newAlarm.SetStartCal(Calendar.getInstance());
+        Calendar date = Calendar.getInstance();
+        try
+        {
+            TextView startDateTextView = (TextView) view.findViewById(R.id.startDateSelection);
+            SimpleDateFormat format = new SimpleDateFormat(context.getText(R.string.dateFormat).toString());
+            String startDate = startDateTextView.getText().toString();
+            Date test = format.parse(startDate);
+            date.setTime(test);
+        }
+        catch (Exception e)
+        {
+            Log.e("ArteneApp", "Exception while creating fragment view: ", e);
+        }
+        newAlarm.SetStartCal(date);
         return newAlarm;
     }
 }

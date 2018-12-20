@@ -108,7 +108,7 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
         TextView alarm_startDate = (TextView) findViewById(R.id.startDateSelection);
         if(editMode)
         {
-            SimpleDateFormat format = new SimpleDateFormat("d MMM YYYY");
+            SimpleDateFormat format = new SimpleDateFormat(m_context.getText(R.string.dateFormat).toString());
             String startDate = format.format(SaveManager.getInstance().GetAlarm(m_alarmIndex).GetStartCal().getTime());
             alarm_startDate.setText(startDate);
         }
@@ -356,6 +356,7 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
         TextView medName = (TextView) findViewById(R.id.medNameText);
         TextView dosage = (TextView) findViewById(R.id.DosageInput_Text);
         TextView notes = (TextView) findViewById(R.id.other_details);
+        TextView startDate = (TextView) findViewById(R.id.startDateSelection);
         RadioGroup alarmFrequency = (RadioGroup) findViewById(R.id.alarmFreq_RadioGroup);
 
         medName.setText(editAlarm.GetMedName());
@@ -363,5 +364,8 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
         final Spinner perDaySpinner = (Spinner) findViewById(R.id.freq_perDay_spinner);
         perDaySpinner.setSelection(editAlarm.m_dailyFrequency.size() - 1);
         notes.setText(editAlarm.GetNote());
+        SimpleDateFormat format = new SimpleDateFormat(m_context.getText(R.string.dateFormat).toString());
+        String startDateCal = format.format(editAlarm.GetStartCal().getTime());
+        startDate.setText(startDateCal);
     }
 }

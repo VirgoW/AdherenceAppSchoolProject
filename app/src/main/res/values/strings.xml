@@ -96,5 +96,6 @@
     <string name="dailyFrequencyHourTag">DailyFreqHour</string>
     <string name="weeklyFrequencyDayTag">WeeklyDayFreq</string>
 
-
+    <string name="dateFormat">dd MMM yyy</string>
+    <string name="hourFormat">HH:mm</string>
 </resources>
