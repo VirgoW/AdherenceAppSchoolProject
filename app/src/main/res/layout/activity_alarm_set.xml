@@ -61,6 +61,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
                 android:text="@string/dosage_txt"
+                android:textColor="@android:color/black"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toStartOf="@+id/DosageInput_Text"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -140,6 +141,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/startDate"
+                android:textColor="@android:color/black"
                 android:visibility="visible"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/alarmDuration_barrier" />
@@ -149,8 +151,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
+                android:hint="@string/startDate_hint"
                 android:singleLine="true"
-                android:textStyle="bold"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="@+id/startDate_textView"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -164,6 +166,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@string/alarmFreq"
+                android:textColor="@android:color/black"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/startDateSelection" />
 
@@ -216,89 +219,65 @@
 
                 <CheckBox
                     android:id="@+id/checkBox_Mo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/checkbox_square"
+                    android:layout_height="@dimen/checkbox_square"
                     android:button="@drawable/checkbox"
-                    android:paddingStart="-16dp"
-                    android:paddingLeft="-16dp"
-                    android:paddingRight="2dp"
-                    android:text="Lu "
-                    android:textSize="12dp"
-                    tools:layout_editor_absoluteX="56dp"
-                    tools:layout_editor_absoluteY="308dp" />
+                    android:paddingStart="@dimen/chkText_off"
+                    android:paddingLeft="@dimen/chkText_off"
+                    android:textSize="@dimen/chk_textSize" />
 
                 <CheckBox
                     android:id="@+id/checkBox_Tu"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/checkbox_square"
+                    android:layout_height="@dimen/checkbox_square"
                     android:button="@drawable/checkbox"
-                    android:paddingStart="-18dp"
-                    android:paddingLeft="-18dp"
-                    android:paddingRight="2dp"
-                    android:text="Ma "
-                    android:textSize="12dp"
-                    tools:layout_editor_absoluteX="79dp"
-                    tools:layout_editor_absoluteY="308dp" />
+                    android:paddingStart="@dimen/chkText_off"
+                    android:paddingLeft="@dimen/chkText_off"
+                    android:textSize="@dimen/chk_textSize" />
 
                 <CheckBox
                     android:id="@+id/checkBox_We"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/checkbox_square"
+                    android:layout_height="@dimen/checkbox_square"
                     android:button="@drawable/checkbox"
-                    android:paddingStart="-18dp"
-                    android:paddingLeft="-18dp"
-                    android:text="Mi "
-                    android:textSize="12dp"
-                    tools:layout_editor_absoluteX="223dp"
-                    tools:layout_editor_absoluteY="308dp" />
+                    android:paddingStart="@dimen/chkText_off"
+                    android:paddingLeft="@dimen/chkText_off"
+                    android:textSize="@dimen/chk_textSize" />
 
                 <CheckBox
                     android:id="@+id/checkBox_Th"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/checkbox_square"
+                    android:layout_height="@dimen/checkbox_square"
                     android:button="@drawable/checkbox"
-                    android:paddingStart="-18dp"
-                    android:paddingLeft="-18dp"
-                    android:text="Jo "
-                    android:textSize="12dp"
-                    tools:layout_editor_absoluteX="194dp"
-                    tools:layout_editor_absoluteY="315dp" />
+                    android:paddingStart="@dimen/chkText_off"
+                    android:paddingLeft="@dimen/chkText_off"
+                    android:textSize="@dimen/chk_textSize" />
 
                 <CheckBox
                     android:id="@+id/checkBox_Fr"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/checkbox_square"
+                    android:layout_height="@dimen/checkbox_square"
                     android:button="@drawable/checkbox"
-                    android:paddingStart="-18dp"
-                    android:paddingLeft="-18dp"
-                    android:text="Vi "
-                    android:textSize="12dp"
-                    tools:layout_editor_absoluteX="161dp"
-                    tools:layout_editor_absoluteY="315dp" />
+                    android:paddingStart="@dimen/chkText_off"
+                    android:paddingLeft="@dimen/chkText_off"
+                    android:textSize="@dimen/chk_textSize" />
 
                 <CheckBox
-                    android:id="@+id/checkBox_Sa"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/checkbox_square"
+                    android:layout_height="@dimen/checkbox_square"
                     android:button="@drawable/checkbox"
-                    android:paddingStart="-18dp"
-                    android:paddingLeft="-18dp"
-                    android:text="Sâ "
-                    android:textSize="12dp"
-                    tools:layout_editor_absoluteX="113dp"
-                    tools:layout_editor_absoluteY="308dp" />
+                    android:paddingStart="@dimen/chkText_off"
+                    android:paddingLeft="@dimen/chkText_off"
+                    android:textSize="@dimen/chk_textSize" />
 
                 <CheckBox
                     android:id="@+id/checkBox_Su"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/checkbox_square"
+                    android:layout_height="@dimen/checkbox_square"
                     android:button="@drawable/checkbox"
-                    android:paddingStart="-18dp"
-                    android:paddingLeft="-18dp"
-                    android:text="Du "
-                    android:textSize="12dp"
-                    tools:layout_editor_absoluteX="132dp"
-                    tools:layout_editor_absoluteY="308dp" />
+                    android:paddingStart="@dimen/chkText_off"
+                    android:paddingLeft="@dimen/chkText_off"
+                    android:textSize="@dimen/chk_textSize" />
 
             </LinearLayout>
 

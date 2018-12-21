@@ -10,5 +10,7 @@
     <color name="tab_item_text_color">#FFFFFF</color>
 
     <color name="switch_thumb">#f8f0eb</color>
+    <color name="checked_checkbox">#ffd600</color>
+    <color name="foreground_material_light">#000000</color>
 
 </resources>

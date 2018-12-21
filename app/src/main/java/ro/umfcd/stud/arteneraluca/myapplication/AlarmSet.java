@@ -70,6 +70,7 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
 
         //Treatment radioGroup
         InitialiseFrequencyRadioGroup(editMode);
+        InitialiseCheckboxes();
 
         //Save alarm button
         Button saveAlarm = (Button) findViewById(R.id.alarmSetButton);
@@ -173,6 +174,27 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
                 }
             }
             alarmFreq_radioGroup.check(daily);
+        }
+    }
+//TODO check is edit mode needs to be applied here as well
+    private void InitialiseCheckboxes()
+    {
+        LinearLayout checkboxesLay = (LinearLayout) findViewById(R.id.checkboxes_layout);
+        for(int i = 0; i < checkboxesLay.getChildCount(); ++i)
+        {
+            final CheckBox chkBox = (CheckBox) checkboxesLay.getChildAt(i);
+            String[] chk_dayNames = getResources().getStringArray(R.array.dayNames);
+            chkBox.setText(chk_dayNames[i]);
+
+            chkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked)
+                        chkBox.setBackgroundColor(getResources().getColor(R.color.checked_checkbox));
+                    else
+                        chkBox.setBackgroundColor(0);
+                }
+            });
         }
     }
 

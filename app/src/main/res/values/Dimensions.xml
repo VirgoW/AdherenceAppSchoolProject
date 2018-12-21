@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="checkbox_square">26dp</dimen>
+    <dimen name="chkText_off">-21dp</dimen>
+    <dimen name="chk_textSize">12dp</dimen>
+</resources>
