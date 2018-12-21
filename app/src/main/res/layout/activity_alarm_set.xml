@@ -213,8 +213,7 @@
                 android:padding="5dp"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/freq_perDay_spinner"
                 app:layout_constraintTop_toBottomOf="@+id/alarmFreq_RadioGroup">
 
                 <CheckBox
@@ -263,6 +262,7 @@
                     android:textSize="@dimen/chk_textSize" />
 
                 <CheckBox
+                    android:id="@+id/checkBox_Sa"
                     android:layout_width="@dimen/checkbox_square"
                     android:layout_height="@dimen/checkbox_square"
                     android:button="@drawable/checkbox"
