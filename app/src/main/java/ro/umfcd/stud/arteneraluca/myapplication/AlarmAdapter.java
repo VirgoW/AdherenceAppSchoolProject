@@ -1,5 +1,6 @@
 package ro.umfcd.stud.arteneraluca.myapplication;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -19,6 +20,7 @@ import java.util.Date;
 public class AlarmAdapter extends BaseAdapter {
     private Context m_context;
     private ArrayList<AlarmItem> m_alarmsToDisplay;
+    private int m_tabIndex;
 
     class AlarmItem
     {
@@ -55,10 +57,11 @@ public class AlarmAdapter extends BaseAdapter {
         }
     }
 
-    public AlarmAdapter(Context context, Calendar cal)
+    public AlarmAdapter(Context context, Calendar cal, int tabIndex)
     {
         m_context = context;
         m_alarmsToDisplay = new ArrayList<>();
+        m_tabIndex = tabIndex;
         CreateAlarmList(cal);
     }
 
@@ -117,7 +120,8 @@ public class AlarmAdapter extends BaseAdapter {
                 Intent setAlarm = new Intent(m_context.getApplicationContext(), AlarmSet.class);
                 setAlarm.putExtra(m_context.getString(R.string.alarmSetModeName), m_context.getString(R.string.alarmModeEdit));
                 setAlarm.putExtra("index", index);
-                m_context.startActivity(setAlarm);
+                setAlarm.putExtra("tabIndex", m_tabIndex);
+                ((Activity) m_context).startActivityForResult(setAlarm, 1);;
             }
         });
 
@@ -126,16 +130,11 @@ public class AlarmAdapter extends BaseAdapter {
 
     private void CreateAlarmList(Calendar cal)
     {
-        int currentDay = cal.get(Calendar.DAY_OF_YEAR);
-
         for(int i=0; i< SaveManager.getInstance().GetAlarmCount(); i++)
         {
             Alarm alarm = SaveManager.getInstance().GetAlarmByIndex(i);
-            int alarmStartDay = alarm.GetStartCal().get(Calendar.DAY_OF_YEAR);
-            if(currentDay >= alarmStartDay)
+            if(ShouldDisplayAlarmToday(cal, alarm))
             {
-                //TODO Check for weekly frequency
-
                 for(int j=0; j< alarm.m_dailyFrequency.size(); j++)
                 {
                     AlarmItem item = new AlarmItem();
@@ -152,5 +151,30 @@ public class AlarmAdapter extends BaseAdapter {
             }
         }
         Collections.sort(m_alarmsToDisplay, new SortByHour());
+    }
+
+    private boolean ShouldDisplayAlarmToday(Calendar todayCal, Alarm alarm)
+    {
+        Calendar alarmCal = alarm.GetStartCal();
+        int dayOfWeek = SaveManager.getInstance().GetDayOfWeek(todayCal);
+        boolean displayAlarm;
+        boolean weeklyFrequencyValid = false;
+        if(alarm.IsDailyTreatment())
+        {
+            weeklyFrequencyValid = true;
+        }
+        else
+        {
+            for(int i=0; i < 7; i++)
+            {
+                if(i == dayOfWeek && alarm.m_weeklyDayFrequency.get(i))
+                {
+                    weeklyFrequencyValid = true;
+                }
+            }
+        }
+        displayAlarm = todayCal.after(alarmCal) || todayCal.equals(alarmCal);
+        displayAlarm = displayAlarm && weeklyFrequencyValid;
+        return displayAlarm;
     }
 }

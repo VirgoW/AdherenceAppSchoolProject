@@ -18,13 +18,14 @@ public class DayFragment extends Fragment {
 
     AlarmAdapter m_alarmAdapter;
 
-    public static DayFragment newInstance(Calendar cal, Context context)
+    public static DayFragment newInstance(Calendar cal, Context context, int tabIndex)
     {
         DayFragment fragment = new DayFragment();
         SimpleDateFormat format = new SimpleDateFormat(context.getText(R.string.dateFormat).toString());
         String startDate = format.format(cal.getTime());
         Bundle args = new Bundle();
         args.putString("calendar", startDate);
+        args.putInt("tabIndex", tabIndex);
         fragment.setArguments(args);
         return fragment;
     }
@@ -41,16 +42,16 @@ public class DayFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-        //TODO update cal on update page cal
         View view = inflater.inflate(R.layout.alarm_page_days_fragment, null);
         try
         {
             SimpleDateFormat format = new SimpleDateFormat( this.getContext().getText(R.string.dateFormat).toString());
             String calString = getArguments().getString("calendar");
+            int tabIndex = getArguments().getInt("tabIndex");
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(format.parse(calString));
             GridView gridView = (GridView) view.findViewById(R.id.gridViewTestFragment);
-            m_alarmAdapter = new AlarmAdapter(view.getContext(), calendar);
+            m_alarmAdapter = new AlarmAdapter(view.getContext(), calendar, tabIndex);
             gridView.setAdapter(m_alarmAdapter);
         }
         catch (Exception e)

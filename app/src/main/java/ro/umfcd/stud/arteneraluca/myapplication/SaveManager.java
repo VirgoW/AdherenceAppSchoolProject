@@ -347,4 +347,14 @@ public class SaveManager {
         newAlarm.SetStartCal(date);
         return newAlarm;
     }
+
+    public int GetDayOfWeek(Calendar cal)
+    {
+        int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK) - 2;
+        if(dayOfWeek < 0)
+        {
+            dayOfWeek = 7 - Math.abs(dayOfWeek);
+        }
+        return dayOfWeek;
+    }
 }

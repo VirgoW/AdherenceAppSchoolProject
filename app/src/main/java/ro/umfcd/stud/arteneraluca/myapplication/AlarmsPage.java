@@ -4,6 +4,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +27,7 @@ public class AlarmsPage extends AppCompatActivity implements TimePickerDialog.On
     TabLayout m_tabLayout;
 
     Calendar m_cal;
+    int m_lastTabIndex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +41,8 @@ public class AlarmsPage extends AppCompatActivity implements TimePickerDialog.On
             public void onClick(View v) {
                 Intent setAlarm = new Intent(getApplicationContext(), AlarmSet.class);
                 setAlarm.putExtra(m_context.getString(R.string.alarmSetModeName), m_context.getString(R.string.alarmModeNew));
-                startActivity(setAlarm);
+                setAlarm.putExtra("tabIndex", m_tabLayout.getSelectedTabPosition());
+                startActivityForResult(setAlarm, 1);
 
                 //DialogFragment timePicker = new TimePickerFragment();
                 //timePicker.show(getSupportFragmentManager(), "time picker");
@@ -93,13 +96,17 @@ public class AlarmsPage extends AppCompatActivity implements TimePickerDialog.On
 
         m_cal = Calendar.getInstance();
         SetupView();
-        //TODO Improve cal
+
+        m_lastTabIndex = SaveManager.getInstance().GetDayOfWeek(m_cal);
     }
 
     @Override
     public void onResume() {
         super.onResume();
         UpdateFragments();
+
+        TabLayout.Tab tab = m_tabLayout.getTabAt(m_lastTabIndex);
+        tab.select();
     }
 
     @Override
@@ -180,8 +187,20 @@ public class AlarmsPage extends AppCompatActivity implements TimePickerDialog.On
 
         UpdateFragments();
 
-        int dayOfWeek = (m_cal.get(Calendar.DAY_OF_WEEK) - 2); // -1 to 5
+        int dayOfWeek = SaveManager.getInstance().GetDayOfWeek(m_cal);
         TabLayout.Tab tab = m_tabLayout.getTabAt(dayOfWeek);
         tab.select();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1)
+        {
+            if(resultCode == RESULT_OK)
+            {
+                m_lastTabIndex = data.getIntExtra("tabIndex", 0);
+            }
+        }
     }
 }

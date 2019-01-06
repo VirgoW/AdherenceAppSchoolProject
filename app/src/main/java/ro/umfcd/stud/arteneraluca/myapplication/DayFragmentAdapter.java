@@ -45,13 +45,13 @@ public class DayFragmentAdapter extends FragmentStatePagerAdapter
 
     @Override
     public Fragment getItem(int index) {
-        int dayOfWeek = m_cal.get(Calendar.DAY_OF_WEEK) - 2; //Day of week starts at 1 and index starts at 0, and first day of the week is sunday
+        int dayOfWeek = SaveManager.getInstance().GetDayOfWeek(m_cal); //Day of week starts at 1 and index starts at 0, and first day of the week is sunday
         int dayOffset = index - dayOfWeek;
          UpdateAddCal(Calendar.DAY_OF_MONTH, dayOffset);
         Calendar newCal = (Calendar) m_cal.clone();
         UpdateAddCal(Calendar.DAY_OF_MONTH, -dayOffset);
 
-        return DayFragment.newInstance(newCal, m_context); //TODO is not cleared on changing month?
+        return DayFragment.newInstance(newCal, m_context, index);
     }
 
     @Override
@@ -92,7 +92,7 @@ public class DayFragmentAdapter extends FragmentStatePagerAdapter
     private void UpdateDayTabs()
     {
         String[] dayNames = m_context.getResources().getStringArray(R.array.dayNames);
-        int dayOfWeek = m_cal.get(Calendar.DAY_OF_WEEK) - 2; //Day of week starts at 1 and index starts at 0, and first day of the week is sunday
+        int dayOfWeek = SaveManager.getInstance().GetDayOfWeek(m_cal); //Day of week starts at 1 and index starts at 0, and first day of the week is sunday
         for(int index = 0; index < 7; index ++)
         {
             int dayOffset = index - dayOfWeek;

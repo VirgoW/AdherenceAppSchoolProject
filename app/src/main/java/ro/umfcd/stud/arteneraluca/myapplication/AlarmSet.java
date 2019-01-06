@@ -34,6 +34,7 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
     TextView currentSelectedHourPicker;
     String m_mode;
     int m_alarmIndex;
+    int m_previousTabIndex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +71,7 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
 
         //Treatment radioGroup
         InitialiseFrequencyRadioGroup(editMode);
-        InitialiseCheckboxes();
+        InitialiseCheckboxes(editMode);
 
         //Save alarm button
         Button saveAlarm = (Button) findViewById(R.id.alarmSetButton);
@@ -81,6 +82,8 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
                 TrySaveAlarm();
             }
         });
+
+        m_previousTabIndex = myIntent.getIntExtra("tabIndex", 0);
     }
 
     //Methods
@@ -168,16 +171,12 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
             else
             {
                 daily = R.id.weeklyRadioBtn;
-                for(int i=0; i<7;i++)
-                {
-                    ((CheckBox) checkboxes_layout.getChildAt(i)).setChecked(editAlarm.m_weeklyDayFrequency.get(i));
-                }
             }
             alarmFreq_radioGroup.check(daily);
         }
     }
-//TODO check is edit mode needs to be applied here as well
-    private void InitialiseCheckboxes()
+
+    private void InitialiseCheckboxes(boolean editMode)
     {
         LinearLayout checkboxesLay = (LinearLayout) findViewById(R.id.checkboxes_layout);
         for(int i = 0; i < checkboxesLay.getChildCount(); ++i)
@@ -195,6 +194,18 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
                         chkBox.setBackgroundColor(0);
                 }
             });
+        }
+
+        if(editMode)
+        {
+            Alarm editAlarm = SaveManager.getInstance().GetAlarm(m_alarmIndex);
+            if(!editAlarm.IsDailyTreatment())
+            {
+                for(int i=0; i<7;i++)
+                {
+                    ((CheckBox) checkboxesLay.getChildAt(i)).setChecked(editAlarm.m_weeklyDayFrequency.get(i));
+                }
+            }
         }
     }
 
@@ -290,7 +301,6 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
             }
 
             onBackPressed();
-            finish();
         }
     }
 
@@ -368,8 +378,8 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
     private void TryDeleteAlarm()
     {
         SaveManager.getInstance().DeleteAlarm(m_alarmIndex, m_context);
+
         onBackPressed();
-        finish();
     }
 
     private void FillFormFromCache()
@@ -389,5 +399,14 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
         SimpleDateFormat format = new SimpleDateFormat(m_context.getText(R.string.dateFormat).toString());
         String startDateCal = format.format(editAlarm.GetStartCal().getTime());
         startDate.setText(startDateCal);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent();
+        intent.putExtra("tabIndex", m_previousTabIndex);
+        setResult(RESULT_OK, intent);
+        finish();
+        super.onBackPressed();
     }
 }

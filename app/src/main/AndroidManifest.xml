@@ -18,7 +18,15 @@
             </intent-filter>
         </activity>
         <activity android:name=".AlarmsPage" />
-        <activity android:name=".AlarmSet" ></activity>
+        <activity android:name=".AlarmSet" />
+        <activity android:name=".AlertDialogClass"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
+            <intent-filter>
+                <action android:name="android.intent.action.DIALOG" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <receiver android:name=".AlarmReceiver"/>
     </application>
 
 </manifest>
