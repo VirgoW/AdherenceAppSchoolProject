@@ -79,6 +79,10 @@
     <string name="alarmModeNew">New</string>
     <string name="alarmModeEdit">Edit</string>
 
+    //Alarm types
+    <string name="alarmActivate">Activate</string>
+    <string name="alarmSet">Set</string>
+
     //Alarm Frequency Type
     <string name="alarmFrequencyDaily">Daily</string>
     <string name="alarmFrequencyWeekly">Weekly</string>

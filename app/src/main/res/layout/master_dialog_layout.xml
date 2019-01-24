@@ -4,22 +4,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    <TextView
-        android:id="@+id/AlarmDialogText"
-        android:layout_width="wrap_content"
+
+    <EditText
+        android:id="@+id/passwordText"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Please take your meds! Id = "
-        android:textSize="20sp"
-        />
+        android:ems="10"
+        android:inputType="numberPassword" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
+
         <Button
+            android:id="@+id/master_OkBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="I'll take them!"
             android:layout_weight="0.5"
-            android:id="@+id/ID_Ok"/>
+            android:text="OK" />
+        <Button
+        android:id="@+id/master_CancelBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        android:text="CANCEL" />
     </LinearLayout>
 </LinearLayout>

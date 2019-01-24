@@ -162,7 +162,7 @@ public class AlarmsPage extends AppCompatActivity implements TimePickerDialog.On
 
     private void UpdateFragments()
     {
-        UpdateMonthTextView(); // TODO update month better per week changed
+        UpdateMonthTextView();
         //m_alarmPageAdapter.notifyDataSetChanged();
         m_alarmPageAdapter = new DayFragmentAdapter(getSupportFragmentManager(), m_context, m_cal);
         m_dayFragmentViewer.setAdapter(null);

@@ -1,6 +1,9 @@
 package ro.umfcd.stud.arteneraluca.myapplication;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.util.Xml;
 import android.view.View;
@@ -87,26 +90,35 @@ public class SaveManager {
 
     void AddNewAlarm(Context context, View view)
     {
-        Alarm newAlarm = CompactAlarm(context, view);
-        newAlarm.setId(m_alarmList.size());
+        Alarm newAlarm = CompactAlarm(context, view, m_alarmList.size());
         m_alarmList.add(newAlarm);
+        AddSystemAlarms(m_alarmList.size() - 1, context);
         SaveDataToXml(context);
     }
 
     void SaveAlarm(int alarmIndex, Context context, View view)
     {
-        Alarm newAlarm = CompactAlarm(context, view);
+        Alarm newAlarm = CompactAlarm(context, view, alarmIndex);
         m_alarmList.set(alarmIndex, newAlarm);
+
+        ClearSystemAlarms(alarmIndex, context);
+        AddSystemAlarms(alarmIndex, context);
         SaveDataToXml(context);
     }
 
     void DeleteAlarm(int alarmIndex, Context context)
     {
+        ClearSystemAlarms(alarmIndex, context);
         m_alarmList.remove(alarmIndex);
 
         for(int i=0; i< m_alarmList.size(); i++)
         {
-            m_alarmList.get(i).setId(i);
+            if(m_alarmList.get(i).getId() != i)
+            {
+                m_alarmList.get(i).setId(i);
+                ClearSystemAlarms(i, context);
+                //AddSystemAlarms(i, context);
+            }
         }
         SaveDataToXml(context);
     }
@@ -283,10 +295,11 @@ public class SaveManager {
         return m_alarmList.size();
     }
 
-    private Alarm CompactAlarm(Context context, View view)
+    private Alarm CompactAlarm(Context context, View view, int id)
     {
         Alarm newAlarm = new Alarm();
 
+        newAlarm.setId(id);
         TextView nameValue = (TextView) view.findViewById(R.id.medNameText);
         TextView dosageValue = (TextView) view.findViewById(R.id.DosageInput_Text);
         TextView notesValue = (TextView) view.findViewById(R.id.other_details);
@@ -356,5 +369,161 @@ public class SaveManager {
             dayOfWeek = 7 - Math.abs(dayOfWeek);
         }
         return dayOfWeek;
+    }
+
+    void ClearSystemAlarms(int alarmIndex, Context context) {
+        //Clear System alarms that start with alarm index
+        int alarmId;
+        Intent intent = new Intent(context, AlarmReceiver.class);
+        AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Alarm alarm = m_alarmList.get(alarmIndex);
+
+        //Daily alarm
+        if (alarm.IsDailyTreatment())
+        {
+            for(int indexHour = 0 ; indexHour < alarm.m_dailyFrequency.size(); indexHour++)
+            {
+                alarmId = alarmIndex * 10 + indexHour;
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(context, alarmId, intent, PendingIntent.FLAG_NO_CREATE);
+                if (pendingIntent != null)
+                {
+                    alarmMgr.cancel(pendingIntent);
+                }
+            }
+        }
+        //Weekly alarm
+        else
+        {
+            //Clear the setter for this week
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, alarmIndex, intent, PendingIntent.FLAG_NO_CREATE);
+            if (pendingIntent != null)
+            {
+                alarmMgr.cancel(pendingIntent);
+            }
+            for(int indexDay = 0; indexDay < 7; indexDay++)
+            {
+                if(alarm.m_weeklyDayFrequency.get(indexDay))
+                {
+                    for(int indexHour = 0 ; indexHour < alarm.m_dailyFrequency.size(); indexHour++)
+                    {
+                        alarmId = alarmIndex * 10 + indexDay;
+                        alarmId = alarmId * 10 + indexHour;
+
+                        pendingIntent = PendingIntent.getBroadcast(context, alarmId, intent, PendingIntent.FLAG_NO_CREATE);
+                        if (pendingIntent != null)
+                        {
+                            alarmMgr.cancel(pendingIntent);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    void AddSystemAlarms(int alarmIndex, Context context)
+    {
+        //Add system alarms
+        int alarmId;
+        Intent intent = new Intent(context, AlarmReceiver.class);
+        AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Alarm alarm = m_alarmList.get(alarmIndex);
+
+        //Daily alarm
+        if (alarm.IsDailyTreatment())
+        {
+            for(int indexHour = 0 ; indexHour < alarm.m_dailyFrequency.size(); indexHour++)
+            {
+                alarmId = alarmIndex * 10 + indexHour;
+                intent.putExtra("alarmType", R.string.alarmActivate);
+                intent.putExtra("alarmID", alarmId);
+                intent.putExtra("medName", alarm.GetMedName());
+                intent.putExtra("hour", alarm.m_dailyFrequency.get(indexHour));
+                Calendar alarmCal = alarm.GetStartCal();
+                //.intent.putExtra("date", );
+                PendingIntent pendingAlarmIntent = PendingIntent.getBroadcast(context, alarmId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                String hourString = alarm.m_dailyFrequency.get(indexHour);
+                Calendar cal = Calendar.getInstance();
+                cal.setTimeInMillis(System.currentTimeMillis());
+                int hour = Integer.parseInt(hourString.substring(0,2));
+                int minute = Integer.parseInt(hourString.substring(3));
+                cal.set(Calendar.HOUR_OF_DAY, hour);
+                cal.set(Calendar.MINUTE, minute);
+
+                Calendar todayCal = Calendar.getInstance();
+
+                long milis1 = alarmCal.getTimeInMillis();
+                long milis2= todayCal.getTimeInMillis();
+                long diffDays = (milis1 - milis2) / (24*60*60*1000);
+
+                if(diffDays > 0)
+                {
+                    cal.add(Calendar.DATE, (int)diffDays); //TODO Possible casting issues
+                }
+                else if(todayCal.after(cal))
+                {
+                    //Make the alarm start tomorrow if current time is after set time.
+                    cal.add(Calendar.DAY_OF_MONTH, 1);
+                }
+
+
+                alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingAlarmIntent);
+            }
+        }
+        //Weekly alarm
+        else {
+            //Pass the alarm and the alarm type - a setter of alarms in this case
+            intent.putExtra("alarmType", R.string.alarmSet);
+            //Manual serialize object
+            SerializeAlarmIntoIntent(intent, alarm);
+
+            //Start today and set the alarms until monday, then set an alarm for monday
+            PendingIntent pendingAlarmIntent = PendingIntent.getBroadcast(context, alarmIndex, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            Calendar todayCal = Calendar.getInstance();
+            alarmMgr.set(AlarmManager.RTC_WAKEUP, todayCal.getTimeInMillis(), pendingAlarmIntent);
+        }
+    }
+
+    void SerializeAlarmIntoIntent(Intent intent, Alarm alarm)
+    {
+        intent.putExtra("medName", alarm.GetMedName());
+        intent.putExtra("dailyHours", alarm.m_dailyFrequency.size());
+        for(int i=0; i< alarm.m_dailyFrequency.size(); i++)
+        {
+            String extraString = "hourString" + i;
+            intent.putExtra(extraString, alarm.m_dailyFrequency.get(i));
+        }
+        intent.putExtra("alarmId", alarm.getId());
+        for(int i=0; i< 7; i++)
+        {
+            String extraString = "dayBoolean" + i;
+            intent.putExtra(extraString, alarm.m_weeklyDayFrequency.get(i));
+        }
+
+    }
+
+    Boolean DeserializeAlarmFromIntent(Intent intent, Alarm alarm)
+    {
+        String medName = intent.getStringExtra("medName");
+        alarm.SetMedName(medName);
+        int dailyHours = intent.getIntExtra("dailyHours", -1);
+        for(int i=0; i < dailyHours; i++)
+        {
+            String extraString = "hourString" + i;
+            String hour = intent.getStringExtra(extraString);
+            alarm.m_dailyFrequency.add(hour);
+        }
+        for(int i=0; i < 7; i++)
+        {
+            String extraString = "dayBoolean" + i;
+            Boolean weekChecked = intent.getBooleanExtra(extraString, false);
+            alarm.m_weeklyDayFrequency.set(i, weekChecked);
+        }
+        int alarmId = intent.getIntExtra("alarmId", -1);
+        alarm.setId(alarmId);
+        if(alarmId >= 0 && !medName.isEmpty())
+        {
+            return true;
+        }
+        return false;
     }
 }

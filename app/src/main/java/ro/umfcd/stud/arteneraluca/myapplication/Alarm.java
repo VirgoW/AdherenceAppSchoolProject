@@ -1,9 +1,10 @@
 package ro.umfcd.stud.arteneraluca.myapplication;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class Alarm {
+public class Alarm implements Serializable {
 
     private String m_medName;
     private String m_notes;
