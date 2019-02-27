@@ -20,8 +20,8 @@ public class AlertDialogClass extends Activity {
         super.onCreate(savedInstanceState);
         final Context context = this;
         //Start Ringtone service to play alarm sound
-        //Intent startIntent = new Intent(context, RingtoneCustomService.class);
-        //context.startService(startIntent);
+        Intent startIntent = new Intent(context, RingtoneCustomService.class);
+        context.startService(startIntent);
 
         LayoutInflater inflater = getLayoutInflater();
         // Build the dialog
@@ -49,8 +49,8 @@ public class AlertDialogClass extends Activity {
                 {
                     mAlertDialog.dismiss();
                     //Stop Ringtone service
-                    //Intent stopIntent = new Intent(context, RingtoneCustomService.class);
-                    //context.stopService(stopIntent);
+                    Intent stopIntent = new Intent(context, RingtoneCustomService.class);
+                    context.stopService(stopIntent);
                     finish();
                 }
             }
