@@ -39,5 +39,8 @@ public class MainActivity extends AppCompatActivity {
 
         //TODO add hidden switch on this activity that can be touched even while invisible?
         // We want to create a hidden method of displaying a button that would open up the review page
+        // Ralu: nu putem sa facem asta pentru ca intram in conflict cu drepturile de privacy.
+        // O sa avem nevoie de o metoda pprin care userul sa salveze un document cu toate
+        //datele si apoi sa il trimita la noi
     }
 }
