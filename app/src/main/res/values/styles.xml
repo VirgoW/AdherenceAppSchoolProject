@@ -18,5 +18,7 @@
 
     <style name="CustomSwitchTheme" parent="@style/Widget.AppCompat.CompoundButton.Switch">
         <item name="android:thumb">@drawable/custom_thumb</item>
+        <item name="android:textSize">@dimen/alarm_set_text_size</item>
+        <item name="android:track">@drawable/custom_track</item>
     </style>
 </resources>

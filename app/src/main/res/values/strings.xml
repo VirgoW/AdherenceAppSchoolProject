@@ -45,7 +45,8 @@
     </string-array>
 
     <string name="alarm_title">Alarmă nouă</string>
-    <string name="medName_hint">Denumire Medicament*</string>
+    <string name="medName_text">Numele medicamentului*:</string>
+    <string name="medName_hint">Ex: Propranolol</string>
     <string name="dosage_txt">Unitatea de dozare*: </string>
     <string name="dosageHint">Capsulă, mL, etc.</string>
 

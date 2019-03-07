@@ -3,13 +3,16 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#000000</color>
+    <color name="grey">#4d4d4d</color>
 
+    <color name="alarm_set_background">#dcfffc</color>
     <color name="tab_backgroundSelected">@color/colorPrimary</color>
     <color name="tab_backgroundUnelected">@color/colorPrimaryDark</color>
 
     <color name="tab_item_text_color">#FFFFFF</color>
 
     <color name="switch_thumb">#f8f0eb</color>
+    <color name="switch_track">#c9c9c9</color>
     <color name="checked_checkbox">#ffd600</color>
 
 </resources>

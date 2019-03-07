@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <dimen name="alarm_set_vertical_padding">10dp</dimen>
+    <dimen name="alarm_set_border_stroke">2dp</dimen>
+    <dimen name="alarm_set_border_corners">5dp</dimen>
+    <dimen name="alarm_set_border_padding">3dp</dimen>
+    <dimen name="alarm_set_text_size">25sp</dimen>
+
+    <dimen name="scroll_padding">5dp</dimen>
+
+    <dimen name="track_size">32dp</dimen>
+    <dimen name="track_stroke">16dp</dimen>
+    <dimen name="switch_radius">5dp</dimen>
+
     <dimen name="checkbox_square">26dp</dimen>
     <dimen name="chkText_off">-21dp</dimen>
     <dimen name="chk_textSize">12dp</dimen>
+
+
 </resources>

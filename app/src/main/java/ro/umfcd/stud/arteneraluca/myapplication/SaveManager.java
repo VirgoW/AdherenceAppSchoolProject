@@ -300,7 +300,7 @@ public class SaveManager {
         Alarm newAlarm = new Alarm();
 
         newAlarm.setId(id);
-        TextView nameValue = (TextView) view.findViewById(R.id.medNameText);
+        TextView nameValue = (TextView) view.findViewById(R.id.medNameTextInput);
         TextView dosageValue = (TextView) view.findViewById(R.id.DosageInput_Text);
         TextView notesValue = (TextView) view.findViewById(R.id.other_details);
         Switch frequncyValue = (Switch) view.findViewById(R.id.alarmDuration_switch); //TODO fixed ammount of time

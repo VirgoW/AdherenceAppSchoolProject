@@ -310,7 +310,7 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
         boolean startDateValid = true;
         boolean hourPickersLayoutValid = true;
         boolean frequencyValid = true;
-        TextView medName = (TextView) findViewById(R.id.medNameText);
+        TextView medName = (TextView) findViewById(R.id.medNameTextInput);
         TextView dosage = (TextView) findViewById(R.id.DosageInput_Text);
         TextView startDateSelection = (TextView) findViewById(R.id.startDateSelection);
         LinearLayout hourPickersLayout = (LinearLayout) findViewById(R.id.hourPickers_LinearLayout);
@@ -385,7 +385,7 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
     private void FillFormFromCache()
     {
         Alarm editAlarm = SaveManager.getInstance().GetAlarm(m_alarmIndex);
-        TextView medName = (TextView) findViewById(R.id.medNameText);
+        TextView medName = (TextView) findViewById(R.id.medNameTextInput);
         TextView dosage = (TextView) findViewById(R.id.DosageInput_Text);
         TextView notes = (TextView) findViewById(R.id.other_details);
         TextView startDate = (TextView) findViewById(R.id.startDateSelection);
