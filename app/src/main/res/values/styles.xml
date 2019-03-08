@@ -21,4 +21,13 @@
         <item name="android:textSize">@dimen/alarm_set_text_size</item>
         <item name="android:track">@drawable/custom_track</item>
     </style>
+
+    <style name="CustomSpinner_ItemTheme" parent="@android:style/TextAppearance.Widget.TextView.SpinnerItem">
+        <item name="android:textSize">@dimen/alarm_set_text_size</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+    <style name="CustomSpinner_dropdownTheme" parent="TextAppearance.AppCompat.Widget.TextView.SpinnerItem">
+        <item name="android:textSize">@dimen/alarm_set_text_size</item>
+        <item name="android:background">@color/spinner_dropdown</item>
+    </style>
 </resources>

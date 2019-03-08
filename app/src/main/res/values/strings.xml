@@ -51,14 +51,14 @@
     <string name="dosageHint">Capsulă, mL, etc.</string>
 
     //Toggle button on/off text for alarm duration
-    <string name="durationOff">Continuă</string>
+    <string name="durationOff">Continuă </string>
     <string name="durationOn">Fixă</string>
     <string name="alarmDuration">Durata tratamentului:</string>
 
     <string name="startDate">Începând cu*: </string>
     <string name="startDate_hint">Selectează data</string>
     <string name="alarmFreq">Frecvența tratamentului *:</string>
-    <string name="alarmsNum">Nr</string>
+    <string name="alarmsNum">Număr</string>
     <string name="hour_picker_hint">Selectează ora* </string>
     <string name="other_details_hint">Detalii suplimentare</string>
     <string name="alarmSaveButtonName">Salvează</string>

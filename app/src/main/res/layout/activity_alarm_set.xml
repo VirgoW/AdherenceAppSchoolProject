@@ -66,7 +66,7 @@
                 android:id="@+id/DosageInput_Text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/alarm_set_vertical_padding"
                 android:background="@drawable/alarm_set_borders"
                 android:hint="@string/dosageHint"
                 android:textSize="@dimen/alarm_set_text_size"
@@ -104,27 +104,30 @@
 
             <EditText
                 android:id="@+id/alarmsNumber_Text"
-                android:layout_width="52dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:ems="10"
+                android:layout_marginTop="@dimen/alarm_set_vertical_padding"
+                android:background="@drawable/alarm_set_borders"
                 android:hint="@string/alarmsNum"
                 android:inputType="number"
                 android:singleLine="true"
-                android:textSize="12sp"
+                android:textSize="@dimen/alarm_set_text_size"
                 android:visibility="visible"
+                app:layout_constraintEnd_toStartOf="@+id/treatmentLengthSpinner"
+                app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/alarmDuration_switch" />
 
             <Spinner
                 android:id="@+id/treatmentLengthSpinner"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:entries="@array/Treatment_length"
                 android:visibility="visible"
+                android:layout_marginLeft="@dimen/alarm_set_horizontal_padding"
+                android:layout_marginStart="@dimen/alarm_set_horizontal_padding"
                 app:layout_constraintBottom_toBottomOf="@+id/alarmsNumber_Text"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.15"
+                app:layout_constraintHorizontal_weight="2"
                 app:layout_constraintStart_toEndOf="@+id/alarmsNumber_Text"
                 app:layout_constraintTop_toTopOf="@+id/alarmsNumber_Text" />
 

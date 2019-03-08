@@ -15,4 +15,6 @@
     <color name="switch_track">#c9c9c9</color>
     <color name="checked_checkbox">#ffd600</color>
 
+    <color name="spinner_dropdown">#f8f0eb</color>
+
 </resources>

@@ -2,6 +2,7 @@
 <resources>
 
     <dimen name="alarm_set_vertical_padding">10dp</dimen>
+    <dimen name="alarm_set_horizontal_padding">5dp</dimen>
     <dimen name="alarm_set_border_stroke">2dp</dimen>
     <dimen name="alarm_set_border_corners">5dp</dimen>
     <dimen name="alarm_set_border_padding">3dp</dimen>
@@ -12,6 +13,9 @@
     <dimen name="track_size">32dp</dimen>
     <dimen name="track_stroke">16dp</dimen>
     <dimen name="switch_radius">5dp</dimen>
+    <dimen name="thumb_padding">5dp</dimen>
+
+    <dimen name="spinner_dropdown_padding">5dp</dimen>
 
     <dimen name="checkbox_square">26dp</dimen>
     <dimen name="chkText_off">-21dp</dimen>

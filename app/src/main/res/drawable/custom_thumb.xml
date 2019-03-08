@@ -4,6 +4,7 @@
         <shape android:shape="rectangle">
             <corners android:radius="@dimen/switch_radius"/>
             <solid android:color="@drawable/switch_thumb_color"/>
+            <padding android:right="@dimen/thumb_padding"/>
         </shape>
     </item>
 

@@ -9,6 +9,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -60,11 +61,13 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
                 }
             });
         }
-        //Hour pickers
-        InitialiseHourPickerLayout();
+
 
         //Tratament continuu/fix switch
         InitialiseSwitch(editMode);
+
+        //Tratament fis spinner
+        InitialiseTreatmentSpinner();
 
         //Date picker textView
         InitialiseDatePicker(editMode);
@@ -72,6 +75,9 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
         //Treatment radioGroup
         InitialiseFrequencyRadioGroup(editMode);
         InitialiseCheckboxes(editMode);
+
+        //Hour pickers
+        InitialiseHourPickerLayout();
 
         //Save alarm button
         Button saveAlarm = (Button) findViewById(R.id.alarmSetButton);
@@ -105,6 +111,14 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
                 }
             }
         });
+    }
+
+    private void InitialiseTreatmentSpinner()
+    {
+        Spinner treatmentLengthSpinner = (Spinner) findViewById(R.id.treatmentLengthSpinner);
+        ArrayAdapter<CharSequence> spinAdapter = ArrayAdapter.createFromResource(this,R.array.Treatment_length,R.layout.custom_spinner_item);
+        spinAdapter.setDropDownViewResource(R.layout.custom_spinner_dropdown);
+        treatmentLengthSpinner.setAdapter(spinAdapter);
     }
 
     private  void InitialiseDatePicker(boolean editMode)
