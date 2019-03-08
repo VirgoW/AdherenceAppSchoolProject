@@ -167,42 +167,41 @@
 
             <TextView
                 android:id="@+id/alarmFreq_textView"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="88dp"
+                android:layout_marginTop="@dimen/alarm_set_vertical_padding"
                 android:text="@string/alarmFreq"
+                android:textSize="@dimen/alarm_set_text_size"
                 android:textColor="@android:color/black"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/startDateSelection" />
 
             <RadioGroup
                 android:id="@+id/alarmFreq_RadioGroup"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
                 android:checkedButton="@+id/dailyRadioBtn"
                 android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="@+id/alarmFreq_textView"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/alarmFreq_textView"
-                app:layout_constraintTop_toTopOf="@+id/alarmFreq_textView">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/alarmFreq_textView">
 
                 <RadioButton
                     android:id="@+id/dailyRadioBtn"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/daily" />
+                    android:text="@string/daily"
+                    android:textSize="@dimen/alarm_set_text_size"/>
 
                 <RadioButton
                     android:id="@+id/weeklyRadioBtn"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/weekly" />
+                    android:text="@string/weekly"
+                    android:textSize="@dimen/alarm_set_text_size"/>
 
             </RadioGroup>
 
@@ -210,15 +209,11 @@
                 android:id="@+id/checkboxes_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
                 android:orientation="horizontal"
-                android:padding="5dp"
+                android:padding="@dimen/checkboxesLay_padding"
                 android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/freq_perDay_spinner"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/alarmFreq_RadioGroup">
 
                 <CheckBox
@@ -227,8 +222,7 @@
                     android:layout_height="@dimen/checkbox_square"
                     android:button="@drawable/checkbox"
                     android:paddingStart="@dimen/chkText_off"
-                    android:paddingLeft="@dimen/chkText_off"
-                    android:textSize="@dimen/chk_textSize" />
+                    android:paddingLeft="@dimen/chkText_off" />
 
                 <CheckBox
                     android:id="@+id/checkBox_Tu"
@@ -289,15 +283,14 @@
 
             <Spinner
                 android:id="@+id/freq_perDay_spinner"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
+                android:layout_marginTop="@dimen/alarm_set_vertical_padding"
                 android:entries="@array/perDay_freq"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/alarmFreq_RadioGroup" />
+                app:layout_constraintTop_toBottomOf="@+id/checkboxes_layout" />
 
             <LinearLayout
                 android:id="@+id/hourPickers_LinearLayout"

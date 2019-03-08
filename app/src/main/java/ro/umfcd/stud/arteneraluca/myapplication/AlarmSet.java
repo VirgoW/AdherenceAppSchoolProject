@@ -76,6 +76,9 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
         InitialiseFrequencyRadioGroup(editMode);
         InitialiseCheckboxes(editMode);
 
+        //Administrari pe zi spinner
+        Initialise_perDaySpinner();
+
         //Hour pickers
         InitialiseHourPickerLayout();
 
@@ -202,17 +205,19 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
         LinearLayout checkboxesLay = (LinearLayout) findViewById(R.id.checkboxes_layout);
         for(int i = 0; i < checkboxesLay.getChildCount(); ++i)
         {
-            final CheckBox chkBox = (CheckBox) checkboxesLay.getChildAt(i);
+            final CheckBox checkbox = (CheckBox) checkboxesLay.getChildAt(i);
             String[] chk_dayNames = getResources().getStringArray(R.array.dayNames);
-            chkBox.setText(chk_dayNames[i]);
+            checkbox.setText(chk_dayNames[i]);
+            float textSize = getResources().getDimension(R.dimen.alarm_set_text_size);
+            checkbox.setTextSize(textSize);
 
-            chkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked)
-                        chkBox.setBackgroundColor(getResources().getColor(R.color.checked_checkbox));
+                        checkbox.setBackgroundColor(getResources().getColor(R.color.custom_checkbox));
                     else
-                        chkBox.setBackgroundColor(0);
+                        checkbox.setBackgroundColor(0);
                 }
             });
         }
@@ -228,6 +233,14 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
                 }
             }
         }
+    }
+
+    private void Initialise_perDaySpinner()
+    {
+        Spinner perDaySpinner = (Spinner) findViewById(R.id.freq_perDay_spinner);
+        ArrayAdapter<CharSequence> spinAdapter = ArrayAdapter.createFromResource(this,R.array.perDay_freq,R.layout.custom_spinner_item);
+        spinAdapter.setDropDownViewResource(R.layout.custom_spinner_dropdown);
+        perDaySpinner.setAdapter(spinAdapter);
     }
 
     private void InitialiseHourPickerLayout()

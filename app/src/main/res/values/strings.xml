@@ -9,14 +9,10 @@
     </string-array>
 
     <string-array name="perDay_freq">
-        <item>1 dată pe zi</item>
-        <item>De 2 ori pe zi</item>
-        <item>De 3 ori pe zi</item>
-        <item>De 4 ori pe zi</item>
-        <item>De 5 ori pe zi</item>
-        <item>De 6 ori pe zi</item>
-        <item>De 7 ori pe zi</item>
-        <item>De 8 ori pe zi</item>
+        <item>O administrare pe zi</item>
+        <item>2 administrări pe zi</item>
+        <item>3 administrări pe zi</item>
+        <item>4 administrări pe zi</item>
     </string-array>
 
     <string-array name="dayNames">
@@ -57,7 +53,7 @@
 
     <string name="startDate">Selectează data de început*: </string>
     <string name="startDate_hint">Selectează data</string>
-    <string name="alarmFreq">Frecvența tratamentului *:</string>
+    <string name="alarmFreq">Frecvența tratamentului*:</string>
     <string name="alarmsNum">Număr</string>
     <string name="hour_picker_hint">Selectează ora* </string>
     <string name="other_details_hint">Detalii suplimentare</string>

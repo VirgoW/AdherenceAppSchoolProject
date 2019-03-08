@@ -13,7 +13,8 @@
 
     <color name="switch_thumb">#f8f0eb</color>
     <color name="switch_track">#c9c9c9</color>
-    <color name="checked_checkbox">#ffd600</color>
+    <color name="custom_checkbox">#ffd600</color>
+    <color name="custom_checkbox_contrast">#9f8500</color>
 
     <color name="spinner_dropdown">#f8f0eb</color>
 
