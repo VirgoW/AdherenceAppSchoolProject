@@ -130,6 +130,13 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
             String startDate = format.format(SaveManager.getInstance().GetAlarm(m_alarmIndex).GetStartCal().getTime());
             alarm_startDate.setText(startDate);
         }
+        else
+        {
+            Calendar c = Calendar.getInstance();
+            String currentDateString = DateFormat.getDateInstance().format(c.getTime());
+            alarm_startDate.setText(currentDateString);
+
+        }
         alarm_startDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

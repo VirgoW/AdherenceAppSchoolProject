@@ -55,7 +55,7 @@
     <string name="durationOn">Fixă</string>
     <string name="alarmDuration">Durata tratamentului:</string>
 
-    <string name="startDate">Începând cu*: </string>
+    <string name="startDate">Selectează data de început*: </string>
     <string name="startDate_hint">Selectează data</string>
     <string name="alarmFreq">Frecvența tratamentului *:</string>
     <string name="alarmsNum">Număr</string>

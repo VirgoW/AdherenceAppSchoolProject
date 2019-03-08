@@ -141,34 +141,35 @@
 
             <TextView
                 android:id="@+id/startDate_textView"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/alarm_set_vertical_padding"
                 android:text="@string/startDate"
                 android:textColor="@android:color/black"
+                android:textSize="@dimen/alarm_set_text_size"
                 android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/alarmDuration_barrier" />
+                app:layout_constraintTop_toBottomOf="@+id/alarmDuration_barrier" />
 
             <TextView
                 android:id="@+id/startDateSelection"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ems="10"
+                android:layout_marginTop="@dimen/alarm_set_vertical_padding"
+                android:background="@drawable/alarm_set_borders"
                 android:hint="@string/startDate_hint"
                 android:singleLine="true"
+                android:textSize="@dimen/alarm_set_text_size"
                 android:visibility="visible"
-                app:layout_constraintBottom_toBottomOf="@+id/startDate_textView"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.17"
-                app:layout_constraintStart_toEndOf="@+id/startDate_textView"
-                app:layout_constraintTop_toTopOf="@+id/startDate_textView" />
+                app:layout_constraintTop_toBottomOf="@+id/startDate_textView"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/alarmFreq_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="88dp"
                 android:text="@string/alarmFreq"
                 android:textColor="@android:color/black"
                 app:layout_constraintStart_toStartOf="parent"
