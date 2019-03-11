@@ -9,7 +9,7 @@
 
     <ScrollView
         android:id="@+id/scroll_bar"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/scroll_padding"
         android:layout_marginTop="@dimen/scroll_padding"
@@ -122,9 +122,9 @@
                 android:id="@+id/treatmentLengthSpinner"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:visibility="visible"
-                android:layout_marginLeft="@dimen/alarm_set_horizontal_padding"
                 android:layout_marginStart="@dimen/alarm_set_horizontal_padding"
+                android:layout_marginLeft="@dimen/alarm_set_horizontal_padding"
+                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="@+id/alarmsNumber_Text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_weight="2"
@@ -161,8 +161,8 @@
                 android:singleLine="true"
                 android:textSize="@dimen/alarm_set_text_size"
                 android:visibility="visible"
-                app:layout_constraintTop_toBottomOf="@+id/startDate_textView"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/startDate_textView" />
 
             <TextView
                 android:id="@+id/alarmFreq_textView"
@@ -170,10 +170,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/alarm_set_vertical_padding"
                 android:text="@string/alarmFreq"
-                android:textSize="@dimen/alarm_set_text_size"
                 android:textColor="@android:color/black"
-                app:layout_constraintStart_toStartOf="parent"
+                android:textSize="@dimen/alarm_set_text_size"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/startDateSelection" />
 
             <RadioGroup
@@ -192,7 +192,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/daily"
-                    android:textSize="@dimen/alarm_set_text_size"/>
+                    android:textSize="@dimen/alarm_set_text_size" />
 
                 <RadioButton
                     android:id="@+id/weeklyRadioBtn"
@@ -200,7 +200,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/weekly"
-                    android:textSize="@dimen/alarm_set_text_size"/>
+                    android:textSize="@dimen/alarm_set_text_size" />
 
             </RadioGroup>
 
@@ -217,7 +217,7 @@
                 <CheckBox
                     android:id="@+id/checkBox_Mo"
                     android:layout_width="@dimen/checkbox_square"
-                    android:layout_height="@dimen/checkbox_square"/>
+                    android:layout_height="@dimen/checkbox_square" />
 
                 <CheckBox
                     android:id="@+id/checkBox_Tu"
@@ -237,17 +237,17 @@
                 <CheckBox
                     android:id="@+id/checkBox_Fr"
                     android:layout_width="@dimen/checkbox_square"
-                    android:layout_height="@dimen/checkbox_square"/>
+                    android:layout_height="@dimen/checkbox_square" />
 
                 <CheckBox
                     android:id="@+id/checkBox_Sa"
                     android:layout_width="@dimen/checkbox_square"
-                    android:layout_height="@dimen/checkbox_square"/>
+                    android:layout_height="@dimen/checkbox_square" />
 
                 <CheckBox
                     android:id="@+id/checkBox_Su"
                     android:layout_width="@dimen/checkbox_square"
-                    android:layout_height="@dimen/checkbox_square"/>
+                    android:layout_height="@dimen/checkbox_square" />
 
             </LinearLayout>
 
@@ -256,7 +256,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:barrierDirection="bottom"
-                app:constraint_referenced_ids="checkboxes_layout"/>
+                app:constraint_referenced_ids="checkboxes_layout" />
 
             <Spinner
                 android:id="@+id/freq_perDay_spinner"
@@ -273,59 +273,64 @@
                 android:id="@+id/hourPickers_LinearLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginTop="@dimen/alarm_set_vertical_padding"
                 android:orientation="vertical"
-                app:layout_constraintBottom_toTopOf="@+id/other_details"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/freq_perDay_spinner" />
 
             <EditText
                 android:id="@+id/other_details"
-                android:layout_width="295dp"
-                android:layout_height="125dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:ems="10"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/alarm_set_vertical_padding"
+                android:background="@drawable/alarm_set_borders"
                 android:hint="@string/other_details_hint"
                 android:inputType="textMultiLine|textLongMessage"
-                android:lineSpacingExtra="8sp"
+                android:lineSpacingExtra="@dimen/otherDetails_spacing"
                 android:singleLine="false"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toTopOf="@+id/alarmSetButton"
+                android:textSize="@dimen/alarm_set_text_size"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/hourPickers_LinearLayout" />
 
             <Button
                 android:id="@+id/alarmSetButton"
+                style="@style/SaveDelete_ButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="32dp"
-                android:layout_marginRight="32dp"
+                android:layout_marginTop="@dimen/alarm_set_vertical_padding"
+                android:layout_marginEnd="@dimen/button_Horizontalpadding"
+                android:layout_marginRight="@dimen/button_Horizontalpadding"
                 android:text="@string/alarmSaveButtonName"
                 android:visibility="visible"
-                app:layout_constraintBottom_toTopOf="@id/errorInvalidForm"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/alarmDeleteButton"
+                app:layout_constraintTop_toBottomOf="@+id/other_details" />
 
             <Button
                 android:id="@+id/alarmDeleteButton"
+                style="@style/Widget.AppCompat.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginLeft="32dp"
+                android:layout_marginStart="@dimen/button_Horizontalpadding"
+                android:layout_marginLeft="@dimen/button_Horizontalpadding"
+                android:layout_marginTop="@dimen/alarm_set_vertical_padding"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
                 android:text="@string/delete_alarm_button_value"
-                android:visibility="invisible"
-                app:layout_constraintBottom_toTopOf="@id/errorInvalidForm"
-                app:layout_constraintStart_toStartOf="parent" />
+                android:textSize="@dimen/alarm_set_text_size"
+                android:visibility="visible"
+                app:layout_constraintEnd_toStartOf="@+id/alarmSetButton"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/other_details" />
 
             <TextView
                 android:id="@+id/errorInvalidForm"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/alarm_set_vertical_padding"
                 android:text="@string/errorMedNameMandatory"
                 android:textColor="@android:color/holo_red_dark"
                 android:textSize="@dimen/alarm_set_text_size"
@@ -333,7 +338,8 @@
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/alarmDeleteButton" />
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>

@@ -22,5 +22,9 @@
     <dimen name="chkText_off">-34dp</dimen>
     <dimen name="checkboxesLay_padding">5dp</dimen>
 
+    <dimen name="otherDetails_spacing">8sp</dimen>
+
+    <dimen name="button_Horizontalpadding">30dp</dimen>
+
 
 </resources>

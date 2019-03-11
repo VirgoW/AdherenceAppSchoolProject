@@ -55,8 +55,9 @@
     <string name="startDate_hint">Selectează data</string>
     <string name="alarmFreq">Frecvența tratamentului*:</string>
     <string name="alarmsNum">Număr</string>
-    <string name="hour_picker_hint">Selectează ora* </string>
-    <string name="other_details_hint">Detalii suplimentare</string>
+    <string name="hour_picker_hint">Selectează ora:* </string>
+    <string name="other_details_hint">Detalii suplimentare
+    Ex:Momentul administrării, Interacțiuni cu alimente, Reacții adverse frecvente</string>
     <string name="alarmSaveButtonName">Salvează</string>
     <string name="set_alarm_button_value">Setează Alarma</string>
     <string name="delete_alarm_button_value">Sterge</string>

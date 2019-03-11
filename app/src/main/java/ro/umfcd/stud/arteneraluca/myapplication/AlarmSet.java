@@ -9,6 +9,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -28,6 +29,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+
+import static android.view.ViewGroup.*;
 
 public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
     Context m_context;
@@ -265,8 +268,9 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
                 {
                     final TextView hourPicker = new TextView(m_context);
                     hourPickersLayout.addView(hourPicker);
-                    //TODO  separate the views
-                    //hourPicker.layout(0,(int) getResources().getDimension(R.dimen.alarm_set_vertical_padding),0,0);
+
+                    int hourPicker_layout = (int) getResources().getDimensionPixelSize(R.dimen.alarm_set_vertical_padding);
+                    setMargins(hourPicker,0,hourPicker_layout,0,0);
 
                     hourPicker.setHint(R.string.hour_picker_hint);
                     hourPicker.setTextSize(TypedValue.COMPLEX_UNIT_PX,getResources().getDimensionPixelSize(R.dimen.alarm_set_text_size));
@@ -308,6 +312,15 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
         if (linearLayout.getChildCount() > 0)
         {
             linearLayout.removeAllViews();
+        }
+    }
+
+    private void setMargins (View view, int left, int top, int right, int bottom) {
+        if (view.getLayoutParams() instanceof MarginLayoutParams)
+        {
+            MarginLayoutParams p = (MarginLayoutParams) view.getLayoutParams();
+            p.setMargins(left, top, right, bottom);
+            view.requestLayout();
         }
     }
 
