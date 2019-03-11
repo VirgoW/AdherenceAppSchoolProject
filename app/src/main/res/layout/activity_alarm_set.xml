@@ -136,8 +136,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:barrierDirection="bottom"
-                app:constraint_referenced_ids="treatmentLengthSpinner,alarmsNumber_Text"
-                tools:layout_editor_absoluteY="133dp" />
+                app:constraint_referenced_ids="treatmentLengthSpinner,alarmsNumber_Text" />
 
             <TextView
                 android:id="@+id/startDate_textView"
@@ -210,7 +209,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="@dimen/checkboxesLay_padding"
                 android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -219,67 +217,46 @@
                 <CheckBox
                     android:id="@+id/checkBox_Mo"
                     android:layout_width="@dimen/checkbox_square"
-                    android:layout_height="@dimen/checkbox_square"
-                    android:button="@drawable/checkbox"
-                    android:paddingStart="@dimen/chkText_off"
-                    android:paddingLeft="@dimen/chkText_off" />
+                    android:layout_height="@dimen/checkbox_square"/>
 
                 <CheckBox
                     android:id="@+id/checkBox_Tu"
                     android:layout_width="@dimen/checkbox_square"
-                    android:layout_height="@dimen/checkbox_square"
-                    android:button="@drawable/checkbox"
-                    android:paddingStart="@dimen/chkText_off"
-                    android:paddingLeft="@dimen/chkText_off"
-                    android:textSize="@dimen/chk_textSize" />
+                    android:layout_height="@dimen/checkbox_square" />
 
                 <CheckBox
                     android:id="@+id/checkBox_We"
                     android:layout_width="@dimen/checkbox_square"
-                    android:layout_height="@dimen/checkbox_square"
-                    android:button="@drawable/checkbox"
-                    android:paddingStart="@dimen/chkText_off"
-                    android:paddingLeft="@dimen/chkText_off"
-                    android:textSize="@dimen/chk_textSize" />
+                    android:layout_height="@dimen/checkbox_square" />
 
                 <CheckBox
                     android:id="@+id/checkBox_Th"
                     android:layout_width="@dimen/checkbox_square"
-                    android:layout_height="@dimen/checkbox_square"
-                    android:button="@drawable/checkbox"
-                    android:paddingStart="@dimen/chkText_off"
-                    android:paddingLeft="@dimen/chkText_off"
-                    android:textSize="@dimen/chk_textSize" />
+                    android:layout_height="@dimen/checkbox_square" />
 
                 <CheckBox
                     android:id="@+id/checkBox_Fr"
                     android:layout_width="@dimen/checkbox_square"
-                    android:layout_height="@dimen/checkbox_square"
-                    android:button="@drawable/checkbox"
-                    android:paddingStart="@dimen/chkText_off"
-                    android:paddingLeft="@dimen/chkText_off"
-                    android:textSize="@dimen/chk_textSize" />
+                    android:layout_height="@dimen/checkbox_square"/>
 
                 <CheckBox
                     android:id="@+id/checkBox_Sa"
                     android:layout_width="@dimen/checkbox_square"
-                    android:layout_height="@dimen/checkbox_square"
-                    android:button="@drawable/checkbox"
-                    android:paddingStart="@dimen/chkText_off"
-                    android:paddingLeft="@dimen/chkText_off"
-                    android:textSize="@dimen/chk_textSize" />
+                    android:layout_height="@dimen/checkbox_square"/>
 
                 <CheckBox
                     android:id="@+id/checkBox_Su"
                     android:layout_width="@dimen/checkbox_square"
-                    android:layout_height="@dimen/checkbox_square"
-                    android:button="@drawable/checkbox"
-                    android:paddingStart="@dimen/chkText_off"
-                    android:paddingLeft="@dimen/chkText_off"
-                    android:textSize="@dimen/chk_textSize" />
+                    android:layout_height="@dimen/checkbox_square"/>
 
             </LinearLayout>
 
+            <android.support.constraint.Barrier
+                android:id="@+id/checkboxes_barrier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="checkboxes_layout"/>
 
             <Spinner
                 android:id="@+id/freq_perDay_spinner"

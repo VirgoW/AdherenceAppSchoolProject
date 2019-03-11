@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -203,13 +204,17 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
     private void InitialiseCheckboxes(boolean editMode)
     {
         LinearLayout checkboxesLay = (LinearLayout) findViewById(R.id.checkboxes_layout);
+        int layout_padding = (int) getResources().getDimensionPixelSize(R.dimen.checkboxesLay_padding);
+        checkboxesLay.setPadding(layout_padding,layout_padding,layout_padding,layout_padding);
+        int checkbox_padding = (int) getResources().getDimensionPixelSize(R.dimen.chkText_off);
         for(int i = 0; i < checkboxesLay.getChildCount(); ++i)
         {
             final CheckBox checkbox = (CheckBox) checkboxesLay.getChildAt(i);
+            checkbox.setButtonDrawable(R.drawable.checkbox);
+            checkbox.setPadding(checkbox_padding,0,0,0);
             String[] chk_dayNames = getResources().getStringArray(R.array.dayNames);
             checkbox.setText(chk_dayNames[i]);
-            float textSize = getResources().getDimension(R.dimen.alarm_set_text_size);
-            checkbox.setTextSize(textSize);
+            checkbox.setTextSize(TypedValue.COMPLEX_UNIT_PX,getResources().getDimensionPixelSize(R.dimen.alarm_set_text_size));
 
             checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -260,10 +265,13 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
                 {
                     final TextView hourPicker = new TextView(m_context);
                     hourPickersLayout.addView(hourPicker);
-                    //hourPicker.setText(R.string.hour_picker_hint);
+                    //TODO  separate the views
+                    //hourPicker.layout(0,(int) getResources().getDimension(R.dimen.alarm_set_vertical_padding),0,0);
+
                     hourPicker.setHint(R.string.hour_picker_hint);
-                   // int hourPickerId = i+1;
-                   // hourPicker.setId(hourPickerId);
+                    hourPicker.setTextSize(TypedValue.COMPLEX_UNIT_PX,getResources().getDimensionPixelSize(R.dimen.alarm_set_text_size));
+                    hourPicker.setSingleLine(true);
+                    hourPicker.setBackgroundResource(R.drawable.alarm_set_borders);
                     hourPicker.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
