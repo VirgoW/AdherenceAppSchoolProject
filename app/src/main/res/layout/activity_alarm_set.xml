@@ -295,7 +295,6 @@
 
             <Button
                 android:id="@+id/alarmSetButton"
-                style="@style/SaveDelete_ButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/alarm_set_vertical_padding"
@@ -303,26 +302,22 @@
                 android:layout_marginRight="@dimen/button_Horizontalpadding"
                 android:text="@string/alarmSaveButtonName"
                 android:visibility="visible"
+                android:textSize="@dimen/alarm_set_text_size"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/alarmDeleteButton"
                 app:layout_constraintTop_toBottomOf="@+id/other_details" />
 
             <Button
                 android:id="@+id/alarmDeleteButton"
-                style="@style/Widget.AppCompat.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/button_Horizontalpadding"
                 android:layout_marginLeft="@dimen/button_Horizontalpadding"
                 android:layout_marginTop="@dimen/alarm_set_vertical_padding"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
                 android:text="@string/delete_alarm_button_value"
-                android:textSize="@dimen/alarm_set_text_size"
                 android:visibility="visible"
+                android:textSize="@dimen/alarm_set_text_size"
                 app:layout_constraintEnd_toStartOf="@+id/alarmSetButton"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/other_details" />
 

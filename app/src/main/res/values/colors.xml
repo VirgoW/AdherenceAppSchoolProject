@@ -1,23 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#000000</color>
-    <color name="grey">#4d4d4d</color>
 
-    <color name="alarm_set_background">#dcfffc</color>
+    //old colors
+    <color name="old_primary">#008577</color>
+    <color name="old_primaryDark">#00574B</color>
+    <color name="old_accent">#000000</color>
+
+    //my Theme colors
+    <color name="colorPrimary">#8ffff5</color>
+    <color name="colorPrimaryDark">#00ced1</color>
+    <color name="colorAccent">#ffa8a8</color>
+
+    //other colors
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="grey">#4d4d4d</color>
+    <color name="light_grey">#c9c9c9</color>
+    <color name="faded_pink">#ffdad6</color>
+    <color name="dusty_pink">#deaba3</color>
+    <color name="light_blue">#dcfffc</color>
+    <color name="blue">#8ffff5</color>
+    <color name="yellow">#ffd600</color>
+    <color name="dark_yellow">#9f8500</color>
+
+    //my app colors
+    <color name="alarm_set_background">@color/light_blue</color>
     <color name="tab_backgroundSelected">@color/colorPrimary</color>
     <color name="tab_backgroundUnelected">@color/colorPrimaryDark</color>
 
-    <color name="tab_item_text_color">#FFFFFF</color>
+    <color name="tab_item_text_color">@color/black</color>
 
-    <color name="switch_thumb">#f8f0eb</color>
-    <color name="switch_track">#c9c9c9</color>
-    <color name="custom_checkbox">#ffd600</color>
-    <color name="custom_checkbox_contrast">#9f8500</color>
+    <color name="switch_thumb">@color/faded_pink</color>
+    <color name="switch_track">@color/light_grey</color>
+    <color name="custom_checkbox">@color/yellow</color>
+    <color name="custom_checkbox_contrast">@color/dark_yellow</color>
 
-    <color name="spinner_dropdown">#f8f0eb</color>
+    <color name="spinner_dropdown">@color/faded_pink</color>
 
-    <color name="SaveDel_button">#f8f0eb</color>
+    <color name="SaveDel_button">@color/faded_pink</color>
+    <color name="SaveDel_button_highlight">@color/dusty_pink</color>
 
 </resources>

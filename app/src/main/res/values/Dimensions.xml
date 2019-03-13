@@ -25,6 +25,9 @@
     <dimen name="otherDetails_spacing">8sp</dimen>
 
     <dimen name="button_Horizontalpadding">30dp</dimen>
-
+    <dimen name="button_width_height">30dp</dimen>
+    <dimen name="button_text_padding">10dp</dimen>
+    <dimen name="button_corner_radius">30dp</dimen>
+    <dimen name="button_shadow_radius">50dp</dimen>
 
 </resources>
