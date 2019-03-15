@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">My Application</string>
 
+    <string name="start_button_text">Start</string>
+
     <string-array name="Treatment_length">
         <item>Zile</item>
         <item>Săptămâni</item>
@@ -63,14 +65,12 @@
     <string name="delete_alarm_button_value">Sterge</string>
 
     //Error messages
-    <string name="errorMedNameMandatory">Completati campurile obligatorii*!</string>
+    <string name="errorMedNameMandatory">Completați câmpurile obligatorii, marcate cu "*"!</string>
 
     //Alarm frequency radio group names
 
     <string name="daily">Zilnic</string>
     <string name="weekly">Săptămânal</string>
-    <string name="monthly">Lunar</string>
-    <string name="custom">Altfel</string>
 
     //Alarm Page Modes
     <string name="alarmSetModeName">Mode</string>

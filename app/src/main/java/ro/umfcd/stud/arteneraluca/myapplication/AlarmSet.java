@@ -9,7 +9,6 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -217,7 +216,7 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
             checkbox.setPadding(checkbox_padding,0,0,0);
             String[] chk_dayNames = getResources().getStringArray(R.array.dayNames);
             checkbox.setText(chk_dayNames[i]);
-            checkbox.setTextSize(TypedValue.COMPLEX_UNIT_PX,getResources().getDimensionPixelSize(R.dimen.alarm_set_text_size));
+            checkbox.setTextSize(TypedValue.COMPLEX_UNIT_PX,getResources().getDimensionPixelSize(R.dimen.project_text_size));
 
             checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -273,7 +272,7 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
                     setMargins(hourPicker,0,hourPicker_layout,0,0);
 
                     hourPicker.setHint(R.string.hour_picker_hint);
-                    hourPicker.setTextSize(TypedValue.COMPLEX_UNIT_PX,getResources().getDimensionPixelSize(R.dimen.alarm_set_text_size));
+                    hourPicker.setTextSize(TypedValue.COMPLEX_UNIT_PX,getResources().getDimensionPixelSize(R.dimen.project_text_size));
                     hourPicker.setSingleLine(true);
                     hourPicker.setBackgroundResource(R.drawable.alarm_set_borders);
                     hourPicker.setOnClickListener(new View.OnClickListener() {

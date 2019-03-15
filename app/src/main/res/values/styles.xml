@@ -9,15 +9,13 @@
         <item name="android:windowFullscreen">true</item>
         <item name="android:colorBackground">@color/light_blue</item>
         <item name="colorButtonNormal">@color/dusty_pink</item>
-        //this line doesn't work
-        <item name="android:buttonStyle">@style/MyButtonStyle</item>
     </style>
 
-//Buttons style
+//Buttons style - not used for now
     <style name="MyButtonStyle" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:textAllCaps">false</item>
-        <item name="android:textColor">@color/dark_yellow</item>
-        <item name="android:textSize">@dimen/alarm_set_text_size</item>
+        <item name="android:textColor">@color/dark_yellow</item>    //color used just for debug
+        <item name="android:textSize">@dimen/project_text_size</item>
     </style>
 
 //Tab style
@@ -30,17 +28,17 @@
 //Switch style
     <style name="CustomSwitchTheme" parent="@style/Widget.AppCompat.CompoundButton.Switch">
         <item name="android:thumb">@drawable/custom_thumb</item>
-        <item name="android:textSize">@dimen/alarm_set_text_size</item>
+        <item name="android:textSize">@dimen/project_text_size</item>
         <item name="android:track">@drawable/custom_track</item>
     </style>
 
 //Spinner style
     <style name="CustomSpinner_ItemTheme" parent="@android:style/TextAppearance.Widget.TextView.SpinnerItem">
-        <item name="android:textSize">@dimen/alarm_set_text_size</item>
+        <item name="android:textSize">@dimen/project_text_size</item>
         <item name="android:textAlignment">center</item>
     </style>
     <style name="CustomSpinner_dropdownTheme" parent="TextAppearance.AppCompat.Widget.TextView.SpinnerItem">
-        <item name="android:textSize">@dimen/alarm_set_text_size</item>
+        <item name="android:textSize">@dimen/project_text_size</item>
         <item name="android:background">@color/spinner_dropdown</item>
     </style>
 

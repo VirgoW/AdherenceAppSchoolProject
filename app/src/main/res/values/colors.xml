@@ -37,7 +37,5 @@
 
     <color name="spinner_dropdown">@color/faded_pink</color>
 
-    <color name="SaveDel_button">@color/faded_pink</color>
-    <color name="SaveDel_button_highlight">@color/dusty_pink</color>
 
 </resources>

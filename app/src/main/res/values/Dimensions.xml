@@ -1,33 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    //Project dimensions
+    <dimen name="project_text_size">25sp</dimen>
 
+    //AlarmSet page
     <dimen name="alarm_set_vertical_padding">10dp</dimen>
     <dimen name="alarm_set_horizontal_padding">5dp</dimen>
+    <dimen name="scroll_padding">5dp</dimen>
+    <dimen name="button_Horizontalpadding">30dp</dimen>
+
+    //Text borders
     <dimen name="alarm_set_border_stroke">2dp</dimen>
     <dimen name="alarm_set_border_corners">5dp</dimen>
     <dimen name="alarm_set_border_padding">3dp</dimen>
-    <dimen name="alarm_set_text_size">25sp</dimen>
 
-    <dimen name="scroll_padding">5dp</dimen>
-
+    //Switch dimensions
     <dimen name="track_size">32dp</dimen>
     <dimen name="track_stroke">16dp</dimen>
     <dimen name="switch_radius">5dp</dimen>
     <dimen name="thumb_padding">5dp</dimen>
 
+    //Spinner dimensions
     <dimen name="spinner_dropdown_padding">5dp</dimen>
 
+    //Checkboxes dimensions
     <dimen name="checkbox_square">40dp</dimen>
     <dimen name="checkbox_stroke">1dp</dimen>
     <dimen name="chkText_off">-34dp</dimen>
     <dimen name="checkboxesLay_padding">5dp</dimen>
 
+    //Other details textBox
     <dimen name="otherDetails_spacing">8sp</dimen>
-
-    <dimen name="button_Horizontalpadding">30dp</dimen>
-    <dimen name="button_width_height">30dp</dimen>
-    <dimen name="button_text_padding">10dp</dimen>
-    <dimen name="button_corner_radius">30dp</dimen>
-    <dimen name="button_shadow_radius">50dp</dimen>
 
 </resources>

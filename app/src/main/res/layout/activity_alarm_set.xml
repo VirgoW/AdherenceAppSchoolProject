@@ -9,7 +9,7 @@
 
     <ScrollView
         android:id="@+id/scroll_bar"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/scroll_padding"
         android:layout_marginTop="@dimen/scroll_padding"
@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <android.support.constraint.ConstraintLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
@@ -31,7 +31,7 @@
                 android:layout_marginTop="@dimen/alarm_set_vertical_padding"
                 android:text="@string/medName_text"
                 android:textColor="@android:color/black"
-                android:textSize="@dimen/alarm_set_text_size"
+                android:textSize="@dimen/project_text_size"
                 android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -44,7 +44,7 @@
                 android:layout_marginTop="@dimen/alarm_set_vertical_padding"
                 android:background="@drawable/alarm_set_borders"
                 android:hint="@string/medName_hint"
-                android:textSize="@dimen/alarm_set_text_size"
+                android:textSize="@dimen/project_text_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/medNameText" />
@@ -56,7 +56,7 @@
                 android:layout_marginTop="@dimen/alarm_set_vertical_padding"
                 android:text="@string/dosage_txt"
                 android:textColor="@android:color/black"
-                android:textSize="@dimen/alarm_set_text_size"
+                android:textSize="@dimen/project_text_size"
                 android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -69,7 +69,7 @@
                 android:layout_marginTop="@dimen/alarm_set_vertical_padding"
                 android:background="@drawable/alarm_set_borders"
                 android:hint="@string/dosageHint"
-                android:textSize="@dimen/alarm_set_text_size"
+                android:textSize="@dimen/project_text_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/dosage_textView" />
@@ -81,7 +81,7 @@
                 android:layout_marginTop="@dimen/alarm_set_vertical_padding"
                 android:text="@string/alarmDuration"
                 android:textColor="@android:color/black"
-                android:textSize="@dimen/alarm_set_text_size"
+                android:textSize="@dimen/project_text_size"
                 android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -111,8 +111,8 @@
                 android:hint="@string/alarmsNum"
                 android:inputType="number"
                 android:singleLine="true"
-                android:textSize="@dimen/alarm_set_text_size"
-                android:visibility="visible"
+                android:textSize="@dimen/project_text_size"
+                android:visibility="gone"
                 app:layout_constraintEnd_toStartOf="@+id/treatmentLengthSpinner"
                 app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintStart_toStartOf="parent"
@@ -124,7 +124,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/alarm_set_horizontal_padding"
                 android:layout_marginLeft="@dimen/alarm_set_horizontal_padding"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@+id/alarmsNumber_Text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_weight="2"
@@ -145,7 +145,7 @@
                 android:layout_marginTop="@dimen/alarm_set_vertical_padding"
                 android:text="@string/startDate"
                 android:textColor="@android:color/black"
-                android:textSize="@dimen/alarm_set_text_size"
+                android:textSize="@dimen/project_text_size"
                 android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -159,7 +159,7 @@
                 android:background="@drawable/alarm_set_borders"
                 android:hint="@string/startDate_hint"
                 android:singleLine="true"
-                android:textSize="@dimen/alarm_set_text_size"
+                android:textSize="@dimen/project_text_size"
                 android:visibility="visible"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/startDate_textView" />
@@ -171,7 +171,7 @@
                 android:layout_marginTop="@dimen/alarm_set_vertical_padding"
                 android:text="@string/alarmFreq"
                 android:textColor="@android:color/black"
-                android:textSize="@dimen/alarm_set_text_size"
+                android:textSize="@dimen/project_text_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/startDateSelection" />
@@ -192,7 +192,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/daily"
-                    android:textSize="@dimen/alarm_set_text_size" />
+                    android:textSize="@dimen/project_text_size" />
 
                 <RadioButton
                     android:id="@+id/weeklyRadioBtn"
@@ -200,7 +200,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/weekly"
-                    android:textSize="@dimen/alarm_set_text_size" />
+                    android:textSize="@dimen/project_text_size" />
 
             </RadioGroup>
 
@@ -209,7 +209,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/alarmFreq_RadioGroup">
@@ -288,7 +288,7 @@
                 android:inputType="textMultiLine|textLongMessage"
                 android:lineSpacingExtra="@dimen/otherDetails_spacing"
                 android:singleLine="false"
-                android:textSize="@dimen/alarm_set_text_size"
+                android:textSize="@dimen/project_text_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/hourPickers_LinearLayout" />
@@ -302,7 +302,7 @@
                 android:layout_marginRight="@dimen/button_Horizontalpadding"
                 android:text="@string/alarmSaveButtonName"
                 android:visibility="visible"
-                android:textSize="@dimen/alarm_set_text_size"
+                android:textSize="@dimen/project_text_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/alarmDeleteButton"
                 app:layout_constraintTop_toBottomOf="@+id/other_details" />
@@ -315,8 +315,8 @@
                 android:layout_marginLeft="@dimen/button_Horizontalpadding"
                 android:layout_marginTop="@dimen/alarm_set_vertical_padding"
                 android:text="@string/delete_alarm_button_value"
-                android:visibility="visible"
-                android:textSize="@dimen/alarm_set_text_size"
+                android:visibility="invisible"
+                android:textSize="@dimen/project_text_size"
                 app:layout_constraintEnd_toStartOf="@+id/alarmSetButton"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/other_details" />
@@ -328,9 +328,9 @@
                 android:layout_marginTop="@dimen/alarm_set_vertical_padding"
                 android:text="@string/errorMedNameMandatory"
                 android:textColor="@android:color/holo_red_dark"
-                android:textSize="@dimen/alarm_set_text_size"
+                android:textSize="@dimen/project_text_size"
                 android:textStyle="italic"
-                android:visibility="visible"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
