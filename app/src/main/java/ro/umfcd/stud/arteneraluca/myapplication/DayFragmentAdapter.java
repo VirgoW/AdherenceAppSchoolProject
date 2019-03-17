@@ -33,16 +33,6 @@ public class DayFragmentAdapter extends FragmentStatePagerAdapter
         UpdateDayTabs();
     }
 
-    public void SetContext(Context context)
-    {
-        m_context = context;
-    }
-
-    public void UpdateCalendar(Calendar cal)
-    {
-        m_cal = cal;
-    }
-
     @Override
     public Fragment getItem(int index) {
         int dayOfWeek = SaveManager.getInstance().GetDayOfWeek(m_cal); //Day of week starts at 1 and index starts at 0, and first day of the week is sunday

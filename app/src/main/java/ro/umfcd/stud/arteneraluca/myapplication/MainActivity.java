@@ -20,27 +20,21 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent toMainPage = new Intent(getApplicationContext(), AlarmsPage.class);
                 startActivity(toMainPage);
-                finish();
             }
         });
 
         final Context context = this;
 
-        Button masterButton = (Button) findViewById(R.id.MasterBtn);
+        Button masterButton = (Button) findViewById(R.id.GenerateReportBtn);
         masterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent toMainPage =  new Intent("android.intent.action.DIALOG");
-                toMainPage.setClass(context, MasterPageLobby.class);
+                toMainPage.setClass(context, MasterPage.class);
                 toMainPage.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(toMainPage);
             }
         });
 
-        //TODO add hidden switch on this activity that can be touched even while invisible?
-        // We want to create a hidden method of displaying a button that would open up the review page
-        // Ralu: nu putem sa facem asta pentru ca intram in conflict cu drepturile de privacy.
-        // O sa avem nevoie de o metoda pprin care userul sa salveze un document cu toate
-        //datele si apoi sa il trimita la noi
     }
 }

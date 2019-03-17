@@ -1,6 +1,5 @@
 package ro.umfcd.stud.arteneraluca.myapplication;
 
-import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,11 +12,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
 import java.util.Calendar;
 
-public class AlarmsPage extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
+public class AlarmsPage extends AppCompatActivity {
     //TODO Check if AppCompatActivity is ok
     Context m_context;
     View m_view;
@@ -43,9 +41,6 @@ public class AlarmsPage extends AppCompatActivity implements TimePickerDialog.On
                 setAlarm.putExtra(m_context.getString(R.string.alarmSetModeName), m_context.getString(R.string.alarmModeNew));
                 setAlarm.putExtra("tabIndex", m_tabLayout.getSelectedTabPosition());
                 startActivityForResult(setAlarm, 1);
-
-                //DialogFragment timePicker = new TimePickerFragment();
-                //timePicker.show(getSupportFragmentManager(), "time picker");
             }
         });
 
@@ -110,11 +105,6 @@ public class AlarmsPage extends AppCompatActivity implements TimePickerDialog.On
     }
 
     @Override
-    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-
-    }
-
-    @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (Integer.parseInt(android.os.Build.VERSION.SDK) > 5
                 && keyCode == KeyEvent.KEYCODE_BACK
@@ -127,7 +117,7 @@ public class AlarmsPage extends AppCompatActivity implements TimePickerDialog.On
 
     @Override
     public void onBackPressed() {
-        moveTaskToBack(true); // Idk what it does exactly, but i think it puts the app in the background, which is exactly what i want the functionality to be.
+        super.onBackPressed();
     }
 
     private void SetupView() {
@@ -153,7 +143,7 @@ public class AlarmsPage extends AppCompatActivity implements TimePickerDialog.On
         int calMonth;
         calMonth = m_cal.get(Calendar.MONTH);
         String[] monthNames = getResources().getStringArray(R.array.monthNames);
-        ((TextView) findViewById(R.id.testDate)).setText(monthNames[calMonth]);
+        ((TextView) findViewById(R.id.currentDisplayedMonth)).setText(monthNames[calMonth]);
     }
 
     private void AddWeek(int direction) {
@@ -178,12 +168,10 @@ public class AlarmsPage extends AppCompatActivity implements TimePickerDialog.On
     private void InstantiateCalToCurrentDay()
     {
         m_cal = Calendar.getInstance();
-        //m_cal.add(Calendar.WEEK_OF_MONTH, -1); // Week of month starts at position zero for us
-        //m_alarmPageAdapter.UpdateCalendar(m_cal);
         int calMonth;
         calMonth = m_cal.get(Calendar.MONTH);
         String[] monthNames = getResources().getStringArray(R.array.monthNames);
-        ((TextView) findViewById(R.id.testDate)).setText(monthNames[calMonth]);
+        ((TextView) findViewById(R.id.currentDisplayedMonth)).setText(monthNames[calMonth]);
 
         UpdateFragments();
 
