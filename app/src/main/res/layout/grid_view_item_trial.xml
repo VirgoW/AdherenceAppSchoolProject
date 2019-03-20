@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guidelineLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/guidelineSquarePadding" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guidelineTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="@dimen/guidelineSquarePadding" />
+
+    <TextView
+        android:id="@+id/hourDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/testHour"
+        android:textSize="@dimen/project_text_size"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineBottom"
+        app:layout_constraintEnd_toStartOf="@+id/verticalDivider"
+        app:layout_constraintStart_toStartOf="@id/guidelineLeft"
+        app:layout_constraintTop_toBottomOf="@id/guidelineTop" />
+
+    <TextView
+        android:id="@+id/verticalDivider"
+        android:layout_width="@dimen/dividerStroke"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimaryDark"
+        app:layout_constraintEnd_toStartOf="@+id/constraintLayout"
+        app:layout_constraintStart_toEndOf="@+id/hourDisplay" />
+
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineBottom"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+        app:layout_constraintStart_toEndOf="@+id/verticalDivider"
+        app:layout_constraintTop_toBottomOf="@+id/guidelineTop"
+        app:layout_constraintWidth_percent="0.65"
+        app:layout_constraintVertical_weight="4">
+
+        <TextView
+            android:id="@+id/medNameDisplay"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="@string/testMedName"
+            android:textSize="@dimen/project_text_size"
+            app:layout_constraintBottom_toTopOf="@+id/dosageTextDisplay"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="spread_inside"
+            app:layout_constraintVertical_weight="1"/>
+
+        <TextView
+            android:id="@+id/dosageTextDisplay"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/gridDosageDisplay"
+            android:textSize="@dimen/project_text_size"
+            app:layout_constraintBottom_toTopOf="@+id/dosageDisplay"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/medNameDisplay"
+            app:layout_constraintVertical_weight="0.5"/>
+
+        <TextView
+            android:id="@+id/dosageDisplay"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="@string/testDosage"
+            android:textSize="@dimen/project_text_size"
+            app:layout_constraintBottom_toTopOf="@+id/otherDetailsDisplay"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dosageTextDisplay"
+            app:layout_constraintVertical_weight="0.5"/>
+
+        <TextView
+            android:id="@+id/otherDetailsDisplay"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="@string/testMedDetails"
+            android:textSize="@dimen/project_text_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dosageDisplay"
+            app:layout_constraintVertical_weight="1.5" />
+
+    </android.support.constraint.ConstraintLayout>
+
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guidelineRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/guidelineSquarePadding" />
+
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guidelineBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="@dimen/guidelineSquarePadding" />
+
+    <TextView
+        android:id="@+id/horizontalDivider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dividerStroke"
+        android:background="@color/colorPrimaryDark"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+</android.support.constraint.ConstraintLayout>

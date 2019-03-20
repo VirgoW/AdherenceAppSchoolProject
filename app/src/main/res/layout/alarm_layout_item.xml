@@ -8,21 +8,21 @@
     <TextView
         android:id="@+id/grid_item_ora"
         android:layout_width="0dp"
-        android:layout_height="16dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_weight="0.10"
         android:gravity="center"
-        android:text="12:00" />
+        android:text="@string/testHour" />
 
     <TextView
         android:id="@+id/grid_item_medicament"
         android:layout_width="0dp"
-        android:layout_height="16dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="20dp"
         android:layout_weight="0.80"
         android:gravity="center"
-        android:text="Nume_Medicament_Test" />
+        android:text="@string/testMedNameDetails" />
 
 </LinearLayout>

@@ -32,4 +32,10 @@
     //Other details textBox
     <dimen name="otherDetails_spacing">8sp</dimen>
 
+    //viewPage dimensions
+    <dimen name="dividerPadding">20dp</dimen>
+    <dimen name="dividerStroke">2dp</dimen>
+    <dimen name="guidelineSquarePadding">25dp</dimen>
+    <dimen name="guidelineHourDivider"></dimen>
+
 </resources>

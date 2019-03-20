@@ -92,7 +92,8 @@ public class AlarmAdapter extends BaseAdapter {
         if(convertView == null)
         {
             //Get layout from xml file using the inflater
-            gridView = inflater.inflate(R.layout.grid_view_item, null);
+            //I have modified the layout from grid_view_item to grid_view_item_trial
+            gridView = inflater.inflate(R.layout.grid_view_item_trial, null);
         }
         else
         {
@@ -106,9 +107,14 @@ public class AlarmAdapter extends BaseAdapter {
 
         //Populate the gridview items with each item value
         //Code tip: FINAL keyword is used to create a constant. That forces the variable to not allow to be changed
-        final TextView medName = (TextView) gridView.findViewById(R.id.grid_item_medicament);
-        final TextView hour = (TextView) gridView.findViewById(R.id.grid_item_ora);
-        final TextView note = (TextView) gridView.findViewById(R.id.alarm_note);
+        //final TextView medName = (TextView) gridView.findViewById(R.id.grid_item_medicament);
+        final TextView medName = (TextView) gridView.findViewById(R.id.medNameDisplay);
+
+        //final TextView hour = (TextView) gridView.findViewById(R.id.grid_item_ora);
+        final TextView hour = (TextView) gridView.findViewById(R.id.hourDisplay);
+
+        //final TextView note = (TextView) gridView.findViewById(R.id.alarm_note);
+        final TextView note = (TextView) gridView.findViewById(R.id.otherDetailsDisplay);
         AlarmItem alarm = m_alarmsToDisplay.get(position);
         medName.setText(alarm.medName);
         hour.setText(alarm.hour);

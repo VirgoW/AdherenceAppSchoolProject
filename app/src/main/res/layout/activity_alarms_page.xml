@@ -9,13 +9,14 @@
     <LinearLayout
         android:id="@+id/headerLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:background="@color/colorPrimary"
+        android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/viewpager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/viewpager"
-        android:background="@color/colorPrimary"
-        android:orientation="vertical">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="spread_inside">
 
         <LinearLayout
             android:id="@+id/monthWidget"
@@ -29,6 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="60dp"
                 android:text="Azi"
+                android:textSize="@dimen/project_text_size"
                 app:layout_constraintEnd_toStartOf="@+id/prevMonth"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -37,22 +39,22 @@
                 android:id="@+id/prevMonth"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
                 android:layout_marginRight="10dp"
+                android:background="@drawable/arrow_left"
                 app:layout_constraintEnd_toStartOf="@+id/currentDisplayedMonth"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:background="@drawable/arrow_left"
-                android:layout_gravity="center_vertical"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/currentDisplayedMonth"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:textSize="20dp"
                 android:text="Month"
                 android:textColor="@color/tab_item_text_color"
+                android:textSize="@dimen/project_text_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -61,20 +63,20 @@
                 android:id="@+id/nextMonth"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
+                android:background="@drawable/arrow_right"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/currentDisplayedMonth"
-                app:layout_constraintTop_toTopOf="parent"
-                android:background="@drawable/arrow_right"
-                android:layout_gravity="center_vertical"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/tabLayoutWidget"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -91,10 +93,10 @@
             <android.support.design.widget.TabLayout
                 android:id="@+id/topTabLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="90dp"
                 app:tabBackground="@drawable/tab_color_selector"
-                app:tabMode="fixed"
-                app:tabTextAppearance="@style/CustomTaLayout"></android.support.design.widget.TabLayout>
+                app:tabMode="scrollable"
+                app:tabTextAppearance="@style/CustomTaLayout" />
 
             <ImageButton
                 android:id="@+id/nextWeek"
@@ -113,15 +115,12 @@
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginLeft="1dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginRight="1dp"
         android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@id/guideline_vertical_grid_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/headerLayout" />
+        app:layout_constraintTop_toBottomOf="@id/headerLayout"/>
+
 
     <ImageView
         android:id="@+id/imageFooter"
@@ -143,9 +142,8 @@
         android:layout_marginBottom="5dp"
         android:text="@string/set_alarm_button_value"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/imageFooter"
-        app:layout_constraintStart_toStartOf="@id/guideline_button_setAlarm"
-        app:layout_constraintTop_toBottomOf="@+id/viewpager" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/guideline_button_setAlarm" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline_button_setAlarm"

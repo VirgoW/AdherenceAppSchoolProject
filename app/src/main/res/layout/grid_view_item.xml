@@ -20,7 +20,7 @@
 
     <TextView
         android:id="@+id/alarm_note"
-        android:text="note informative aici..."
+        android:text="@string/testMedDetails"
         android:textStyle="italic"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

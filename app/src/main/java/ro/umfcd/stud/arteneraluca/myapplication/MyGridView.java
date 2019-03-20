@@ -1,3 +1,5 @@
+/*
+
 package ro.umfcd.stud.arteneraluca.myapplication;
 
 import android.content.Context;
@@ -40,3 +42,5 @@ public class MyGridView extends GridView {
         super.onMeasure(widthMeasureSpec, heightSpec);
     }
 }
+
+*/
