@@ -37,7 +37,7 @@ public class DayFragmentAdapter extends FragmentStatePagerAdapter
     public Fragment getItem(int index) {
         int dayOfWeek = SaveManager.getInstance().GetDayOfWeek(m_cal); //Day of week starts at 1 and index starts at 0, and first day of the week is sunday
         int dayOffset = index - dayOfWeek;
-         UpdateAddCal(Calendar.DAY_OF_MONTH, dayOffset);
+        UpdateAddCal(Calendar.DAY_OF_MONTH, dayOffset);
         Calendar newCal = (Calendar) m_cal.clone();
         UpdateAddCal(Calendar.DAY_OF_MONTH, -dayOffset);
 

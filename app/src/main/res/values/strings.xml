@@ -4,6 +4,7 @@
     <string name="start_button_text">Start</string>
     <string name="generate_report_button_text">Descarca raport</string>
 
+    <string name="returnToToday">Întoarce-te la ziua curentă</string>
     <string name="gridDosageDisplay">Unitatea de dozare pe administrare:</string>
 
     <string-array name="Treatment_length">
@@ -52,6 +53,7 @@
     <string name="testMedName">Medication name</string>
     <string name="testDosage">Med dosage</string>
     <string name="testMedDetails"> Other Details</string>
+    <string name="testMonth">Month</string>
 
     <string name="alarm_title">Alarmă nouă</string>
     <string name="medName_text">Numele medicamentului*:</string>

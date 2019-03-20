@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     //Project dimensions
-    <dimen name="project_text_size">25sp</dimen>
+    <dimen name="project_text_size">20sp</dimen>
 
     //AlarmSet page
     <dimen name="alarm_set_vertical_padding">10dp</dimen>
@@ -32,7 +32,12 @@
     //Other details textBox
     <dimen name="otherDetails_spacing">8sp</dimen>
 
-    //viewPage dimensions
+    //Alarms page dimen
+
+    <dimen name="buttonScreenMargin">10dp</dimen>
+    <dimen name="arrowSquareSize">30dp</dimen>
+
+    //viewPager dimensions
     <dimen name="dividerPadding">20dp</dimen>
     <dimen name="dividerStroke">2dp</dimen>
     <dimen name="guidelineSquarePadding">25dp</dimen>

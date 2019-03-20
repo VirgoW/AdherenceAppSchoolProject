@@ -6,144 +6,154 @@
     android:layout_height="match_parent"
     tools:context=".AlarmsPage">
 
-    <LinearLayout
-        android:id="@+id/headerLayout"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@color/colorPrimary"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/viewpager"
-        app:layout_constraintEnd_toEndOf="parent"
+    <Button
+        android:id="@+id/resetToCurrentDay"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/buttonScreenMargin"
+        android:layout_marginTop="@dimen/buttonScreenMargin"
+        android:text="@string/returnToToday"
+        android:textSize="@dimen/project_text_size"
+        app:layout_constraintEnd_toStartOf="@+id/prevMonth"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="spread_inside">
+        app:layout_constraintHorizontal_weight="1.5"/>
 
-        <LinearLayout
-            android:id="@+id/monthWidget"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center">
+    <ImageView
+        android:id="@+id/imageHeader"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:src="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="@id/guideline_tab_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
-                android:id="@+id/resetToCurrentDay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="60dp"
-                android:text="Azi"
-                android:textSize="@dimen/project_text_size"
-                app:layout_constraintEnd_toStartOf="@+id/prevMonth"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+    <ImageButton
+        android:id="@+id/prevMonth"
+        android:layout_width="@dimen/arrowSquareSize"
+        android:layout_height="@dimen/arrowSquareSize"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/arrow_left"
+        app:layout_constraintBottom_toBottomOf="@+id/resetToCurrentDay"
+        app:layout_constraintEnd_toStartOf="@+id/currentDisplayedMonth"
+        app:layout_constraintStart_toEndOf="@+id/resetToCurrentDay"
+        app:layout_constraintTop_toTopOf="@+id/resetToCurrentDay" />
 
-            <ImageButton
-                android:id="@+id/prevMonth"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/arrow_left"
-                app:layout_constraintEnd_toStartOf="@+id/currentDisplayedMonth"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/currentDisplayedMonth"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/testMonth"
+        android:textColor="@color/tab_item_text_color"
+        android:textSize="@dimen/project_text_size"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@+id/prevMonth"
+        app:layout_constraintEnd_toStartOf="@+id/nextMonth"
+        app:layout_constraintStart_toEndOf="@+id/prevMonth"
+        app:layout_constraintTop_toTopOf="@+id/prevMonth"
+        app:layout_constraintHorizontal_weight="2"/>
 
-            <TextView
-                android:id="@+id/currentDisplayedMonth"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="Month"
-                android:textColor="@color/tab_item_text_color"
-                android:textSize="@dimen/project_text_size"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+    <ImageButton
+        android:id="@+id/nextMonth"
+        android:layout_width="@dimen/arrowSquareSize"
+        android:layout_height="@dimen/arrowSquareSize"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/arrow_right"
+        app:layout_constraintBottom_toBottomOf="@+id/currentDisplayedMonth"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/currentDisplayedMonth"
+        app:layout_constraintTop_toTopOf="@+id/currentDisplayedMonth" />
 
-            <ImageButton
-                android:id="@+id/nextMonth"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
-                android:background="@drawable/arrow_right"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/currentDisplayedMonth"
-                app:layout_constraintTop_toTopOf="parent" />
+    <android.support.constraint.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="resetToCurrentDay,prevMonth,currentDisplayedMonth,nextMonth" />
 
-        </LinearLayout>
+    <ImageButton
+        android:id="@+id/previousWeek"
+        android:layout_width="@dimen/arrowSquareSize"
+        android:layout_height="@dimen/arrowSquareSize"
+        android:background="@drawable/arrow_left"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@+id/topTabLayout"
+        app:layout_constraintEnd_toStartOf="@+id/topTabLayout"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/topTabLayout" />
 
-        <LinearLayout
-            android:id="@+id/tabLayoutWidget"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
+    <android.support.design.widget.TabLayout
+        android:id="@+id/topTabLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_tab_view"
+        app:layout_constraintEnd_toStartOf="@+id/nextWeek"
+        app:layout_constraintStart_toEndOf="@+id/previousWeek"
+        app:layout_constraintTop_toTopOf="@+id/barrier"
+        app:tabBackground="@drawable/tab_color_selector"
+        app:tabMode="scrollable"
+        app:tabTextAppearance="@style/CustomTaLayout" />
 
-            <ImageButton
-                android:id="@+id/previousWeek"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginLeft="30dp"
-                android:background="@drawable/arrow_left"
-                android:gravity="center"
-                app:layout_constraintEnd_toStartOf="@+id/topTabLayout"
-                app:layout_constraintTop_toTopOf="parent" />
+    <ImageButton
+        android:id="@+id/nextWeek"
+        android:layout_width="@dimen/arrowSquareSize"
+        android:layout_height="@dimen/arrowSquareSize"
+        android:background="@drawable/arrow_right"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@+id/topTabLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/topTabLayout"
+        app:layout_constraintTop_toTopOf="@+id/topTabLayout" />
 
-            <android.support.design.widget.TabLayout
-                android:id="@+id/topTabLayout"
-                android:layout_width="match_parent"
-                android:layout_height="90dp"
-                app:tabBackground="@drawable/tab_color_selector"
-                app:tabMode="scrollable"
-                app:tabTextAppearance="@style/CustomTaLayout" />
-
-            <ImageButton
-                android:id="@+id/nextWeek"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginRight="30dp"
-                android:background="@drawable/arrow_right"
-                android:gravity="center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/topTabLayout"
-                app:layout_constraintTop_toTopOf="parent" />
-        </LinearLayout>
-    </LinearLayout>
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_tab_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.2" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@id/guideline_vertical_grid_view"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_vertical_grid_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/headerLayout"/>
+        app:layout_constraintTop_toTopOf="@+id/guideline_tab_view" />
 
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_vertical_grid_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.90" />
 
     <ImageView
         android:id="@+id/imageFooter"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:src="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewpager" />
+        app:layout_constraintTop_toTopOf="@+id/guideline_vertical_grid_view" />
 
     <Button
         android:id="@+id/alarmSetButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginRight="@dimen/buttonScreenMargin"
+        android:layout_marginBottom="@dimen/buttonScreenMargin"
         android:text="@string/set_alarm_button_value"
+        android:textSize="@dimen/project_text_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/guideline_button_setAlarm" />
+        app:layout_constraintStart_toStartOf="@+id/guideline_button_setAlarm"
+        app:layout_constraintTop_toBottomOf="@id/guideline_vertical_grid_view"/>
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline_button_setAlarm"
@@ -152,11 +162,8 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.6" />
 
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline_vertical_grid_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.90" />
+
+
+
 
 </android.support.constraint.ConstraintLayout>
