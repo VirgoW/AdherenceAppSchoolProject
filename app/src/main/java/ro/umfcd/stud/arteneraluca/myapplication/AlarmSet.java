@@ -330,7 +330,8 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
         Calendar currentTime = Calendar.getInstance();
         currentTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
         currentTime.set(Calendar.MINUTE, minute);
-        String setTimeString = DateFormat.getTimeInstance(DateFormat.SHORT).format(currentTime.getTime());
+        SimpleDateFormat format = new SimpleDateFormat(m_context.getText(R.string.hourFormat).toString());
+        String setTimeString = format.format(currentTime.getTime());
         currentSelectedHourPicker.setText(setTimeString);
     }
 
