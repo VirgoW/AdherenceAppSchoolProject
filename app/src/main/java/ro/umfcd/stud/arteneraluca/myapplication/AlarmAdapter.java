@@ -27,6 +27,7 @@ public class AlarmAdapter extends BaseAdapter {
         public String medName;
         public String hour;
         public String note;
+        public String dosage;
         public int index;
     }
 
@@ -115,10 +116,12 @@ public class AlarmAdapter extends BaseAdapter {
 
         //final TextView note = (TextView) gridView.findViewById(R.id.alarm_note);
         final TextView note = (TextView) gridView.findViewById(R.id.otherDetailsDisplay);
+        final TextView dosage = (TextView) gridView.findViewById(R.id.dosageDisplay);
         AlarmItem alarm = m_alarmsToDisplay.get(position);
         medName.setText(alarm.medName);
         hour.setText(alarm.hour);
         note.setText(alarm.note);
+        dosage.setText(alarm.dosage);
         final int index = alarm.index;
         gridView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -148,6 +151,8 @@ public class AlarmAdapter extends BaseAdapter {
                     item.index = alarm.getId();
                     item.medName = alarm.GetMedName();
                     item.note = alarm.GetNote();
+                    //i'm trying to get dosage to display in gridview
+                    item.dosage = alarm.GetDosage();
                     m_alarmsToDisplay.add(item);
                 }
             }

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -33,16 +32,18 @@
     <TextView
         android:id="@+id/verticalDivider"
         android:layout_width="@dimen/dividerStroke"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:background="@color/colorPrimaryDark"
         app:layout_constraintEnd_toStartOf="@+id/constraintLayout"
-        app:layout_constraintStart_toEndOf="@+id/hourDisplay" />
+        app:layout_constraintStart_toEndOf="@+id/hourDisplay"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/guidelineBottom"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintStart_toEndOf="@+id/verticalDivider"
@@ -60,15 +61,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="spread_inside"
-            app:layout_constraintVertical_weight="1"/>
+            app:layout_constraintVertical_chainStyle="spread"
+            app:layout_constraintVertical_weight="1" />
 
         <TextView
             android:id="@+id/dosageTextDisplay"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/gridDosageDisplay"
             android:textSize="@dimen/project_text_size"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/dosageDisplay"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -77,20 +79,19 @@
 
         <TextView
             android:id="@+id/dosageDisplay"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="@string/testDosage"
             android:textSize="@dimen/project_text_size"
             app:layout_constraintBottom_toTopOf="@+id/otherDetailsDisplay"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dosageTextDisplay"
-            app:layout_constraintVertical_weight="0.5"/>
+            app:layout_constraintTop_toBottomOf="@+id/dosageTextDisplay"/>
 
         <TextView
             android:id="@+id/otherDetailsDisplay"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="@string/testMedDetails"
             android:textSize="@dimen/project_text_size"
             app:layout_constraintBottom_toBottomOf="parent"
