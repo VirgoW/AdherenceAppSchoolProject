@@ -446,6 +446,7 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
         TextView startDate = (TextView) findViewById(R.id.startDateSelection);
         RadioGroup alarmFrequency = (RadioGroup) findViewById(R.id.alarmFreq_RadioGroup);
 
+
         medName.setText(editAlarm.GetMedName());
         dosage.setText(editAlarm.GetDosage());
         final Spinner perDaySpinner = (Spinner) findViewById(R.id.freq_perDay_spinner);
@@ -454,6 +455,18 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
         SimpleDateFormat format = new SimpleDateFormat(m_context.getText(R.string.dateFormat).toString());
         String startDateCal = format.format(editAlarm.GetStartCal().getTime());
         startDate.setText(startDateCal);
+
+        //Fixed or Continuous treatment
+        Switch fixedTimeTreatment = (Switch) findViewById(R.id.alarmDuration_switch);
+        TextView alarmsNumber_Text = (TextView) findViewById(R.id.alarmsNumber_Text);
+        Spinner treatmentLengthSpinner = (Spinner) findViewById(R.id.treatmentLengthSpinner);
+
+        fixedTimeTreatment.setChecked(editAlarm.IsFixedTimeTreament());
+        if(fixedTimeTreatment.isChecked())
+        {
+            alarmsNumber_Text.setVisibility(View.VISIBLE);
+            treatmentLengthSpinner.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -144,7 +145,13 @@ public class SaveManager {
                 SimpleDateFormat format = new SimpleDateFormat(context.getText(R.string.dateFormat).toString());
                 String startDate = format.format(alarm.GetStartCal().getTime());
                 AddNewTag(serializer, context.getText(R.string.dateTag).toString(), "name", startDate);
-                AddNewTag(serializer, context.getText(R.string.frequencyTag).toString(), "name", alarm.GetFrequency());
+                AddNewTag(serializer, context.getText(R.string.frequencyTag).toString(), "name", Boolean.toString(alarm.IsFixedTimeTreament()));
+                if(alarm.IsFixedTimeTreament())
+                {
+                    String endDate = format.format(alarm.GetEndCal().getTime());
+                    AddNewTag(serializer, context.getText(R.string.dateEndTag).toString(), "name", endDate);
+                }
+
                 AddNewTag(serializer, context.getText(R.string.notesTag).toString(), "name", alarm.GetNote());
                 AddNewTag(serializer, context.getText(R.string.dailyTreatmentTag).toString(), "name", Boolean.toString(alarm.IsDailyTreatment()));
 
@@ -210,14 +217,23 @@ public class SaveManager {
                         {
                             SimpleDateFormat format = new SimpleDateFormat(context.getText(R.string.dateFormat).toString());
                             String startDate = m_XmlParser.getAttributeValue(null,"name");
-                            Date test = format.parse(startDate);
+                            Date dateFormat = format.parse(startDate);
                             Calendar date = Calendar.getInstance();
-                            date.setTime(test);
+                            date.setTime(dateFormat);
                             newAlarm.SetStartCal(date);
                         }
                         if(name.equals(context.getText(R.string.frequencyTag).toString()))
                         {
-                            newAlarm.SetFrequency(m_XmlParser.getAttributeValue(null,"name"));
+                            newAlarm.SetFixedTimeTreament(Boolean.parseBoolean(m_XmlParser.getAttributeValue(null,"name")));
+                        }
+                        if(name.equals(context.getText(R.string.dateEndTag).toString()) && newAlarm.IsFixedTimeTreament())
+                        {
+                            SimpleDateFormat format = new SimpleDateFormat(context.getText(R.string.dateFormat).toString());
+                            String endDate = m_XmlParser.getAttributeValue(null,"name");
+                            Date dateFormat = format.parse(endDate);
+                            Calendar date = Calendar.getInstance();
+                            date.setTime(dateFormat);
+                            newAlarm.SetEndCal(date);
                         }
                         if(name.equals(context.getText(R.string.notesTag).toString()))
                         {
@@ -303,7 +319,7 @@ public class SaveManager {
         TextView nameValue = (TextView) view.findViewById(R.id.medNameTextInput);
         TextView dosageValue = (TextView) view.findViewById(R.id.DosageInput_Text);
         TextView notesValue = (TextView) view.findViewById(R.id.other_details);
-        Switch frequncyValue = (Switch) view.findViewById(R.id.alarmDuration_switch); //TODO fixed ammount of time
+        Switch frequncyValue = (Switch) view.findViewById(R.id.alarmDuration_switch);
 
         newAlarm.SetMedName(nameValue.getText().toString());
         newAlarm.SetDosage(dosageValue.getText().toString());
@@ -313,11 +329,39 @@ public class SaveManager {
         }
         if(frequncyValue.isChecked())
         {
-            newAlarm.SetFrequency( context.getText(R.string.durationOn).toString());
+            //If the frequency value is checked, it means the medication treatment has a fixed period of time
+            //So we add that end date based on the user input
+            newAlarm.SetFixedTimeTreament(true);
+            String frequencyNumberString = ((TextView) view.findViewById(R.id.alarmsNumber_Text)).getText().toString();
+            int frequencyNumber = Integer.parseInt(frequencyNumberString);
+            Spinner treatmentLenghtSpinner = (Spinner) view.findViewById(R.id.treatmentLengthSpinner);
+            int treatmentOption = treatmentLenghtSpinner.getSelectedItemPosition();
+
+            Calendar treatmentEndDate = Calendar.getInstance();
+            switch(treatmentOption)
+            {
+                case 0:
+                    //Days
+                    treatmentEndDate.add(Calendar.DAY_OF_YEAR, frequencyNumber);
+                    break;
+                case 1:
+                    //Weeks
+                    treatmentEndDate.add(Calendar.WEEK_OF_YEAR, frequencyNumber);
+                    break;
+                case 2:
+                    //Months
+                    treatmentEndDate.add(Calendar.MONTH, 1);
+                    break;
+                case 3:
+                    //Years
+                    treatmentEndDate.add(Calendar.YEAR, frequencyNumber);
+                    break;
+            }
+            newAlarm.SetEndCal(treatmentEndDate);
         }
         else
         {
-            newAlarm.SetFrequency( context.getText(R.string.durationOff).toString());
+            newAlarm.SetFixedTimeTreament(false);
         }
 
         LinearLayout hourPickersLayout = view.findViewById(R.id.hourPickers_LinearLayout);
@@ -350,8 +394,8 @@ public class SaveManager {
             TextView startDateTextView = (TextView) view.findViewById(R.id.startDateSelection);
             SimpleDateFormat format = new SimpleDateFormat(context.getText(R.string.dateFormat).toString());
             String startDate = startDateTextView.getText().toString();
-            Date test = format.parse(startDate);
-            date.setTime(test);
+            Date formatedDate = format.parse(startDate);
+            date.setTime(formatedDate);
         }
         catch (Exception e)
         {
@@ -438,35 +482,47 @@ public class SaveManager {
                 intent.putExtra("alarmID", alarmId);
                 intent.putExtra("medName", alarm.GetMedName());
                 intent.putExtra("hour", alarm.m_dailyFrequency.get(indexHour));
-                Calendar alarmCal = alarm.GetStartCal();
-                //.intent.putExtra("date", );
-                PendingIntent pendingAlarmIntent = PendingIntent.getBroadcast(context, alarmId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
                 String hourString = alarm.m_dailyFrequency.get(indexHour);
-                Calendar cal = Calendar.getInstance();
-                cal.setTimeInMillis(System.currentTimeMillis());
                 int hour = Integer.parseInt(hourString.substring(0,2));
                 int minute = Integer.parseInt(hourString.substring(3));
-                cal.set(Calendar.HOUR_OF_DAY, hour);
-                cal.set(Calendar.MINUTE, minute);
+
+                Calendar alarmStartCalendar = alarm.GetStartCal();
+                Calendar alarmEndCalendar = null;
+                if(alarm.IsFixedTimeTreament())
+                {
+                   alarmEndCalendar = alarm.GetEndCal();
+                }
+                Calendar alarmCalendar = Calendar.getInstance();
+                alarmCalendar.setTimeInMillis(System.currentTimeMillis());
+                alarmCalendar.set(Calendar.HOUR_OF_DAY, hour);
+                alarmCalendar.set(Calendar.MINUTE, minute);
 
                 Calendar todayCal = Calendar.getInstance();
 
-                long milis1 = alarmCal.getTimeInMillis();
+                long milis1 = alarmStartCalendar.getTimeInMillis();
                 long milis2= todayCal.getTimeInMillis();
                 long diffDays = (milis1 - milis2) / (24*60*60*1000);
 
+                if(alarmEndCalendar != null && (todayCal.after(alarmEndCalendar) || alarmCalendar.after(alarmEndCalendar)))
+                {
+                    //If today is after the end of the treatment or the next alarm would be after the end of treatment, skip this alarm.
+                    continue;
+                }
+
                 if(diffDays > 0)
                 {
-                    cal.add(Calendar.DATE, (int)diffDays); //TODO Possible casting issues
+                    alarmCalendar.add(Calendar.DATE, (int)diffDays); //TODO Possible casting issues
                 }
-                else if(todayCal.after(cal))
+                else if(todayCal.after(alarmCalendar))
                 {
                     //Make the alarm start tomorrow if current time is after set time.
-                    cal.add(Calendar.DAY_OF_MONTH, 1);
+                    alarmCalendar.add(Calendar.DAY_OF_MONTH, 1);
                 }
 
 
-                alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingAlarmIntent);
+                PendingIntent pendingAlarmIntent = PendingIntent.getBroadcast(context, alarmId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, alarmCalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingAlarmIntent);
             }
         }
         //Weekly alarm
@@ -479,7 +535,7 @@ public class SaveManager {
             //Start today and set the alarms until monday, then set an alarm for monday
             PendingIntent pendingAlarmIntent = PendingIntent.getBroadcast(context, alarmIndex, intent, PendingIntent.FLAG_UPDATE_CURRENT);
             Calendar todayCal = Calendar.getInstance();
-            alarmMgr.set(AlarmManager.RTC_WAKEUP, todayCal.getTimeInMillis(), pendingAlarmIntent);
+            alarmMgr.set(AlarmManager.RTC_WAKEUP, todayCal.getTimeInMillis(), pendingAlarmIntent); //TODO end cal
         }
     }
 

@@ -107,6 +107,7 @@
     <string name="dosageTag">Dosage</string>
     <string name="frequencyTag">Frequency</string>
     <string name="dateTag">StartDate</string>
+    <string name="dateEndTag">EndDate</string>
     <string name="notesTag">Notes</string>
     <string name="dailyTreatmentTag">DailyTreatment</string>
     <string name="dailyFrequencyHourTag">DailyFreqHour</string>
