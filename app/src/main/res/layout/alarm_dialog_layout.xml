@@ -1,25 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:layout_height="match_parent">
+
     <TextView
         android:id="@+id/AlarmDialogText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Please take your meds! Id = "
-        android:textSize="20sp"
-        />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="I'll take them!"
-            android:layout_weight="0.5"
-            android:id="@+id/ID_Ok"/>
-    </LinearLayout>
-</LinearLayout>
+        android:text="@string/testAlarmDialogText"
+        android:textSize="@dimen/project_text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/confirmTakingBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/confirmButton"
+        android:textSize="@dimen/project_text_size"
+        app:layout_constraintBottom_toTopOf="@+id/snoozeTakingBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/AlarmDialogText"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <Button
+        android:id="@+id/snoozeTakingBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/snoozeButton"
+        android:textSize="@dimen/project_text_size"
+        app:layout_constraintBottom_toTopOf="@+id/denyTakingBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/confirmTakingBtn" />
+
+    <Button
+        android:id="@+id/denyTakingBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/denyButton"
+        android:textSize="@dimen/project_text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/snoozeTakingBtn" />
+
+</android.support.constraint.ConstraintLayout>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     //Project dimensions
-    <dimen name="project_text_size">20sp</dimen>
+    <dimen name="project_text_size">22sp</dimen>
 
     //AlarmSet page
     <dimen name="alarm_set_vertical_padding">10dp</dimen>
@@ -39,7 +39,7 @@
 
     //viewPager dimensions
     <dimen name="dividerPadding">20dp</dimen>
-    <dimen name="dividerStroke">2dp</dimen>
+    <dimen name="dividerStroke">1dp</dimen>
     <dimen name="guidelineSquarePadding">25dp</dimen>
     <dimen name="guidelineHourDivider"></dimen>
 

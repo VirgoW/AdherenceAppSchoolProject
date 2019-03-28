@@ -5,6 +5,7 @@
     <string name="generate_report_button_text">Descarca raport</string>
 
     <string name="returnToToday">Întoarce-te la ziua curentă</string>
+    <string name="setNewAlarm">Setează Alarma</string>
     <string name="gridDosageDisplay">Unitatea de dozare pe administrare:</string>
 
     <string-array name="Treatment_length">
@@ -54,29 +55,32 @@
     <string name="testDosage">Med dosage</string>
     <string name="testMedDetails"> Other Details</string>
     <string name="testMonth">Month</string>
+    <string name="testAlarmDialogText">Mesaj pentru utilizator! ID=</string>
 
-    <string name="alarm_title">Alarmă nouă</string>
+//Alarm Dialog
+    <string name="confirmButton">Le-am luat</string>
+    <string name="snoozeButton">Amână 30 de minute</string>
+    <string name="denyButton">Nu le-am luat</string>
+
+//Set new alarm page
+    <string name="alarm_title">Alarmă nouă</string>                                 //not used yet
     <string name="medName_text">Numele medicamentului*:</string>
     <string name="medName_hint">Ex: Propranolol</string>
     <string name="dosage_txt">Unitatea de dozare*: </string>
     <string name="dosageHint">Capsulă, mL, etc.</string>
-
     //Toggle button on/off text for alarm duration
     <string name="durationOff">Continuă </string>
     <string name="durationOn">Fixă</string>
     <string name="alarmDuration">Durata tratamentului:</string>
-
     <string name="startDate">Selectează data de început*: </string>
     <string name="startDate_hint">Selectează data</string>
     <string name="alarmFreq">Frecvența tratamentului*:</string>
     <string name="alarmsNum">Număr</string>
     <string name="hour_picker_hint">Selectează ora:* </string>
-    <string name="other_details_hint">Detalii suplimentare
+    <string name="other_details_hint">Detalii suplimentare.
     Ex:Momentul administrării, Interacțiuni cu alimente, Reacții adverse frecvente</string>
     <string name="alarmSaveButtonName">Salvează</string>
-    <string name="set_alarm_button_value">Setează Alarma</string>
     <string name="delete_alarm_button_value">Sterge</string>
-
     //Error messages
     <string name="errorMedNameMandatory">Completați câmpurile obligatorii, marcate cu "*"!</string>
 
