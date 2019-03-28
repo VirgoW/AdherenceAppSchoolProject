@@ -466,6 +466,8 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
         {
             alarmsNumber_Text.setVisibility(View.VISIBLE);
             treatmentLengthSpinner.setVisibility(View.VISIBLE);
+            alarmsNumber_Text.setText(Integer.toString(editAlarm.GetFixedFrequencyNumber()));
+            treatmentLengthSpinner.setSelection(editAlarm.GetFixedFrequencySpinnerPosition());
         }
     }
 

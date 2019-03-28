@@ -150,6 +150,8 @@ public class SaveManager {
                 {
                     String endDate = format.format(alarm.GetEndCal().getTime());
                     AddNewTag(serializer, context.getText(R.string.dateEndTag).toString(), "name", endDate);
+                    AddNewTag(serializer, context.getText(R.string.fixedFrequencyNumber).toString(), "name", Integer.toString(alarm.GetFixedFrequencyNumber()));
+                    AddNewTag(serializer, context.getText(R.string.fixedFrequencySpinnerPosition).toString(), "name", Integer.toString(alarm.GetFixedFrequencySpinnerPosition()));
                 }
 
                 AddNewTag(serializer, context.getText(R.string.notesTag).toString(), "name", alarm.GetNote());
@@ -234,6 +236,14 @@ public class SaveManager {
                             Calendar date = Calendar.getInstance();
                             date.setTime(dateFormat);
                             newAlarm.SetEndCal(date);
+                        }
+                        if(name.equals(context.getText(R.string.fixedFrequencyNumber).toString()) && newAlarm.IsFixedTimeTreament())
+                        {
+                            newAlarm.SetFixedFrequencyNumber(Integer.parseInt(m_XmlParser.getAttributeValue(null, "name")));
+                        }
+                        if(name.equals(context.getText(R.string.fixedFrequencySpinnerPosition).toString()) && newAlarm.IsFixedTimeTreament())
+                        {
+                            newAlarm.SetFixedFrequencySpinnerPosition(Integer.parseInt(m_XmlParser.getAttributeValue(null, "name")));
                         }
                         if(name.equals(context.getText(R.string.notesTag).toString()))
                         {
@@ -358,6 +368,9 @@ public class SaveManager {
                     break;
             }
             newAlarm.SetEndCal(treatmentEndDate);
+
+            newAlarm.SetFixedFrequencyNumber(frequencyNumber);
+            newAlarm.SetFixedFrequencySpinnerPosition(treatmentOption);
         }
         else
         {

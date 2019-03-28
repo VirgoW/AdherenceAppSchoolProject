@@ -11,6 +11,8 @@ public class Alarm implements Serializable {
     private String m_dose;
     private boolean m_fixedTimeTreatment;
     private boolean m_dailyTreatment = false;
+    private int m_fixedFrequencyNumber;
+    private int m_fixedFrequencySpinnerPosition;
     private Calendar m_StartCal;
     private Calendar m_EndCal;
     public ArrayList<String> m_dailyFrequency;
@@ -23,6 +25,8 @@ public class Alarm implements Serializable {
         m_dose = "";
         m_notes = "";
         m_fixedTimeTreatment = false;
+        m_fixedFrequencyNumber = 0;
+        m_fixedFrequencySpinnerPosition = -1;
         m_StartCal = null;
         m_EndCal = null;
         m_weeklyDayFrequency = new ArrayList<>();
@@ -113,4 +117,10 @@ public class Alarm implements Serializable {
     public void setId(int id) {
         m_id = id;
     }
+
+    public int GetFixedFrequencyNumber() { return m_fixedFrequencyNumber;}
+    public void SetFixedFrequencyNumber(int number) { m_fixedFrequencyNumber = number;}
+
+    public int GetFixedFrequencySpinnerPosition() { return m_fixedFrequencySpinnerPosition;}
+    public void SetFixedFrequencySpinnerPosition(int position){m_fixedFrequencySpinnerPosition = position;}
 }
