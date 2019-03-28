@@ -150,7 +150,7 @@
         android:layout_marginEnd="@dimen/buttonScreenMargin"
         android:layout_marginBottom="@dimen/buttonScreenMargin"
         android:layout_marginTop="@dimen/buttonScreenMargin"
-        android:text="@string/set_alarm_button_value"
+        android:text="@string/setNewAlarm"
         android:textSize="@dimen/project_text_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

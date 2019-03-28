@@ -27,7 +27,7 @@ public class AlertDialogClass extends Activity {
         // Build the dialog
         mAlertDlgBuilder = new AlertDialog.Builder(this);
         mDialogView = inflater.inflate(R.layout.alarm_dialog_layout, null);
-        mOKBtn = (Button)mDialogView.findViewById(R.id.ID_Ok);
+        mOKBtn = (Button)mDialogView.findViewById(R.id.confirmTakingBtn);
         TextView text = (TextView) mDialogView.findViewById(R.id.AlarmDialogText);
 
 
@@ -35,9 +35,10 @@ public class AlertDialogClass extends Activity {
         int alarmId = 0;
         String buffer;
         alarmId = thisIntent.getIntExtra("alarmID", 0);
-        String textValue = "Please take your meds! Id =" + alarmId;
+        //String textValue = "Please take your meds! Id =" + alarmId;
+        String textValue = getString(R.string.testAlarmDialogText) + alarmId;
         buffer = thisIntent.getStringExtra("medName");
-        textValue +=". Name = " + buffer;
+        textValue +=". Medication = " + buffer;
         buffer = thisIntent.getStringExtra("hour");
         textValue +=". Hour = " + buffer;
         text.setText(textValue);
@@ -45,13 +46,14 @@ public class AlertDialogClass extends Activity {
         mOKBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(v.getId() == R.id.ID_Ok)
+                if(v.getId() == R.id.confirmTakingBtn)
                 {
                     mAlertDialog.dismiss();
                     //Stop Ringtone service
                     Intent stopIntent = new Intent(context, RingtoneCustomService.class);
                     context.stopService(stopIntent);
                     finish();
+                    //TODO  check why the saved alarm disappears after clicking the OK button.
                 }
             }
         });
