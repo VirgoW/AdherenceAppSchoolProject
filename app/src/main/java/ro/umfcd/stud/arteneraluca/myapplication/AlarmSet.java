@@ -70,7 +70,7 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
         InitialiseSwitch(editMode);
 
         //Tratament fis spinner
-        InitialiseTreatmentSpinner();
+        InitialiseTreatmentSpinner(editMode);
 
         //Date picker textView
         InitialiseDatePicker(editMode);
@@ -99,7 +99,7 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
     }
 
     //Methods
-    private void InitialiseSwitch(boolean editMode) //TODO
+    private void InitialiseSwitch(boolean editMode)
     {
         Switch alarmDuration_switch = (Switch) findViewById(R.id.alarmDuration_switch);
         final TextView alarmsNumber_Text = (TextView) findViewById(R.id.alarmsNumber_Text);
@@ -119,12 +119,17 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
         });
     }
 
-    private void InitialiseTreatmentSpinner()
+    private void InitialiseTreatmentSpinner(boolean editMode)
     {
         Spinner treatmentLengthSpinner = (Spinner) findViewById(R.id.treatmentLengthSpinner);
+        int nextSpinnerPosition = treatmentLengthSpinner.getSelectedItemPosition();
         ArrayAdapter<CharSequence> spinAdapter = ArrayAdapter.createFromResource(this,R.array.Treatment_length,R.layout.custom_spinner_item);
         spinAdapter.setDropDownViewResource(R.layout.custom_spinner_dropdown);
         treatmentLengthSpinner.setAdapter(spinAdapter);
+        if(editMode)
+        {
+            treatmentLengthSpinner.setSelection(nextSpinnerPosition);
+        }
     }
 
     private  void InitialiseDatePicker(boolean editMode)
