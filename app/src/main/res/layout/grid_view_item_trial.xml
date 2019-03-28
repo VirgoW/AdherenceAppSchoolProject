@@ -58,7 +58,6 @@
             android:text="@string/testMedName"
             android:textSize="@dimen/project_text_size"
             app:layout_constraintBottom_toTopOf="@+id/dosageTextDisplay"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="spread"
@@ -72,7 +71,6 @@
             android:textSize="@dimen/project_text_size"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/dosageDisplay"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/medNameDisplay"
             app:layout_constraintVertical_weight="0.5"/>
@@ -84,7 +82,6 @@
             android:text="@string/testDosage"
             android:textSize="@dimen/project_text_size"
             app:layout_constraintBottom_toTopOf="@+id/otherDetailsDisplay"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/dosageTextDisplay"/>
 
@@ -95,7 +92,6 @@
             android:text="@string/testMedDetails"
             android:textSize="@dimen/project_text_size"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/dosageDisplay"
             app:layout_constraintVertical_weight="1.5" />

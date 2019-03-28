@@ -108,12 +108,6 @@
         app:layout_constraintStart_toEndOf="@+id/topTabLayout"
         app:layout_constraintTop_toTopOf="@+id/topTabLayout" />
 
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline_tab_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.3" />
     <android.support.constraint.Barrier
         android:id="@+id/tabBarrier"
         android:layout_width="wrap_content"
@@ -126,17 +120,17 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_vertical_grid_view"
+        app:layout_constraintBottom_toTopOf="@+id/footerBarrier"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tabBarrier" />
 
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline_vertical_grid_view"
+    <android.support.constraint.Barrier
+        android:id="@+id/footerBarrier"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.90" />
+        app:barrierDirection="top"
+        app:constraint_referenced_ids="alarmSetButton"/>
 
     <ImageView
         android:id="@+id/imageFooter"
@@ -146,30 +140,21 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline_vertical_grid_view" />
+        app:layout_constraintTop_toTopOf="@+id/footerBarrier" />
 
     <Button
         android:id="@+id/alarmSetButton"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/buttonScreenMargin"
+        android:layout_marginEnd="@dimen/buttonScreenMargin"
         android:layout_marginBottom="@dimen/buttonScreenMargin"
+        android:layout_marginTop="@dimen/buttonScreenMargin"
         android:text="@string/set_alarm_button_value"
         android:textSize="@dimen/project_text_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline_button_setAlarm"
-        app:layout_constraintTop_toBottomOf="@id/guideline_vertical_grid_view"/>
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline_button_setAlarm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.6" />
-
-
-
+        app:layout_constraintTop_toBottomOf="@id/footerBarrier"/>
 
 
 </android.support.constraint.ConstraintLayout>
