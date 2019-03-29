@@ -337,45 +337,6 @@ public class SaveManager {
         {
             newAlarm.SetNote(notesValue.getText().toString());
         }
-        if(frequncyValue.isChecked())
-        {
-            //If the frequency value is checked, it means the medication treatment has a fixed period of time
-            //So we add that end date based on the user input
-            newAlarm.SetFixedTimeTreament(true);
-            String frequencyNumberString = ((TextView) view.findViewById(R.id.alarmsNumber_Text)).getText().toString();
-            int frequencyNumber = Integer.parseInt(frequencyNumberString);
-            Spinner treatmentLenghtSpinner = (Spinner) view.findViewById(R.id.treatmentLengthSpinner);
-            int treatmentOption = treatmentLenghtSpinner.getSelectedItemPosition();
-
-            Calendar treatmentEndDate = Calendar.getInstance();
-            switch(treatmentOption)
-            {
-                case 0:
-                    //Days
-                    treatmentEndDate.add(Calendar.DAY_OF_YEAR, frequencyNumber);
-                    break;
-                case 1:
-                    //Weeks
-                    treatmentEndDate.add(Calendar.WEEK_OF_YEAR, frequencyNumber);
-                    break;
-                case 2:
-                    //Months
-                    treatmentEndDate.add(Calendar.MONTH, 1);
-                    break;
-                case 3:
-                    //Years
-                    treatmentEndDate.add(Calendar.YEAR, frequencyNumber);
-                    break;
-            }
-            newAlarm.SetEndCal(treatmentEndDate);
-
-            newAlarm.SetFixedFrequencyNumber(frequencyNumber);
-            newAlarm.SetFixedFrequencySpinnerPosition(treatmentOption);
-        }
-        else
-        {
-            newAlarm.SetFixedTimeTreament(false);
-        }
 
         LinearLayout hourPickersLayout = view.findViewById(R.id.hourPickers_LinearLayout);
         for (int i = 0; i < hourPickersLayout.getChildCount(); i++)
@@ -415,6 +376,50 @@ public class SaveManager {
             Log.e("ArteneApp", "Exception while creating fragment view: ", e);
         }
         newAlarm.SetStartCal(date);
+
+        if(frequncyValue.isChecked())
+        {
+            //If the frequency value is checked, it means the medication treatment has a fixed period of time
+            //So we add that end date based on the user input
+            newAlarm.SetFixedTimeTreament(true);
+            String frequencyNumberString = ((TextView) view.findViewById(R.id.alarmsNumber_Text)).getText().toString();
+            int frequencyNumber = Integer.parseInt(frequencyNumberString);
+            Spinner treatmentLenghtSpinner = (Spinner) view.findViewById(R.id.treatmentLengthSpinner);
+            int treatmentOption = treatmentLenghtSpinner.getSelectedItemPosition();
+
+            Calendar treatmentEndDate = (Calendar) newAlarm.GetStartCal().clone();
+            switch(treatmentOption)
+            {
+                case 0:
+                    //Days
+                    treatmentEndDate.add(Calendar.DAY_OF_YEAR, frequencyNumber);
+                    newAlarm.SetEndCal(treatmentEndDate);
+
+                    break;
+                case 1:
+                    //Weeks
+                    treatmentEndDate.add(Calendar.WEEK_OF_YEAR, frequencyNumber);
+                    newAlarm.SetEndCal(treatmentEndDate);
+                    break;
+                case 2:
+                    //Months
+                    treatmentEndDate.add(Calendar.MONTH, frequencyNumber);
+                    newAlarm.SetEndCal(treatmentEndDate);
+                    break;
+                case 3:
+                    //Years
+                    treatmentEndDate.add(Calendar.YEAR, frequencyNumber);
+                    newAlarm.SetEndCal(treatmentEndDate);
+                    break;
+            }
+
+            newAlarm.SetFixedFrequencyNumber(frequencyNumber);
+            newAlarm.SetFixedFrequencySpinnerPosition(treatmentOption);
+        }
+        else
+        {
+            newAlarm.SetFixedTimeTreament(false);
+        }
         return newAlarm;
     }
 
