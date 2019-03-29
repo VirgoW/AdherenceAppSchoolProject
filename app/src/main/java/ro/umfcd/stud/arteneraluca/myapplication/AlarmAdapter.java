@@ -170,17 +170,9 @@ public class AlarmAdapter extends BaseAdapter {
         if(alarm.IsFixedTimeTreament())
         {
             Calendar alarmEndCal = alarm.GetEndCal();
-            try {
-                SimpleDateFormat format = new SimpleDateFormat(m_context.getText(R.string.dateFormat).toString());
-                String date1 = format.format(alarmEndCal.getTime());
-                String date2 = format.format(todayCal.getTime());
-                if(date1.equals(date2) || todayCal.after(alarmEndCal))
-                {
-                    return false;
-                }
-
-            } catch (Exception e) {
-                e.printStackTrace();
+            if(SaveManager.getInstance().CalendarAAfterCalendarB(m_context, todayCal, alarmEndCal))
+            {
+                return false;
             }
         }
         int dayOfWeek = SaveManager.getInstance().GetDayOfWeek(todayCal);

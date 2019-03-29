@@ -45,15 +45,16 @@ public class AlarmReceiver extends BroadcastReceiver {
         Alarm alarm = new Alarm();
         if(SaveManager.getInstance().DeserializeAlarmFromIntent(intent, alarm))
         {
-            int alarmIndex = alarm.getId();
-
             Intent newIntent = new Intent(context, AlarmReceiver.class);
             AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+            boolean fixedTreatment = alarm.IsFixedTimeTreament();
 
             //Set an alarm next monday at 00:00 to set once alarms for that week.
             newIntent.putExtra("alarmType", R.string.alarmSet);
             SaveManager.getInstance().SerializeAlarmIntoIntent(newIntent, alarm);
 
+            int alarmIndex = alarm.getId();
+            PendingIntent pendingAlarmIntent = PendingIntent.getBroadcast(context, alarmIndex, newIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             Calendar nextMondayCal = Calendar.getInstance();
             do
             {
@@ -61,8 +62,11 @@ public class AlarmReceiver extends BroadcastReceiver {
             } while(nextMondayCal.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY);
             nextMondayCal.set(Calendar.HOUR_OF_DAY, 0);
             nextMondayCal.set(Calendar.MINUTE, 0);
-            PendingIntent pendingAlarmIntent = PendingIntent.getBroadcast(context, alarmIndex, newIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-            alarmMgr.set(AlarmManager.RTC_WAKEUP, nextMondayCal.getTimeInMillis(), pendingAlarmIntent);
+
+            if(! (fixedTreatment && SaveManager.getInstance().CalendarAAfterCalendarB(context, nextMondayCal, alarm.GetEndCal())) )
+            {
+                alarmMgr.set(AlarmManager.RTC_WAKEUP, nextMondayCal.getTimeInMillis(), pendingAlarmIntent);
+            }
 
             //Set alarms for this week
             Calendar todayCal = Calendar.getInstance();
@@ -93,7 +97,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                         alarmCal.set(Calendar.MINUTE, minute);
                         alarmCal.add(Calendar.DATE, indexDay - today);
                         //Skip today's alarms
-                        if(today == indexDay && todayCal.after(alarmCal))
+                        if(today == indexDay && todayCal.after(alarmCal) || (fixedTreatment && SaveManager.getInstance().CalendarAAfterCalendarB(context, todayCal, alarm.GetEndCal())))
                         {
                             continue;
                         }

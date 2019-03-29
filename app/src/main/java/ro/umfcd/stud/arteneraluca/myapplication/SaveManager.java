@@ -600,4 +600,23 @@ public class SaveManager {
         }
         return false;
     }
+
+    Boolean CalendarAAfterCalendarB(Context context, Calendar calA, Calendar calB)
+    {
+        try
+        {
+            SimpleDateFormat format = new SimpleDateFormat(context.getText(R.string.dateFormat).toString());
+            String date1 = format.format(calA.getTime());
+            String date2 = format.format(calB.getTime());
+            if(date1.equals(date2) || calA.after(calB))
+            {
+                return true;
+            }
+        }
+        catch (Exception e)
+        {
+             e.printStackTrace();
+        }
+        return false;
+    }
 }
