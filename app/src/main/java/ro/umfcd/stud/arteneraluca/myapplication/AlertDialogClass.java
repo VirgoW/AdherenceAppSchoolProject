@@ -35,7 +35,6 @@ public class AlertDialogClass extends Activity {
         int alarmId = 0;
         String buffer;
         alarmId = thisIntent.getIntExtra("alarmID", 0);
-        //String textValue = "Please take your meds! Id =" + alarmId;
         String textValue = getString(R.string.testAlarmDialogText) + alarmId;
         buffer = thisIntent.getStringExtra("medName");
         textValue +=". Medication = " + buffer;

@@ -75,7 +75,7 @@
     <string name="startDate">Selectează data de început*: </string>
     <string name="startDate_hint">Selectează data</string>
     <string name="alarmFreq">Frecvența tratamentului*:</string>
-    <string name="alarmsNum">Număr</string>
+    <string name="alarmsNum">Număr*</string>
     <string name="hour_picker_hint">Selectează ora:* </string>
     <string name="other_details_hint">Detalii suplimentare.
     Ex:Momentul administrării, Interacțiuni cu alimente, Reacții adverse frecvente</string>

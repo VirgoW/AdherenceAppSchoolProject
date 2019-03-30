@@ -370,11 +370,13 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
         boolean startDateValid = true;
         boolean hourPickersLayoutValid = true;
         boolean frequencyValid = true;
+        boolean fixedTimeTreamentValid = false;
         TextView medName = (TextView) findViewById(R.id.medNameTextInput);
         TextView dosage = (TextView) findViewById(R.id.DosageInput_Text);
         TextView startDateSelection = (TextView) findViewById(R.id.startDateSelection);
         LinearLayout hourPickersLayout = (LinearLayout) findViewById(R.id.hourPickers_LinearLayout);
         RadioGroup alarmFrequency = (RadioGroup) findViewById(R.id.alarmFreq_RadioGroup);
+        Switch fixedTimeTreatment = (Switch) findViewById(R.id.alarmDuration_switch);
 
         if (medName.getText().toString().isEmpty()) {
             medNameValid = false;
@@ -413,8 +415,20 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
             }
             frequencyValid = numberOfCheckedDays > 0;
         }
+        if(fixedTimeTreatment.isChecked())
+        {
+            int frenquencyNumber = Integer.parseInt(((TextView) findViewById(R.id.alarmsNumber_Text)).getText().toString());
+            if(frenquencyNumber > 0)
+            {
+                fixedTimeTreamentValid = true;
+            }
+        }
+        else
+        {
+            fixedTimeTreamentValid = true;
+        }
 
-        if(medNameValid && dosageValid && startDateValid && hourPickersLayoutValid && frequencyValid)
+        if(medNameValid && dosageValid && startDateValid && hourPickersLayoutValid && frequencyValid && fixedTimeTreamentValid)
         {
             return true;
         }
