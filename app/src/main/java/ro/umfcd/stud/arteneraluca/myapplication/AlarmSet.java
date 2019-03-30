@@ -417,8 +417,12 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
         }
         if(fixedTimeTreatment.isChecked())
         {
-            int frenquencyNumber = Integer.parseInt(((TextView) findViewById(R.id.alarmsNumber_Text)).getText().toString());
-            if(frenquencyNumber > 0)
+            String alarmNumberText = ((TextView) findViewById(R.id.alarmsNumber_Text)).getText().toString();
+            if(alarmNumberText.isEmpty())
+            {
+                fixedTimeTreamentValid = false;
+            }
+            else
             {
                 fixedTimeTreamentValid = true;
             }

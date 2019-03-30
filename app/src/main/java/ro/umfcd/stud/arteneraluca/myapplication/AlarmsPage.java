@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class AlarmsPage extends AppCompatActivity {
@@ -90,6 +91,8 @@ public class AlarmsPage extends AppCompatActivity {
 
 
         m_cal = Calendar.getInstance();
+        SimpleDateFormat format = new SimpleDateFormat("hh:mm:ss");
+        String date1 = format.format(m_cal.getTime());
         SetupView();
 
         m_lastTabIndex = SaveManager.getInstance().GetDayOfWeek(m_cal);

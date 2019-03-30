@@ -192,7 +192,7 @@ public class AlarmAdapter extends BaseAdapter {
                 }
             }
         }
-        displayAlarm = todayCal.after(alarmCal) || todayCal.equals(alarmCal);
+        displayAlarm = SaveManager.getInstance().CalendarAAfterCalendarB(m_context, todayCal, alarmCal);
         displayAlarm = displayAlarm && weeklyFrequencyValid;
         return displayAlarm;
     }
