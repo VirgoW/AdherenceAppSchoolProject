@@ -74,9 +74,11 @@ public class DayFragmentAdapter extends FragmentStatePagerAdapter
         TextView dayName = (TextView) tabView.findViewById(R.id.dayNameTabItem);
         day.setText(Integer.toString(m_fragmentDayValueList.get(position)));
         dayName.setText(m_fragmentDayNameList.get(position));
+        int height = tabView.getHeight(); //this is just for testing
         return tabView;
-    }
 
+    }
+    // We need the tab_item_layout's height so we can set this size to the tabs
     public int getTabHeight()
     {
         View tabView = getTabView(0);

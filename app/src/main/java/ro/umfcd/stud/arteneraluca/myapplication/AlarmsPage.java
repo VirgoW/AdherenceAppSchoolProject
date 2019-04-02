@@ -3,6 +3,7 @@ package ro.umfcd.stud.arteneraluca.myapplication;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -97,6 +98,7 @@ public class AlarmsPage extends AppCompatActivity {
         SetupView();
 
         m_lastTabIndex = SaveManager.getInstance().GetDayOfWeek(m_cal);
+
     }
 
     @Override
@@ -130,7 +132,7 @@ public class AlarmsPage extends AppCompatActivity {
         //Give the TabLayout the ViewPager to use
         m_tabLayout = (TabLayout) findViewById(R.id.topTabLayout);
         InstantiateCalToCurrentDay();
-        
+
     }
 
     private void AddMonth(int plus) {
@@ -209,5 +211,26 @@ public class AlarmsPage extends AppCompatActivity {
                 m_lastTabIndex = data.getIntExtra("tabIndex", 0);
             }
         }
+    }
+
+
+    // We tried to determine the tabItem's height here, to see if it's different than 0;
+    //It's not functional
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onPostCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
+        super.onPostCreate(savedInstanceState, persistentState);
+        //we need to resize the TabLayout so it correctly fits the tabView
+
+        //Get the layout params that will allow you to resize the tablayout
+        ViewGroup.LayoutParams params = m_tabLayout.getLayoutParams();
+        //By default, params.height = -2
+        params.height = m_alarmPageAdapter.getTabHeight();
+        //Here params.height = 0 because that's the value it receives
+        m_tabLayout.setLayoutParams(params);
     }
 }
