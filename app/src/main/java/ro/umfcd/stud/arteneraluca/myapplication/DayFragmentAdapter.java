@@ -77,6 +77,13 @@ public class DayFragmentAdapter extends FragmentStatePagerAdapter
         return tabView;
     }
 
+    public int getTabHeight()
+    {
+        View tabView = getTabView(0);
+        int tabHeight = tabView.getHeight();
+        return tabHeight;
+    }
+
     //Populate the adapter data with days name and value
     private void UpdateDayTabs()
     {

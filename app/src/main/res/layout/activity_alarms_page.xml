@@ -16,9 +16,9 @@
         android:textSize="@dimen/project_text_size"
         app:layout_constraintEnd_toStartOf="@+id/prevMonth"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintHorizontal_weight="4"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_weight="4"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imageHeader"
@@ -43,17 +43,18 @@
 
     <TextView
         android:id="@+id/currentDisplayedMonth"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="@string/testMonth"
         android:textColor="@color/tab_item_text_color"
         android:textSize="@dimen/project_text_size"
-        android:gravity="center"
+        android:singleLine="true"
         app:layout_constraintBottom_toBottomOf="@+id/prevMonth"
         app:layout_constraintEnd_toStartOf="@+id/nextMonth"
+        app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toEndOf="@+id/prevMonth"
-        app:layout_constraintTop_toTopOf="@+id/prevMonth"
-        app:layout_constraintHorizontal_weight="1"/>
+        app:layout_constraintTop_toTopOf="@+id/prevMonth" />
 
     <ImageButton
         android:id="@+id/nextMonth"
@@ -89,13 +90,25 @@
         android:id="@+id/topTabLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/tabBarrier"
+        app:layout_constraintBottom_toBottomOf="@+id/tabBarrier"
         app:layout_constraintEnd_toStartOf="@+id/nextWeek"
         app:layout_constraintStart_toEndOf="@+id/previousWeek"
         app:layout_constraintTop_toTopOf="@+id/barrier"
         app:tabBackground="@drawable/tab_color_selector"
         app:tabMode="scrollable"
-        app:tabTextAppearance="@style/CustomTaLayout" />
+        app:tabTextAppearance="@style/CustomTaLayout">
+
+
+        <android.support.design.widget.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/testDay"/>
+        <android.support.design.widget.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/testDay"/>
+    </android.support.design.widget.TabLayout>
+
 
     <ImageButton
         android:id="@+id/nextWeek"
@@ -113,7 +126,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="previousWeek,topTabLayout,nextWeek"/>
+        app:constraint_referenced_ids="topTabLayout,nextWeek" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
@@ -130,7 +143,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="top"
-        app:constraint_referenced_ids="alarmSetButton"/>
+        app:constraint_referenced_ids="alarmSetButton" />
 
     <ImageView
         android:id="@+id/imageFooter"
@@ -146,15 +159,15 @@
         android:id="@+id/alarmSetButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/buttonScreenMargin"
-        android:layout_marginEnd="@dimen/buttonScreenMargin"
-        android:layout_marginBottom="@dimen/buttonScreenMargin"
         android:layout_marginTop="@dimen/buttonScreenMargin"
+        android:layout_marginEnd="@dimen/buttonScreenMargin"
+        android:layout_marginRight="@dimen/buttonScreenMargin"
+        android:layout_marginBottom="@dimen/buttonScreenMargin"
         android:text="@string/setNewAlarm"
         android:textSize="@dimen/project_text_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/footerBarrier"/>
+        app:layout_constraintTop_toBottomOf="@id/footerBarrier" />
 
 
 </android.support.constraint.ConstraintLayout>

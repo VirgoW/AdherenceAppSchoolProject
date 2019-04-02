@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -129,6 +130,7 @@ public class AlarmsPage extends AppCompatActivity {
         //Give the TabLayout the ViewPager to use
         m_tabLayout = (TabLayout) findViewById(R.id.topTabLayout);
         InstantiateCalToCurrentDay();
+        
     }
 
     private void AddMonth(int plus) {
@@ -166,7 +168,17 @@ public class AlarmsPage extends AppCompatActivity {
             TabLayout.Tab tab = m_tabLayout.getTabAt(index);
             tab.setCustomView(m_alarmPageAdapter.getTabView(index));
         }
+        //we need to resize the TabLayout so it correctly fits the tabView
+
+        /*Get the layout params that will allow you to resize the tablayout
+        ViewGroup.LayoutParams params = m_tabLayout.getLayoutParams();
+        //By default, params.height = -2
+        params.height = m_alarmPageAdapter.getTabHeight();
+        //Here params.height = 0 because that's the value it receives
+        m_tabLayout.setLayoutParams(params);
+*/
     }
+
 
     private void InstantiateCalToCurrentDay()
     {
@@ -176,11 +188,15 @@ public class AlarmsPage extends AppCompatActivity {
         String[] monthNames = getResources().getStringArray(R.array.monthNames);
         ((TextView) findViewById(R.id.currentDisplayedMonth)).setText(monthNames[calMonth]);
 
+        //The 4 lines above aren't the same thing as the UpdateMonthTextView function?
+        //If so, these 4 lines are repeated when the updateFragments is called
+
         UpdateFragments();
 
         int dayOfWeek = SaveManager.getInstance().GetDayOfWeek(m_cal);
         TabLayout.Tab tab = m_tabLayout.getTabAt(dayOfWeek);
         tab.select();
+
     }
 
     @Override
