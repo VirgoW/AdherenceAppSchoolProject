@@ -50,20 +50,6 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
         m_mode = myIntent.getStringExtra(m_context.getString(R.string.alarmSetModeName));
         m_alarmIndex = myIntent.getIntExtra("index", -1);
         boolean editMode = m_mode.equals(m_context.getString(R.string.alarmModeEdit));
-        if(editMode)
-        {
-            FillFormFromCache();
-            Button deleteAlarm = (Button) findViewById(R.id.alarmDeleteButton);
-            deleteAlarm.setVisibility(View.VISIBLE);
-            deleteAlarm.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v) {
-                    TryDeleteAlarm();
-                }
-            });
-        }
-
 
         //Tratament continuu/fix switch
         InitialiseSwitch(editMode);
@@ -95,6 +81,20 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
         });
 
         m_previousTabIndex = myIntent.getIntExtra("tabIndex", 0);
+
+        if(editMode)
+        {
+            FillFormFromCache();
+            Button deleteAlarm = (Button) findViewById(R.id.alarmDeleteButton);
+            deleteAlarm.setVisibility(View.VISIBLE);
+            deleteAlarm.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v) {
+                    TryDeleteAlarm();
+                }
+            });
+        }
     }
 
     //Methods
