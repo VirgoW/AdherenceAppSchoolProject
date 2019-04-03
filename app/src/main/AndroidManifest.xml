@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ro.umfcd.stud.arteneraluca.myapplication">
 
+    <uses-permission android:name="android.permission.VIBRATE"/>
     <application
         android:name=".NotificationsApp"
         android:allowBackup="true"

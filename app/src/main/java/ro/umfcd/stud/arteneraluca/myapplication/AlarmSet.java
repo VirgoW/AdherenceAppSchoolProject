@@ -485,7 +485,7 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
         TextView alarmsNumber_Text = (TextView) findViewById(R.id.alarmsNumber_Text);
         Spinner treatmentLengthSpinner = (Spinner) findViewById(R.id.treatmentLengthSpinner);
 
-        fixedTimeTreatment.setChecked(editAlarm.IsFixedTimeTreament());
+        fixedTimeTreatment.setChecked(editAlarm.IsFixedTimeTreatment());
         if(fixedTimeTreatment.isChecked())
         {
             alarmsNumber_Text.setVisibility(View.VISIBLE);

@@ -93,7 +93,6 @@ public class AlarmAdapter extends BaseAdapter {
         if(convertView == null)
         {
             //Get layout from xml file using the inflater
-            //I have modified the layout from grid_view_item to grid_view_item_trial
             gridView = inflater.inflate(R.layout.grid_view_item_trial, null);
         }
         else
@@ -108,13 +107,8 @@ public class AlarmAdapter extends BaseAdapter {
 
         //Populate the gridview items with each item value
         //Code tip: FINAL keyword is used to create a constant. That forces the variable to not allow to be changed
-        //final TextView medName = (TextView) gridView.findViewById(R.id.grid_item_medicament);
         final TextView medName = (TextView) gridView.findViewById(R.id.medNameDisplay);
-
-        //final TextView hour = (TextView) gridView.findViewById(R.id.grid_item_ora);
         final TextView hour = (TextView) gridView.findViewById(R.id.hourDisplay);
-
-        //final TextView note = (TextView) gridView.findViewById(R.id.alarm_note);
         final TextView note = (TextView) gridView.findViewById(R.id.otherDetailsDisplay);
         final TextView dosage = (TextView) gridView.findViewById(R.id.dosageDisplay);
         AlarmItem alarm = m_alarmsToDisplay.get(position);
@@ -151,7 +145,6 @@ public class AlarmAdapter extends BaseAdapter {
                     item.index = alarm.getId();
                     item.medName = alarm.GetMedName();
                     item.note = alarm.GetNote();
-                    //i'm trying to get dosage to display in gridview
                     item.dosage = alarm.GetDosage();
                     m_alarmsToDisplay.add(item);
                 }
@@ -167,7 +160,7 @@ public class AlarmAdapter extends BaseAdapter {
     private boolean ShouldDisplayAlarmToday(Calendar todayCal, Alarm alarm)
     {
         Calendar alarmCal = alarm.GetStartCal();
-        if(alarm.IsFixedTimeTreament())
+        if(alarm.IsFixedTimeTreatment())
         {
             Calendar alarmEndCal = alarm.GetEndCal();
             if(SaveManager.getInstance().CalendarAAfterCalendarB(m_context, todayCal, alarmEndCal))

@@ -145,8 +145,8 @@ public class SaveManager {
                 SimpleDateFormat format = new SimpleDateFormat(context.getText(R.string.dateFormat).toString());
                 String startDate = format.format(alarm.GetStartCal().getTime());
                 AddNewTag(serializer, context.getText(R.string.dateTag).toString(), "name", startDate);
-                AddNewTag(serializer, context.getText(R.string.frequencyTag).toString(), "name", Boolean.toString(alarm.IsFixedTimeTreament()));
-                if(alarm.IsFixedTimeTreament())
+                AddNewTag(serializer, context.getText(R.string.frequencyTag).toString(), "name", Boolean.toString(alarm.IsFixedTimeTreatment()));
+                if(alarm.IsFixedTimeTreatment())
                 {
                     String endDate = format.format(alarm.GetEndCal().getTime());
                     AddNewTag(serializer, context.getText(R.string.dateEndTag).toString(), "name", endDate);
@@ -226,9 +226,9 @@ public class SaveManager {
                         }
                         if(name.equals(context.getText(R.string.frequencyTag).toString()))
                         {
-                            newAlarm.SetFixedTimeTreament(Boolean.parseBoolean(m_XmlParser.getAttributeValue(null,"name")));
+                            newAlarm.SetFixedTimeTreatment(Boolean.parseBoolean(m_XmlParser.getAttributeValue(null,"name")));
                         }
-                        if(name.equals(context.getText(R.string.dateEndTag).toString()) && newAlarm.IsFixedTimeTreament())
+                        if(name.equals(context.getText(R.string.dateEndTag).toString()) && newAlarm.IsFixedTimeTreatment())
                         {
                             SimpleDateFormat format = new SimpleDateFormat(context.getText(R.string.dateFormat).toString());
                             String endDate = m_XmlParser.getAttributeValue(null,"name");
@@ -237,11 +237,11 @@ public class SaveManager {
                             date.setTime(dateFormat);
                             newAlarm.SetEndCal(date);
                         }
-                        if(name.equals(context.getText(R.string.fixedFrequencyNumber).toString()) && newAlarm.IsFixedTimeTreament())
+                        if(name.equals(context.getText(R.string.fixedFrequencyNumber).toString()) && newAlarm.IsFixedTimeTreatment())
                         {
                             newAlarm.SetFixedFrequencyNumber(Integer.parseInt(m_XmlParser.getAttributeValue(null, "name")));
                         }
-                        if(name.equals(context.getText(R.string.fixedFrequencySpinnerPosition).toString()) && newAlarm.IsFixedTimeTreament())
+                        if(name.equals(context.getText(R.string.fixedFrequencySpinnerPosition).toString()) && newAlarm.IsFixedTimeTreatment())
                         {
                             newAlarm.SetFixedFrequencySpinnerPosition(Integer.parseInt(m_XmlParser.getAttributeValue(null, "name")));
                         }
@@ -381,7 +381,7 @@ public class SaveManager {
         {
             //If the frequency value is checked, it means the medication treatment has a fixed period of time
             //So we add that end date based on the user input
-            newAlarm.SetFixedTimeTreament(true);
+            newAlarm.SetFixedTimeTreatment(true);
             String frequencyNumberString = ((TextView) view.findViewById(R.id.alarmsNumber_Text)).getText().toString();
             int frequencyNumber = Integer.parseInt(frequencyNumberString);
             Spinner treatmentLenghtSpinner = (Spinner) view.findViewById(R.id.treatmentLengthSpinner);
@@ -418,7 +418,7 @@ public class SaveManager {
         }
         else
         {
-            newAlarm.SetFixedTimeTreament(false);
+            newAlarm.SetFixedTimeTreatment(false);
         }
         return newAlarm;
     }
@@ -507,7 +507,7 @@ public class SaveManager {
 
                 Calendar alarmStartCalendar = alarm.GetStartCal();
                 Calendar alarmEndCalendar = null;
-                if(alarm.IsFixedTimeTreament())
+                if(alarm.IsFixedTimeTreatment())
                 {
                    alarmEndCalendar = alarm.GetEndCal();
                 }
