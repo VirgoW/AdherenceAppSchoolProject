@@ -24,12 +24,11 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import static android.view.ViewGroup.*;
+import static android.view.ViewGroup.MarginLayoutParams;
 
 public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
     Context m_context;
@@ -143,8 +142,10 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
         }
         else
         {
-            Calendar c = Calendar.getInstance();
-            String currentDateString = DateFormat.getDateInstance().format(c.getTime());
+            Calendar cal = Calendar.getInstance();
+
+            SimpleDateFormat format = new SimpleDateFormat(m_context.getText(R.string.dateFormat).toString());
+            String currentDateString = format.format(cal.getTime());
             alarm_startDate.setText(currentDateString);
 
         }
@@ -153,7 +154,6 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
             public void onClick(View v) {
                 DialogFragment datePicker = new DatePickerFragment();
                 datePicker.show(getSupportFragmentManager(),"date picker");
-
             }
         });
     }
@@ -161,11 +161,12 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
     //on Date set for DatePicker
     @Override
     public void onDateSet (DatePicker view , int year, int month, int dayOfMonth){
-        Calendar c = Calendar.getInstance();
-        c.set(Calendar.YEAR, year);
-        c.set(Calendar.MONTH, month);
-        c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-        String setDateString = DateFormat.getDateInstance().format(c.getTime());
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, year);
+        cal.set(Calendar.MONTH, month);
+        cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+        SimpleDateFormat format = new SimpleDateFormat(m_context.getText(R.string.dateFormat).toString());
+        String setDateString = format.format(cal.getTime());
         TextView alarm_startDate = (TextView) findViewById(R.id.startDateSelection);
         alarm_startDate.setText(setDateString);
     }

@@ -42,13 +42,20 @@ public class Alarm implements Serializable {
         m_medName = newMed;
     }
 
+    /*
+        Check for weekly treatment to be valid. That means dailyTreatment = true and we have more than 0 weekly days selected
+        For the alarm to be valid, we need to have all members valid.
+        If the treatment has a fixed time, the end calendar must be valid.
+     */
     boolean IsValid()
     {
-        //Code tip: In a normal project we would need a method to access the members of a class, to preserve the OOP principle called Incapsulation
-        //Incapsulation: every object in a class must be hidden and only accessible from within the class. All external access must be granted through methods of the class
+
         boolean isWeeklyTreatementValid = !m_dailyTreatment && m_weeklyDayFrequency.size() > 0;
-        boolean isValid = !m_medName.isEmpty() && !m_dose.isEmpty() && m_StartCal != null && m_dailyFrequency.size() > 0 &&
-                (m_dailyTreatment || isWeeklyTreatementValid) && (m_fixedTimeTreatment && m_EndCal != null) ;
+        boolean isValid = !m_medName.isEmpty() && !m_dose.isEmpty() && m_StartCal != null && m_dailyFrequency.size() > 0 && (m_dailyTreatment || isWeeklyTreatementValid);
+        if(m_fixedTimeTreatment)
+        {
+            isValid = isValid &&  m_EndCal != null;
+        }
 
         return isValid;
     }

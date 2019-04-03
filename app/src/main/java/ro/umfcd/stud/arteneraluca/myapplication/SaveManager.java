@@ -605,11 +605,6 @@ public class SaveManager {
     {
         try
         {
-            /*
-            SimpleDateFormat format = new SimpleDateFormat(context.getText(R.string.dateFormat).toString());
-            String date1 = format.format(calA.getTime());
-            String date2 = format.format(calB.getTime());
-            if(date1.equals(date2) || calA.after(calB))*/
             Date dateA = calA.getTime();
             Date dateB = calB.getTime();
 
