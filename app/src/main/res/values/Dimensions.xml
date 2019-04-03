@@ -1,43 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    //Project dimensions
+    <!--Project dimensions-->
     <dimen name="project_text_size">22sp</dimen>
 
-    //AlarmSet page
+    <!--AlarmSet page -->
     <dimen name="alarm_set_vertical_padding">10dp</dimen>
     <dimen name="alarm_set_horizontal_padding">5dp</dimen>
     <dimen name="scroll_padding">5dp</dimen>
     <dimen name="button_Horizontalpadding">30dp</dimen>
 
-    //Text borders
+        <!--Text borders-->
     <dimen name="alarm_set_border_stroke">2dp</dimen>
     <dimen name="alarm_set_border_corners">5dp</dimen>
     <dimen name="alarm_set_border_padding">3dp</dimen>
 
-    //Switch dimensions
+        <!--Switch dimensions-->
     <dimen name="track_size">32dp</dimen>
     <dimen name="track_stroke">16dp</dimen>
     <dimen name="switch_radius">5dp</dimen>
     <dimen name="thumb_padding">5dp</dimen>
 
-    //Spinner dimensions
+        <!--Spinner dimensions-->
     <dimen name="spinner_dropdown_padding">5dp</dimen>
 
-    //Checkboxes dimensions
+        <!--Checkboxes dimensions-->
     <dimen name="checkbox_square">40dp</dimen>
     <dimen name="checkbox_stroke">1dp</dimen>
     <dimen name="chkText_off">-34dp</dimen>
     <dimen name="checkboxesLay_padding">5dp</dimen>
 
-    //Other details textBox
+        <!--Other details textBox-->
     <dimen name="otherDetails_spacing">8sp</dimen>
 
-    //Alarms page dimen
+    <!--Alarms page dimen-->
 
     <dimen name="buttonScreenMargin">10dp</dimen>
     <dimen name="arrowSquareSize">30dp</dimen>
 
-    //viewPager dimensions
+        <!--viewPager dimensions-->
     <dimen name="dividerPadding">20dp</dimen>
     <dimen name="dividerStroke">1dp</dimen>
     <dimen name="guidelineSquarePadding">25dp</dimen>
