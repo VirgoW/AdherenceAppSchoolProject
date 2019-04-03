@@ -18,6 +18,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         if(alarmType == R.string.alarmActivate)
         {
             ActivateAlarm(context, intent, alarmIntent);
+
         }
         else
         {
@@ -47,7 +48,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         {
             Intent newIntent = new Intent(context, AlarmReceiver.class);
             AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-            boolean fixedTreatment = alarm.IsFixedTimeTreament();
+            boolean fixedTreatment = alarm.IsFixedTimeTreatment();
 
             //Set an alarm next monday at 00:00 to set once alarms for that week.
             newIntent.putExtra("alarmType", R.string.alarmSet);

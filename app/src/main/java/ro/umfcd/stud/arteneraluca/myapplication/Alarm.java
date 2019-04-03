@@ -40,7 +40,7 @@ public class Alarm implements Serializable {
     public Alarm(String newMed)
     {
         m_medName = newMed;
-    }
+    } //Seems to be not used
 
     boolean IsValid()
     {
@@ -85,8 +85,8 @@ public class Alarm implements Serializable {
         return m_dailyTreatment;
     }
 
-    public void SetDailyTreatment(boolean dailyTreament) {
-        m_dailyTreatment = dailyTreament;
+    public void SetDailyTreatment(boolean dailyTreatment) {
+        m_dailyTreatment = dailyTreatment;
     }
 
     public Calendar GetStartCal() {
@@ -101,12 +101,11 @@ public class Alarm implements Serializable {
 
     public void SetEndCal(Calendar endCal) { m_EndCal = endCal;}
 
-    public boolean IsFixedTimeTreament() {
+    public boolean IsFixedTimeTreatment() {
         return m_fixedTimeTreatment;
     }
 
-    public void SetFixedTimeTreament(boolean fixedTimeTreatment)
-    {
+    public void SetFixedTimeTreatment(boolean fixedTimeTreatment) {
         m_fixedTimeTreatment = fixedTimeTreatment;
     }
 

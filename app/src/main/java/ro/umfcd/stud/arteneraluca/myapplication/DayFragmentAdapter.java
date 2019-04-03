@@ -77,13 +77,6 @@ public class DayFragmentAdapter extends FragmentStatePagerAdapter
         return tabView;
 
     }
-    // We need the tab_item_layout's height so we can set this size to the tabs
-    public int getTabHeight()
-    {
-        View tabView = getTabView(0);
-        int tabHeight = tabView.getHeight();
-        return tabHeight;
-    }
 
     //Populate the adapter data with days name and value
     private void UpdateDayTabs()
