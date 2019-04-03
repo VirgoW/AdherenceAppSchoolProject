@@ -166,7 +166,6 @@ public class AlarmAdapter extends BaseAdapter {
 
     private boolean ShouldDisplayAlarmToday(Calendar todayCal, Alarm alarm)
     {
-        Calendar alarmCal = alarm.GetStartCal();
         if(alarm.IsFixedTimeTreament())
         {
             Calendar alarmEndCal = alarm.GetEndCal();
@@ -176,7 +175,6 @@ public class AlarmAdapter extends BaseAdapter {
             }
         }
         int dayOfWeek = SaveManager.getInstance().GetDayOfWeek(todayCal);
-        boolean displayAlarm;
         boolean weeklyFrequencyValid = false;
         if(alarm.IsDailyTreatment())
         {
@@ -192,8 +190,6 @@ public class AlarmAdapter extends BaseAdapter {
                 }
             }
         }
-        displayAlarm = SaveManager.getInstance().CalendarAAfterCalendarB(m_context, todayCal, alarmCal);
-        displayAlarm = displayAlarm && weeklyFrequencyValid;
-        return displayAlarm;
+        return weeklyFrequencyValid;
     }
 }
