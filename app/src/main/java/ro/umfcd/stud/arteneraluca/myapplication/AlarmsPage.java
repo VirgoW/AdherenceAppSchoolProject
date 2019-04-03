@@ -131,6 +131,11 @@ public class AlarmsPage extends AppCompatActivity {
         m_dayFragmentViewer = (ViewPager) findViewById(R.id.viewpager);
         //Give the TabLayout the ViewPager to use
         m_tabLayout = (TabLayout) findViewById(R.id.topTabLayout);
+        //Setting the TabLayout's height to 3times the text size, so it correctly fits the text
+        ViewGroup.LayoutParams params = m_tabLayout.getLayoutParams();
+        params.height = getResources().getDimensionPixelSize(R.dimen.project_text_size)*3;
+        m_tabLayout.setLayoutParams(params);
+
         InstantiateCalToCurrentDay();
 
     }
@@ -170,15 +175,6 @@ public class AlarmsPage extends AppCompatActivity {
             TabLayout.Tab tab = m_tabLayout.getTabAt(index);
             tab.setCustomView(m_alarmPageAdapter.getTabView(index));
         }
-        //we need to resize the TabLayout so it correctly fits the tabView
-
-        /*Get the layout params that will allow you to resize the tablayout
-        ViewGroup.LayoutParams params = m_tabLayout.getLayoutParams();
-        //By default, params.height = -2
-        params.height = m_alarmPageAdapter.getTabHeight();
-        //Here params.height = 0 because that's the value it receives
-        m_tabLayout.setLayoutParams(params);
-*/
     }
 
 
@@ -211,26 +207,5 @@ public class AlarmsPage extends AppCompatActivity {
                 m_lastTabIndex = data.getIntExtra("tabIndex", 0);
             }
         }
-    }
-
-
-    // We tried to determine the tabItem's height here, to see if it's different than 0;
-    //It's not functional
-    @Override
-    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-    }
-
-    @Override
-    public void onPostCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-        super.onPostCreate(savedInstanceState, persistentState);
-        //we need to resize the TabLayout so it correctly fits the tabView
-
-        //Get the layout params that will allow you to resize the tablayout
-        ViewGroup.LayoutParams params = m_tabLayout.getLayoutParams();
-        //By default, params.height = -2
-        params.height = m_alarmPageAdapter.getTabHeight();
-        //Here params.height = 0 because that's the value it receives
-        m_tabLayout.setLayoutParams(params);
     }
 }
