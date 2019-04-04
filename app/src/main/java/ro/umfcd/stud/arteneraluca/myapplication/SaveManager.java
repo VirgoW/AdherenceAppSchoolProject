@@ -437,31 +437,25 @@ public class SaveManager {
         //Clear System alarms that start with alarm index
         int alarmId;
         Intent intent = new Intent(context, AlarmReceiver.class);
-        AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+
         Alarm alarm = m_alarmList.get(alarmIndex);
 
         //Daily alarm
         if (alarm.IsDailyTreatment())
         {
+            AlarmHelperClass.CancelIntentWithId(context, alarmIndex, intent);
             for(int indexHour = 0 ; indexHour < alarm.m_dailyFrequency.size(); indexHour++)
             {
                 alarmId = alarmIndex * 10 + indexHour;
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(context, alarmId, intent, PendingIntent.FLAG_NO_CREATE);
-                if (pendingIntent != null)
-                {
-                    alarmMgr.cancel(pendingIntent);
-                }
+                AlarmHelperClass.CancelIntentWithId(context, alarmId, intent);
             }
+
         }
         //Weekly alarm
         else
         {
             //Clear the setter for this week
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, alarmIndex, intent, PendingIntent.FLAG_NO_CREATE);
-            if (pendingIntent != null)
-            {
-                alarmMgr.cancel(pendingIntent);
-            }
+            AlarmHelperClass.CancelIntentWithId(context, alarmIndex, intent);
             for(int indexDay = 0; indexDay < 7; indexDay++)
             {
                 if(alarm.m_weeklyDayFrequency.get(indexDay))
@@ -470,12 +464,7 @@ public class SaveManager {
                     {
                         alarmId = alarmIndex * 10 + indexDay;
                         alarmId = alarmId * 10 + indexHour;
-
-                        pendingIntent = PendingIntent.getBroadcast(context, alarmId, intent, PendingIntent.FLAG_NO_CREATE);
-                        if (pendingIntent != null)
-                        {
-                            alarmMgr.cancel(pendingIntent);
-                        }
+                        AlarmHelperClass.CancelIntentWithId(context, alarmId, intent);
                     }
                 }
             }
@@ -485,76 +474,23 @@ public class SaveManager {
     void AddSystemAlarms(int alarmIndex, Context context)
     {
         //Add system alarms
-        int alarmId;
-        Intent intent = new Intent(context, AlarmReceiver.class);
-        AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Alarm alarm = m_alarmList.get(alarmIndex);
 
-        //Daily alarm
-        if (alarm.IsDailyTreatment())
+        //Check if treatment has ended and if so, don't set an alarm anymore for it.
+        if(AlarmHelperClass.HasTreatmentEnded(alarm))
         {
-            for(int indexHour = 0 ; indexHour < alarm.m_dailyFrequency.size(); indexHour++)
-            {
-                alarmId = alarmIndex * 10 + indexHour;
-                intent.putExtra("alarmType", R.string.alarmActivate);
-                intent.putExtra("alarmID", alarmId);
-                intent.putExtra("medName", alarm.GetMedName());
-                intent.putExtra("hour", alarm.m_dailyFrequency.get(indexHour));
-
-                String hourString = alarm.m_dailyFrequency.get(indexHour);
-                int hour = Integer.parseInt(hourString.substring(0,2));
-                int minute = Integer.parseInt(hourString.substring(3));
-
-                Calendar alarmStartCalendar = alarm.GetStartCal();
-                Calendar alarmEndCalendar = null;
-                if(alarm.IsFixedTimeTreatment())
-                {
-                   alarmEndCalendar = alarm.GetEndCal();
-                }
-                Calendar alarmCalendar = Calendar.getInstance();
-                alarmCalendar.setTimeInMillis(System.currentTimeMillis());
-                alarmCalendar.set(Calendar.HOUR_OF_DAY, hour);
-                alarmCalendar.set(Calendar.MINUTE, minute);
-
-                Calendar todayCal = Calendar.getInstance();
-
-                long milis1 = alarmStartCalendar.getTimeInMillis();
-                long milis2= todayCal.getTimeInMillis();
-                long diffDays = (milis1 - milis2) / (24*60*60*1000);
-
-                if(alarmEndCalendar != null && (todayCal.after(alarmEndCalendar) || alarmCalendar.after(alarmEndCalendar)))
-                {
-                    //If today is after the end of the treatment or the next alarm would be after the end of treatment, skip this alarm.
-                    continue;
-                }
-
-                if(diffDays > 0)
-                {
-                    alarmCalendar.add(Calendar.DATE, (int)diffDays); //TODO Possible casting issues
-                }
-                else if(todayCal.after(alarmCalendar))
-                {
-                    //Make the alarm start tomorrow if current time is after set time.
-                    alarmCalendar.add(Calendar.DAY_OF_MONTH, 1);
-                }
-
-
-                PendingIntent pendingAlarmIntent = PendingIntent.getBroadcast(context, alarmId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-                alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, alarmCalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingAlarmIntent);
-            }
+            return;
         }
-        //Weekly alarm
-        else {
-            //Pass the alarm and the alarm type - a setter of alarms in this case
-            intent.putExtra("alarmType", R.string.alarmSet);
-            //Manual serialize object
-            SerializeAlarmIntoIntent(intent, alarm);
 
-            //Start today and set the alarms until monday, then set an alarm for monday
-            PendingIntent pendingAlarmIntent = PendingIntent.getBroadcast(context, alarmIndex, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-            Calendar todayCal = Calendar.getInstance();
-            alarmMgr.set(AlarmManager.RTC_WAKEUP, todayCal.getTimeInMillis(), pendingAlarmIntent); //TODO end cal
-        }
+        //Set an event to schedule alerts for this treatment
+        Intent intent = new Intent(context, AlarmReceiver.class);
+        intent.putExtra("alarmType", R.string.alarmSet);
+        //Manual serialize object
+        SerializeAlarmIntoIntent(intent, alarm);
+        PendingIntent pendingAlarmIntent = PendingIntent.getBroadcast(context, alarmIndex, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Calendar todayCal = Calendar.getInstance();
+        alarmMgr.set(AlarmManager.RTC_WAKEUP, todayCal.getTimeInMillis(), pendingAlarmIntent);
     }
 
     void SerializeAlarmIntoIntent(Intent intent, Alarm alarm)
@@ -572,7 +508,7 @@ public class SaveManager {
             String extraString = "dayBoolean" + i;
             intent.putExtra(extraString, alarm.m_weeklyDayFrequency.get(i));
         }
-
+        intent.putExtra("dailyFrequency", alarm.IsDailyTreatment());
     }
 
     Boolean DeserializeAlarmFromIntent(Intent intent, Alarm alarm)
@@ -594,6 +530,8 @@ public class SaveManager {
         }
         int alarmId = intent.getIntExtra("alarmId", -1);
         alarm.setId(alarmId);
+        boolean dailyFrequency = intent.getBooleanExtra("dailyFrequency", false);
+        alarm.SetDailyTreatment(dailyFrequency);
         if(alarmId >= 0 && !medName.isEmpty())
         {
             return true;
@@ -601,22 +539,5 @@ public class SaveManager {
         return false;
     }
 
-    Boolean CalendarAAfterCalendarB(Context context, Calendar calA, Calendar calB)
-    {
-        try
-        {
-            Date dateA = calA.getTime();
-            Date dateB = calB.getTime();
 
-            if(dateA.after(dateB) || dateA.equals(dateB))
-            {
-                return true;
-            }
-        }
-        catch (Exception e)
-        {
-             e.printStackTrace();
-        }
-        return false;
-    }
 }

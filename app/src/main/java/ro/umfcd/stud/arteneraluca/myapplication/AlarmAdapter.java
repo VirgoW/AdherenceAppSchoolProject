@@ -163,7 +163,7 @@ public class AlarmAdapter extends BaseAdapter {
         if(alarm.IsFixedTimeTreatment())
         {
             Calendar alarmEndCal = alarm.GetEndCal();
-            if(SaveManager.getInstance().CalendarAAfterCalendarB(m_context, todayCal, alarmEndCal))
+            if(AlarmHelperClass.CalendarAAfterCalendarB(todayCal, alarmEndCal))
             {
                 return false;
             }
@@ -185,7 +185,7 @@ public class AlarmAdapter extends BaseAdapter {
                 }
             }
         }
-        displayAlarm = SaveManager.getInstance().CalendarAAfterCalendarB(m_context, todayCal, alarmCal);
+        displayAlarm = AlarmHelperClass.CalendarAAfterCalendarB(todayCal, alarmCal);
         displayAlarm = displayAlarm && weeklyFrequencyValid;
         return displayAlarm;
     }
