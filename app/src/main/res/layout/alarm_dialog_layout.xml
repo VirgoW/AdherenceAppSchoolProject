@@ -14,7 +14,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <!--Button
         android:id="@+id/confirmTakingBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -45,6 +45,6 @@
         android:textSize="@dimen/project_text_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/snoozeTakingBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/snoozeTakingBtn" /-->
 
 </android.support.constraint.ConstraintLayout>

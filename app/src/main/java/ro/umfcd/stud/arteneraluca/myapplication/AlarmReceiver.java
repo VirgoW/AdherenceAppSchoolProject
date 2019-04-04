@@ -47,7 +47,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         alarmIntent.putExtra("medName", buffer);
         buffer = intent.getStringExtra("hour");
         alarmIntent.putExtra("hour", buffer);
-        alarmIntent.setClass(context, AlertDialogClass.class);
+        alarmIntent.setClass(context, AlarmDialogClass.class);
         alarmIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(alarmIntent);
     }
