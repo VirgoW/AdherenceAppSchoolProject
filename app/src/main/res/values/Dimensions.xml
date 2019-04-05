@@ -2,6 +2,7 @@
 <resources>
     <!--Project dimensions-->
     <dimen name="project_text_size">22sp</dimen>
+    <dimen name="dialog_text_size">10</dimen>
 
     <!--AlarmSet page -->
     <dimen name="alarm_set_vertical_padding">10dp</dimen>

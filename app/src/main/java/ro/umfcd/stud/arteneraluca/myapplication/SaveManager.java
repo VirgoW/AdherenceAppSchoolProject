@@ -503,6 +503,8 @@ public class SaveManager {
             intent.putExtra(extraString, alarm.m_dailyFrequency.get(i));
         }
         intent.putExtra("alarmId", alarm.getId());
+        intent.putExtra("alarmDetails",alarm.GetNote());    //not sure if i really need these for showing them in the dialog
+        intent.putExtra("medDosage",alarm.GetDosage());     //i thought that i need to send them to intent so i can get them out
         for(int i=0; i< 7; i++)
         {
             String extraString = "dayBoolean" + i;
