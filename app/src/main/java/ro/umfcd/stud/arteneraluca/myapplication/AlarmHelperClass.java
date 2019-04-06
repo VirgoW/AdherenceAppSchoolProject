@@ -26,7 +26,7 @@ public class AlarmHelperClass {
         }
     }
 
-    public static boolean HasTreatmentEnded(Alarm treatment)
+    public static boolean HasTreatmentEnded(Treatment treatment)
     {
         Calendar treatmentEndCalendar = null;
         Calendar todayCal = Calendar.getInstance();

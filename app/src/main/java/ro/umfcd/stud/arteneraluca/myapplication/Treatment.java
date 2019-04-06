@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class Alarm implements Serializable {
+public class Treatment implements Serializable {
 
     private String m_medName;
     private String m_notes;
@@ -19,7 +19,7 @@ public class Alarm implements Serializable {
     public ArrayList<Boolean> m_weeklyDayFrequency;
     public int m_id;
 
-    public Alarm()
+    public Treatment()
     {
         m_medName = "";
         m_dose = "";
@@ -37,7 +37,7 @@ public class Alarm implements Serializable {
         }
     }
 
-    public Alarm(String newMed)
+    public Treatment(String newMed)
     {
         m_medName = newMed;
     } //Seems to be not used

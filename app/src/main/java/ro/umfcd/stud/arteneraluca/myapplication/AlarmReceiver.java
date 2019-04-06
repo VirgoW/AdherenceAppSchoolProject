@@ -49,47 +49,47 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     private void SetAlarms(Context context, int treatmentIndex)
     {
-        Alarm alarm = SaveManager.getInstance().GetAlarm(treatmentIndex);
+        Treatment treatment = SaveManager.getInstance().GetAlarm(treatmentIndex);
 
-        //Check if treatment has ended and if so, don't set an alarm anymore for it.
-        if(AlarmHelperClass.HasTreatmentEnded(alarm))
+        //Check if treatment has ended and if so, don't set an treatment anymore for it.
+        if(AlarmHelperClass.HasTreatmentEnded(treatment))
         {
             return;
         }
-        if(alarm.IsDailyTreatment())
+        if(treatment.IsDailyTreatment())
         {
-            ScheduleDailyAlarm(context, alarm);
+            ScheduleDailyAlarm(context, treatment);
         }
         else
         {
-            ScheduleWeeklyAlarm(context, alarm);
+            ScheduleWeeklyAlarm(context, treatment);
         }
     }
 
     /*
-        Schedule an event next day at 00:00 to schedule an alarm for that day and continue doing so until canceled
+        Schedule an event next day at 00:00 to schedule an treatment for that day and continue doing so until canceled
         Schedule events for the treatment that can still happen today
 
         @param context - The activity context
-        @param alarm - The treatment for which we will set an alarm
+        @param treatment - The treatment for which we will set an treatment
      */
-    private void ScheduleDailyAlarm(Context context, Alarm alarm)
+    private void ScheduleDailyAlarm(Context context, Treatment treatment)
     {
-        int treatmentIndex = alarm.getId();
+        int treatmentIndex = treatment.getId();
         Intent newIntent = new Intent(context, AlarmReceiver.class);
         AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
         //Schedule event for next midnight
         newIntent.putExtra("alarmType", R.string.alarmSet);
-        newIntent.putExtra("treatmentIndex", alarm.getId());
+        newIntent.putExtra("treatmentIndex", treatment.getId());
 
         PendingIntent pendingAlarmIntent = PendingIntent.getBroadcast(context, treatmentIndex, newIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         Calendar nextMidnight = Calendar.getInstance();
         nextMidnight.add(Calendar.DATE, 1);
         nextMidnight.set(Calendar.HOUR_OF_DAY, 0);
         nextMidnight.set(Calendar.MINUTE, 0);
-        boolean fixedTreatment = alarm.IsFixedTimeTreatment();
-        if(! (fixedTreatment && AlarmHelperClass.CalendarAAfterCalendarB(nextMidnight, alarm.GetEndCal())) )
+        boolean fixedTreatment = treatment.IsFixedTimeTreatment();
+        if(! (fixedTreatment && AlarmHelperClass.CalendarAAfterCalendarB(nextMidnight, treatment.GetEndCal())) )
         {
             alarmMgr.set(AlarmManager.RTC_WAKEUP, nextMidnight.getTimeInMillis(), pendingAlarmIntent);
         }
@@ -97,12 +97,12 @@ public class AlarmReceiver extends BroadcastReceiver {
         //Schedule alarms for today
         newIntent = new Intent(context, AlarmReceiver.class);
         int alarmId;
-        for(int indexHour = 0 ; indexHour < alarm.m_dailyFrequency.size(); indexHour++)
+        for(int indexHour = 0; indexHour < treatment.m_dailyFrequency.size(); indexHour++)
         {
             newIntent.putExtra("alarmType", R.string.alarmActivate);
             newIntent.putExtra("treatmentIndex", treatmentIndex);
 
-            String hourString = alarm.m_dailyFrequency.get(indexHour);
+            String hourString = treatment.m_dailyFrequency.get(indexHour);
             int hour = Integer.parseInt(hourString.substring(0,2));
             int minute = Integer.parseInt(hourString.substring(3));
 
@@ -129,16 +129,16 @@ public class AlarmReceiver extends BroadcastReceiver {
         Set event for next monday at 00:00 to schedule next week alarms.
 
         @param context - The activity context
-        @param alarm - The treatment for which we will set an alarm
+        @param treatment - The treatment for which we will set an treatment
      */
-    private void ScheduleWeeklyAlarm(Context context, Alarm alarm)
+    private void ScheduleWeeklyAlarm(Context context, Treatment treatment)
     {
         Intent alarmIntent = new Intent(context, AlarmReceiver.class);
-        int treatmentIndex = alarm.getId();
+        int treatmentIndex = treatment.getId();
         AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        boolean fixedTreatment = alarm.IsFixedTimeTreatment();
+        boolean fixedTreatment = treatment.IsFixedTimeTreatment();
 
-        //Set an alarm next monday at 00:00 to set once alarms for that week.
+        //Set an treatment next monday at 00:00 to set once alarms for that week.
         alarmIntent.putExtra("alarmType", R.string.alarmSet);
         alarmIntent.putExtra("treatmentIndex", treatmentIndex);
 
@@ -151,7 +151,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         nextMondayCal.set(Calendar.MINUTE, 0);
 
         PendingIntent pendingAlarmIntent = PendingIntent.getBroadcast(context, treatmentIndex, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        if(! (fixedTreatment && AlarmHelperClass.CalendarAAfterCalendarB(nextMondayCal, alarm.GetEndCal())) )
+        if(! (fixedTreatment && AlarmHelperClass.CalendarAAfterCalendarB(nextMondayCal, treatment.GetEndCal())) )
         {
             alarmMgr.set(AlarmManager.RTC_WAKEUP, nextMondayCal.getTimeInMillis(), pendingAlarmIntent);
         }
@@ -164,15 +164,15 @@ public class AlarmReceiver extends BroadcastReceiver {
         alarmIntent = new Intent(context, AlarmReceiver.class);
         for (int indexDay = today; indexDay < 7; indexDay++)
         {
-            if (alarm.m_weeklyDayFrequency.get(indexDay))
+            if (treatment.m_weeklyDayFrequency.get(indexDay))
             {
-                for (int indexHour = 0; indexHour < alarm.m_dailyFrequency.size(); indexHour++)
+                for (int indexHour = 0; indexHour < treatment.m_dailyFrequency.size(); indexHour++)
                 {
                     alarmIntent.putExtra("alarmType", R.string.alarmActivate);
                     alarmIntent.putExtra("treatmentIndex", treatmentIndex);
 
                     Calendar alarmCal = Calendar.getInstance();
-                    String hourString = alarm.m_dailyFrequency.get(indexHour);
+                    String hourString = treatment.m_dailyFrequency.get(indexHour);
                     alarmCal.setTimeInMillis(System.currentTimeMillis());
                     int hour = Integer.parseInt(hourString.substring(0,2));
                     int minute = Integer.parseInt(hourString.substring(3));
@@ -181,12 +181,12 @@ public class AlarmReceiver extends BroadcastReceiver {
                     alarmCal.add(Calendar.DATE, indexDay - today);
 
                     //Skip today's alarms
-                    if(today == indexDay && todayCal.after(alarmCal) || (fixedTreatment && AlarmHelperClass.CalendarAAfterCalendarB(todayCal, alarm.GetEndCal())))
+                    if(today == indexDay && todayCal.after(alarmCal) || (fixedTreatment && AlarmHelperClass.CalendarAAfterCalendarB(todayCal, treatment.GetEndCal())))
                     {
                         continue;
                     }
 
-                    //Set alarm
+                    //Set treatment
                     alarmId = treatmentIndex * 10 + indexDay;
                     alarmId = alarmId * 10 + indexHour;
                     pendingAlarmIntent = PendingIntent.getBroadcast(context, alarmId, alarmIntent, 0);

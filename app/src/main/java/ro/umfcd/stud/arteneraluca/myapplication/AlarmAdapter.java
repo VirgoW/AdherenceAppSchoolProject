@@ -135,17 +135,17 @@ public class AlarmAdapter extends BaseAdapter {
     {
         for(int i=0; i< SaveManager.getInstance().GetAlarmCount(); i++)
         {
-            Alarm alarm = SaveManager.getInstance().GetAlarmByIndex(i);
-            if(ShouldDisplayAlarmToday(cal, alarm))
+            Treatment treatment = SaveManager.getInstance().GetAlarmByIndex(i);
+            if(ShouldDisplayAlarmToday(cal, treatment))
             {
-                for(int j=0; j< alarm.m_dailyFrequency.size(); j++)
+                for(int j = 0; j< treatment.m_dailyFrequency.size(); j++)
                 {
                     AlarmItem item = new AlarmItem();
-                    item.hour = alarm.m_dailyFrequency.get(j);
-                    item.index = alarm.getId();
-                    item.medName = alarm.GetMedName();
-                    item.note = alarm.GetNote();
-                    item.dosage = alarm.GetDosage();
+                    item.hour = treatment.m_dailyFrequency.get(j);
+                    item.index = treatment.getId();
+                    item.medName = treatment.GetMedName();
+                    item.note = treatment.GetNote();
+                    item.dosage = treatment.GetDosage();
                     m_alarmsToDisplay.add(item);
                 }
             }
@@ -157,12 +157,12 @@ public class AlarmAdapter extends BaseAdapter {
         Collections.sort(m_alarmsToDisplay, new SortByHour());
     }
 
-    private boolean ShouldDisplayAlarmToday(Calendar todayCal, Alarm alarm)
+    private boolean ShouldDisplayAlarmToday(Calendar todayCal, Treatment treatment)
     {
-        Calendar alarmCal = alarm.GetStartCal();
-        if(alarm.IsFixedTimeTreatment())
+        Calendar alarmCal = treatment.GetStartCal();
+        if(treatment.IsFixedTimeTreatment())
         {
-            Calendar alarmEndCal = alarm.GetEndCal();
+            Calendar alarmEndCal = treatment.GetEndCal();
             if(AlarmHelperClass.CalendarAAfterCalendarB(todayCal, alarmEndCal))
             {
                 return false;
@@ -171,7 +171,7 @@ public class AlarmAdapter extends BaseAdapter {
         int dayOfWeek = SaveManager.getInstance().GetDayOfWeek(todayCal);
         boolean displayAlarm;
         boolean weeklyFrequencyValid = false;
-        if(alarm.IsDailyTreatment())
+        if(treatment.IsDailyTreatment())
         {
             weeklyFrequencyValid = true;
         }
@@ -179,7 +179,7 @@ public class AlarmAdapter extends BaseAdapter {
         {
             for(int i=0; i < 7; i++)
             {
-                if(i == dayOfWeek && alarm.m_weeklyDayFrequency.get(i))
+                if(i == dayOfWeek && treatment.m_weeklyDayFrequency.get(i))
                 {
                     weeklyFrequencyValid = true;
                 }

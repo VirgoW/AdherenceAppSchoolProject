@@ -35,15 +35,9 @@ public class SaveManager {
     private XmlPullParserFactory m_XmlFactoryObject;
     private XmlPullParser m_XmlParser;
 
-    private ArrayList<Alarm> m_alarmList;
+    private ArrayList<Treatment> m_treatmentList;
     String m_saveFile;
 
-    /*
-    This class an instance -> It can be called from anywhere and it does not require you to create an object of this class
-    We make it an instance because we need to access the save data from everywhere, but most importantly, we want it to be the SAME data.
-
-    Code tip: static members of a class are blocks of memory that are shared across all object of that class.
-     */
     public static SaveManager getInstance() {
         return ourInstance;
     }
@@ -53,11 +47,11 @@ public class SaveManager {
             //Initialize all objects
             m_XmlFactoryObject = XmlPullParserFactory.newInstance();
             m_XmlParser = m_XmlFactoryObject.newPullParser();
-            m_alarmList = new ArrayList<>();
+            m_treatmentList = new ArrayList<>();
         }
         catch(Exception e)
         {
-            Log.e("ArteneApp", "Exception occured in SaveManager constructor: ", e);
+            Log.e("ArteneApp", "Exception occurred in SaveManager constructor: ", e);
         }
 
     }
@@ -72,7 +66,7 @@ public class SaveManager {
         //Check and create the save file if it does not exist.
         if(file.exists())
         {
-            //If it exist, read it and cache the alarms in m_alarmList.
+            //If it exist, read it and cache the alarms in m_treatmentList.
             ParseXmlFile(context);
         }
         else
@@ -84,39 +78,39 @@ public class SaveManager {
             }
             catch(Exception e)
             {
-                Log.e("ArteneApp", "Exception occured in SaveManager while creating / opening the save file: ", e);
+                Log.e("ArteneApp", "Exception occurred in SaveManager while creating / opening the save file: ", e);
             }
         }
     }
 
     void AddNewAlarm(Context context, View view)
     {
-        Alarm newAlarm = CompactAlarm(context, view, m_alarmList.size());
-        m_alarmList.add(newAlarm);
-        AddSystemAlarms(m_alarmList.size() - 1, context);
+        Treatment newTreatment = CompactAlarm(context, view, m_treatmentList.size());
+        m_treatmentList.add(newTreatment);
+        AddSystemAlarms(m_treatmentList.size() - 1, context);
         SaveDataToXml(context);
     }
 
-    void SaveAlarm(int alarmIndex, Context context, View view)
+    void SaveAlarm(int treatmentIndex, Context context, View view)
     {
-        Alarm newAlarm = CompactAlarm(context, view, alarmIndex);
-        m_alarmList.set(alarmIndex, newAlarm);
+        Treatment newTreatment = CompactAlarm(context, view, treatmentIndex);
+        m_treatmentList.set(treatmentIndex, newTreatment);
 
-        ClearSystemAlarms(alarmIndex, context);
-        AddSystemAlarms(alarmIndex, context);
+        ClearSystemAlarms(treatmentIndex, context);
+        AddSystemAlarms(treatmentIndex, context);
         SaveDataToXml(context);
     }
 
-    void DeleteAlarm(int alarmIndex, Context context)
+    void DeleteAlarm(int treatmentIndex, Context context)
     {
-        ClearSystemAlarms(alarmIndex, context);
-        m_alarmList.remove(alarmIndex);
+        ClearSystemAlarms(treatmentIndex, context);
+        m_treatmentList.remove(treatmentIndex);
 
-        for(int i=0; i< m_alarmList.size(); i++)
+        for(int i = 0; i< m_treatmentList.size(); i++)
         {
-            if(m_alarmList.get(i).getId() != i)
+            if(m_treatmentList.get(i).getId() != i)
             {
-                m_alarmList.get(i).setId(i);
+                m_treatmentList.get(i).setId(i);
                 ClearSystemAlarms(i, context);
                 //AddSystemAlarms(i, context);
             }
@@ -134,42 +128,42 @@ public class SaveManager {
             serializer.setOutput(writer);
             //Start document writing
             serializer.startDocument("UTF-8", true);
-            for(int index = 0; index < m_alarmList.size(); index++)
+            for(int index = 0; index < m_treatmentList.size(); index++)
             {
-                Alarm alarm = m_alarmList.get(index);
-                serializer.startTag("","Alarm");
+                Treatment treatment = m_treatmentList.get(index);
+                serializer.startTag("","Treatment");
                 //Add a new tag - specify the serializer, the tag name, the attribute name and the tag value
                 //Currently we have only 1 attribute per tag..
-                AddNewTag(serializer, context.getText(R.string.medNameTag).toString(), "name", alarm.GetMedName());
-                AddNewTag(serializer, context.getText(R.string.dosageTag).toString(), "name", alarm.GetDosage());
+                AddNewTag(serializer, context.getText(R.string.medNameTag).toString(), "name", treatment.GetMedName());
+                AddNewTag(serializer, context.getText(R.string.dosageTag).toString(), "name", treatment.GetDosage());
                 SimpleDateFormat format = new SimpleDateFormat(context.getText(R.string.dateFormat).toString());
-                String startDate = format.format(alarm.GetStartCal().getTime());
+                String startDate = format.format(treatment.GetStartCal().getTime());
                 AddNewTag(serializer, context.getText(R.string.dateTag).toString(), "name", startDate);
-                AddNewTag(serializer, context.getText(R.string.frequencyTag).toString(), "name", Boolean.toString(alarm.IsFixedTimeTreatment()));
-                if(alarm.IsFixedTimeTreatment())
+                AddNewTag(serializer, context.getText(R.string.frequencyTag).toString(), "name", Boolean.toString(treatment.IsFixedTimeTreatment()));
+                if(treatment.IsFixedTimeTreatment())
                 {
-                    String endDate = format.format(alarm.GetEndCal().getTime());
+                    String endDate = format.format(treatment.GetEndCal().getTime());
                     AddNewTag(serializer, context.getText(R.string.dateEndTag).toString(), "name", endDate);
-                    AddNewTag(serializer, context.getText(R.string.fixedFrequencyNumber).toString(), "name", Integer.toString(alarm.GetFixedFrequencyNumber()));
-                    AddNewTag(serializer, context.getText(R.string.fixedFrequencySpinnerPosition).toString(), "name", Integer.toString(alarm.GetFixedFrequencySpinnerPosition()));
+                    AddNewTag(serializer, context.getText(R.string.fixedFrequencyNumber).toString(), "name", Integer.toString(treatment.GetFixedFrequencyNumber()));
+                    AddNewTag(serializer, context.getText(R.string.fixedFrequencySpinnerPosition).toString(), "name", Integer.toString(treatment.GetFixedFrequencySpinnerPosition()));
                 }
 
-                AddNewTag(serializer, context.getText(R.string.notesTag).toString(), "name", alarm.GetNote());
-                AddNewTag(serializer, context.getText(R.string.dailyTreatmentTag).toString(), "name", Boolean.toString(alarm.IsDailyTreatment()));
+                AddNewTag(serializer, context.getText(R.string.notesTag).toString(), "name", treatment.GetNote());
+                AddNewTag(serializer, context.getText(R.string.dailyTreatmentTag).toString(), "name", Boolean.toString(treatment.IsDailyTreatment()));
 
-                for(int i=0; i< alarm.m_dailyFrequency.size(); i++)
+                for(int i = 0; i< treatment.m_dailyFrequency.size(); i++)
                 {
-                    AddNewTag(serializer, context.getText(R.string.dailyFrequencyHourTag).toString(),"name", alarm.m_dailyFrequency.get(i));
+                    AddNewTag(serializer, context.getText(R.string.dailyFrequencyHourTag).toString(),"name", treatment.m_dailyFrequency.get(i));
                 }
 
-                if(!alarm.IsDailyTreatment())
-                for(int i=0; i<alarm.m_weeklyDayFrequency.size();i++)
+                if(!treatment.IsDailyTreatment())
+                for(int i = 0; i< treatment.m_weeklyDayFrequency.size(); i++)
                 {
                     AddNewTag(serializer, context.getText(R.string.weeklyFrequencyDayTag).toString(),"index", Integer.toString(i));
-                    AddNewTag(serializer, context.getText(R.string.weeklyFrequencyDayTag).toString(),"name", Boolean.toString(alarm.m_weeklyDayFrequency.get(i)));
+                    AddNewTag(serializer, context.getText(R.string.weeklyFrequencyDayTag).toString(),"name", Boolean.toString(treatment.m_weeklyDayFrequency.get(i)));
                 }
 
-                serializer.endTag("","Alarm");
+                serializer.endTag("","Treatment");
             }
             serializer.endDocument();
             //End document writing
@@ -182,13 +176,13 @@ public class SaveManager {
         }
         catch (Exception e)
         {
-            Log.e("ArteneApp", "Exception occured while writing the XML: ", e);
+            Log.e("ArteneApp", "Exception occurred while writing the XML: ", e);
         }
     }
 
     void ParseXmlFile(Context context)
     {
-        m_alarmList.clear();
+        m_treatmentList.clear();
 
         try{
             //Open an input stream for readit from the file
@@ -196,7 +190,7 @@ public class SaveManager {
             m_XmlParser.setInput(fs, null);
 
             int event = m_XmlParser.getEventType();
-            Alarm newAlarm = new Alarm();
+            Treatment newTreatment = new Treatment();
             int weeklyIndex = -1;
             while(event != XmlPullParser.END_DOCUMENT)
             {
@@ -208,11 +202,11 @@ public class SaveManager {
                     case XmlPullParser.END_TAG:
                         if(name.equals(context.getText(R.string.medNameTag).toString()))
                         {
-                            newAlarm.SetMedName(m_XmlParser.getAttributeValue(null,"name"));
+                            newTreatment.SetMedName(m_XmlParser.getAttributeValue(null,"name"));
                         }
                         if(name.equals(context.getText(R.string.dosageTag).toString()))
                         {
-                            newAlarm.SetDosage(m_XmlParser.getAttributeValue(null,"name"));
+                            newTreatment.SetDosage(m_XmlParser.getAttributeValue(null,"name"));
                         }
 
                         if(name.equals(context.getText(R.string.dateTag).toString()))
@@ -222,40 +216,40 @@ public class SaveManager {
                             Date dateFormat = format.parse(startDate);
                             Calendar date = Calendar.getInstance();
                             date.setTime(dateFormat);
-                            newAlarm.SetStartCal(date);
+                            newTreatment.SetStartCal(date);
                         }
                         if(name.equals(context.getText(R.string.frequencyTag).toString()))
                         {
-                            newAlarm.SetFixedTimeTreatment(Boolean.parseBoolean(m_XmlParser.getAttributeValue(null,"name")));
+                            newTreatment.SetFixedTimeTreatment(Boolean.parseBoolean(m_XmlParser.getAttributeValue(null,"name")));
                         }
-                        if(name.equals(context.getText(R.string.dateEndTag).toString()) && newAlarm.IsFixedTimeTreatment())
+                        if(name.equals(context.getText(R.string.dateEndTag).toString()) && newTreatment.IsFixedTimeTreatment())
                         {
                             SimpleDateFormat format = new SimpleDateFormat(context.getText(R.string.dateFormat).toString());
                             String endDate = m_XmlParser.getAttributeValue(null,"name");
                             Date dateFormat = format.parse(endDate);
                             Calendar date = Calendar.getInstance();
                             date.setTime(dateFormat);
-                            newAlarm.SetEndCal(date);
+                            newTreatment.SetEndCal(date);
                         }
-                        if(name.equals(context.getText(R.string.fixedFrequencyNumber).toString()) && newAlarm.IsFixedTimeTreatment())
+                        if(name.equals(context.getText(R.string.fixedFrequencyNumber).toString()) && newTreatment.IsFixedTimeTreatment())
                         {
-                            newAlarm.SetFixedFrequencyNumber(Integer.parseInt(m_XmlParser.getAttributeValue(null, "name")));
+                            newTreatment.SetFixedFrequencyNumber(Integer.parseInt(m_XmlParser.getAttributeValue(null, "name")));
                         }
-                        if(name.equals(context.getText(R.string.fixedFrequencySpinnerPosition).toString()) && newAlarm.IsFixedTimeTreatment())
+                        if(name.equals(context.getText(R.string.fixedFrequencySpinnerPosition).toString()) && newTreatment.IsFixedTimeTreatment())
                         {
-                            newAlarm.SetFixedFrequencySpinnerPosition(Integer.parseInt(m_XmlParser.getAttributeValue(null, "name")));
+                            newTreatment.SetFixedFrequencySpinnerPosition(Integer.parseInt(m_XmlParser.getAttributeValue(null, "name")));
                         }
                         if(name.equals(context.getText(R.string.notesTag).toString()))
                         {
-                            newAlarm.SetNote(m_XmlParser.getAttributeValue(null,"name"));
+                            newTreatment.SetNote(m_XmlParser.getAttributeValue(null,"name"));
                         }
                         if(name.equals(context.getText(R.string.dailyTreatmentTag).toString()))
                         {
-                            newAlarm.SetDailyTreatment(Boolean.parseBoolean(m_XmlParser.getAttributeValue(null, "name")));
+                            newTreatment.SetDailyTreatment(Boolean.parseBoolean(m_XmlParser.getAttributeValue(null, "name")));
                         }
                         if(name.equals(context.getText(R.string.dailyFrequencyHourTag).toString()))
                         {
-                            newAlarm.m_dailyFrequency.add(m_XmlParser.getAttributeValue(null, "name"));
+                            newTreatment.m_dailyFrequency.add(m_XmlParser.getAttributeValue(null, "name"));
                         }
                         if(name.equals(context.getText(R.string.weeklyFrequencyDayTag).toString()))
                         {
@@ -266,14 +260,14 @@ public class SaveManager {
                             }
                             else
                             {
-                                newAlarm.m_weeklyDayFrequency.set(weeklyIndex, Boolean.parseBoolean(m_XmlParser.getAttributeValue(null, "name")));
+                                newTreatment.m_weeklyDayFrequency.set(weeklyIndex, Boolean.parseBoolean(m_XmlParser.getAttributeValue(null, "name")));
                             }
                         }
-                        if(name.equals("Alarm") && newAlarm.IsValid())
+                        if(name.equals("Treatment") && newTreatment.IsValid())
                         {
-                            newAlarm.setId(m_alarmList.size());
-                            m_alarmList.add(newAlarm);
-                            newAlarm = new Alarm();
+                            newTreatment.setId(m_treatmentList.size());
+                            m_treatmentList.add(newTreatment);
+                            newTreatment = new Treatment();
                         }
 
                 }
@@ -300,42 +294,42 @@ public class SaveManager {
         }
     }
 
-    Alarm GetAlarm(int index)
+    Treatment GetAlarm(int index)
     {
-        for(int i=0; i<m_alarmList.size();i++)
+        for(int i = 0; i< m_treatmentList.size(); i++)
         {
-            if(m_alarmList.get(i).getId() == index)
+            if(m_treatmentList.get(i).getId() == index)
             {
-                return m_alarmList.get(i);
+                return m_treatmentList.get(i);
             }
         }
         return null;
     }
-    Alarm GetAlarmByIndex(int index)
+    Treatment GetAlarmByIndex(int index)
     {
-        return m_alarmList.get(index);
+        return m_treatmentList.get(index);
     }
 
     int GetAlarmCount()
     {
-        return m_alarmList.size();
+        return m_treatmentList.size();
     }
 
-    private Alarm CompactAlarm(Context context, View view, int id)
+    private Treatment CompactAlarm(Context context, View view, int id)
     {
-        Alarm newAlarm = new Alarm();
+        Treatment newTreatment = new Treatment();
 
-        newAlarm.setId(id);
+        newTreatment.setId(id);
         TextView nameValue = (TextView) view.findViewById(R.id.medNameTextInput);
         TextView dosageValue = (TextView) view.findViewById(R.id.DosageInput_Text);
         TextView notesValue = (TextView) view.findViewById(R.id.other_details);
-        Switch frequncyValue = (Switch) view.findViewById(R.id.alarmDuration_switch);
+        Switch frequencyValue = (Switch) view.findViewById(R.id.alarmDuration_switch);
 
-        newAlarm.SetMedName(nameValue.getText().toString());
-        newAlarm.SetDosage(dosageValue.getText().toString());
+        newTreatment.SetMedName(nameValue.getText().toString());
+        newTreatment.SetDosage(dosageValue.getText().toString());
         if(notesValue != null)
         {
-            newAlarm.SetNote(notesValue.getText().toString());
+            newTreatment.SetNote(notesValue.getText().toString());
         }
 
         LinearLayout hourPickersLayout = view.findViewById(R.id.hourPickers_LinearLayout);
@@ -344,12 +338,12 @@ public class SaveManager {
             TextView hourPicker = (TextView) hourPickersLayout.getChildAt(i);
             if(!hourPicker.getText().toString().isEmpty())
             {
-                newAlarm.m_dailyFrequency.add(hourPicker.getText().toString());
+                newTreatment.m_dailyFrequency.add(hourPicker.getText().toString());
             }
         }
         RadioGroup alarmFrequency = view.findViewById(R.id.alarmFreq_RadioGroup);
         boolean dailyFreq = alarmFrequency.getCheckedRadioButtonId() == R.id.dailyRadioBtn;
-        newAlarm.SetDailyTreatment(dailyFreq);
+        newTreatment.SetDailyTreatment(dailyFreq);
         if(!dailyFreq)
         {
             LinearLayout dayPickerLayout = (LinearLayout) view.findViewById(R.id.checkboxes_layout);
@@ -358,7 +352,7 @@ public class SaveManager {
                 CheckBox dayPicker = (CheckBox) dayPickerLayout.getChildAt(i);
                 if(dayPicker.isChecked())
                 {
-                    newAlarm.m_weeklyDayFrequency.set(i, true);
+                    newTreatment.m_weeklyDayFrequency.set(i, true);
                 }
             }
         }
@@ -368,59 +362,59 @@ public class SaveManager {
             TextView startDateTextView = (TextView) view.findViewById(R.id.startDateSelection);
             SimpleDateFormat format = new SimpleDateFormat(context.getText(R.string.dateFormat).toString());
             String startDate = startDateTextView.getText().toString();
-            Date formatedDate = format.parse(startDate);
-            date.setTime(formatedDate);
+            Date formattedDate = format.parse(startDate);
+            date.setTime(formattedDate);
         }
         catch (Exception e)
         {
             Log.e("ArteneApp", "Exception while creating fragment view: ", e);
         }
-        newAlarm.SetStartCal(date);
+        newTreatment.SetStartCal(date);
 
-        if(frequncyValue.isChecked())
+        if(frequencyValue.isChecked())
         {
             //If the frequency value is checked, it means the medication treatment has a fixed period of time
             //So we add that end date based on the user input
-            newAlarm.SetFixedTimeTreatment(true);
+            newTreatment.SetFixedTimeTreatment(true);
             String frequencyNumberString = ((TextView) view.findViewById(R.id.alarmsNumber_Text)).getText().toString();
             int frequencyNumber = Integer.parseInt(frequencyNumberString);
-            Spinner treatmentLenghtSpinner = (Spinner) view.findViewById(R.id.treatmentLengthSpinner);
-            int treatmentOption = treatmentLenghtSpinner.getSelectedItemPosition();
+            Spinner treatmentLengthSpinner = (Spinner) view.findViewById(R.id.treatmentLengthSpinner);
+            int treatmentOption = treatmentLengthSpinner.getSelectedItemPosition();
 
-            Calendar treatmentEndDate = (Calendar) newAlarm.GetStartCal().clone();
+            Calendar treatmentEndDate = (Calendar) newTreatment.GetStartCal().clone();
             switch(treatmentOption)
             {
                 case 0:
                     //Days
                     treatmentEndDate.add(Calendar.DAY_OF_YEAR, frequencyNumber);
-                    newAlarm.SetEndCal(treatmentEndDate);
+                    newTreatment.SetEndCal(treatmentEndDate);
 
                     break;
                 case 1:
                     //Weeks
                     treatmentEndDate.add(Calendar.WEEK_OF_YEAR, frequencyNumber);
-                    newAlarm.SetEndCal(treatmentEndDate);
+                    newTreatment.SetEndCal(treatmentEndDate);
                     break;
                 case 2:
                     //Months
                     treatmentEndDate.add(Calendar.MONTH, frequencyNumber);
-                    newAlarm.SetEndCal(treatmentEndDate);
+                    newTreatment.SetEndCal(treatmentEndDate);
                     break;
                 case 3:
                     //Years
                     treatmentEndDate.add(Calendar.YEAR, frequencyNumber);
-                    newAlarm.SetEndCal(treatmentEndDate);
+                    newTreatment.SetEndCal(treatmentEndDate);
                     break;
             }
 
-            newAlarm.SetFixedFrequencyNumber(frequencyNumber);
-            newAlarm.SetFixedFrequencySpinnerPosition(treatmentOption);
+            newTreatment.SetFixedFrequencyNumber(frequencyNumber);
+            newTreatment.SetFixedFrequencySpinnerPosition(treatmentOption);
         }
         else
         {
-            newAlarm.SetFixedTimeTreatment(false);
+            newTreatment.SetFixedTimeTreatment(false);
         }
-        return newAlarm;
+        return newTreatment;
     }
 
     public int GetDayOfWeek(Calendar cal)
@@ -433,36 +427,35 @@ public class SaveManager {
         return dayOfWeek;
     }
 
-    void ClearSystemAlarms(int alarmIndex, Context context) {
-        //Clear System alarms that start with alarm index
-        int alarmId;
+    void ClearSystemAlarms(int treatmentIndex, Context context) {
+        //Clear System alarms that start with treatment index
         Intent intent = new Intent(context, AlarmReceiver.class);
+        Treatment treatment = m_treatmentList.get(treatmentIndex);
 
-        Alarm alarm = m_alarmList.get(alarmIndex);
-
-        //Daily alarm
-        if (alarm.IsDailyTreatment())
+        int alarmId;
+        //Daily treatment
+        if (treatment.IsDailyTreatment())
         {
-            AlarmHelperClass.CancelIntentWithId(context, alarmIndex, intent);
-            for(int indexHour = 0 ; indexHour < alarm.m_dailyFrequency.size(); indexHour++)
+            AlarmHelperClass.CancelIntentWithId(context, treatmentIndex, intent);
+            for(int indexHour = 0; indexHour < treatment.m_dailyFrequency.size(); indexHour++)
             {
-                alarmId = alarmIndex * 10 + indexHour;
+                alarmId = treatmentIndex * 10 + indexHour;
                 AlarmHelperClass.CancelIntentWithId(context, alarmId, intent);
             }
 
         }
-        //Weekly alarm
+        //Weekly treatment
         else
         {
             //Clear the setter for this week
-            AlarmHelperClass.CancelIntentWithId(context, alarmIndex, intent);
+            AlarmHelperClass.CancelIntentWithId(context, treatmentIndex, intent);
             for(int indexDay = 0; indexDay < 7; indexDay++)
             {
-                if(alarm.m_weeklyDayFrequency.get(indexDay))
+                if(treatment.m_weeklyDayFrequency.get(indexDay))
                 {
-                    for(int indexHour = 0 ; indexHour < alarm.m_dailyFrequency.size(); indexHour++)
+                    for(int indexHour = 0; indexHour < treatment.m_dailyFrequency.size(); indexHour++)
                     {
-                        alarmId = alarmIndex * 10 + indexDay;
+                        alarmId = treatmentIndex * 10 + indexDay;
                         alarmId = alarmId * 10 + indexHour;
                         AlarmHelperClass.CancelIntentWithId(context, alarmId, intent);
                     }
@@ -471,13 +464,13 @@ public class SaveManager {
         }
     }
 
-    void AddSystemAlarms(int alarmIndex, Context context)
+    void AddSystemAlarms(int treatmentIndex, Context context)
     {
         //Add system alarms
-        Alarm alarm = m_alarmList.get(alarmIndex);
+        Treatment treatment = m_treatmentList.get(treatmentIndex);
 
-        //Check if treatment has ended and if so, don't set an alarm anymore for it.
-        if(AlarmHelperClass.HasTreatmentEnded(alarm))
+        //Check if treatment has ended and if so, don't set an treatment anymore for it.
+        if(AlarmHelperClass.HasTreatmentEnded(treatment))
         {
             return;
         }
@@ -485,9 +478,9 @@ public class SaveManager {
         //Set an event to schedule alerts for this treatment
         Intent intent = new Intent(context, AlarmReceiver.class);
         intent.putExtra("alarmType", R.string.alarmSet);
-        intent.putExtra("treatmentIndex", alarmIndex);
+        intent.putExtra("treatmentIndex", treatmentIndex);
         //Manual serialize object
-        PendingIntent pendingAlarmIntent = PendingIntent.getBroadcast(context, alarmIndex, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingAlarmIntent = PendingIntent.getBroadcast(context, treatmentIndex, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Calendar todayCal = Calendar.getInstance();
         alarmMgr.set(AlarmManager.RTC_WAKEUP, todayCal.getTimeInMillis(), pendingAlarmIntent);

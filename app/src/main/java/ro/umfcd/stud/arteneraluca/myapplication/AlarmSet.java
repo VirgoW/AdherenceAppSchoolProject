@@ -195,9 +195,9 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
         });
         if(editMode)
         {
-            Alarm editAlarm = SaveManager.getInstance().GetAlarm(m_alarmIndex);
+            Treatment editTreatment = SaveManager.getInstance().GetAlarm(m_alarmIndex);
             int daily;
-            if(editAlarm.IsDailyTreatment())
+            if(editTreatment.IsDailyTreatment())
             {
                 daily = R.id.dailyRadioBtn;
             }
@@ -237,12 +237,12 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
 
         if(editMode)
         {
-            Alarm editAlarm = SaveManager.getInstance().GetAlarm(m_alarmIndex);
-            if(!editAlarm.IsDailyTreatment())
+            Treatment editTreatment = SaveManager.getInstance().GetAlarm(m_alarmIndex);
+            if(!editTreatment.IsDailyTreatment())
             {
                 for(int i=0; i<7;i++)
                 {
-                    ((CheckBox) checkboxesLay.getChildAt(i)).setChecked(editAlarm.m_weeklyDayFrequency.get(i));
+                    ((CheckBox) checkboxesLay.getChildAt(i)).setChecked(editTreatment.m_weeklyDayFrequency.get(i));
                 }
             }
         }
@@ -463,7 +463,7 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
 
     private void FillFormFromCache()
     {
-        Alarm editAlarm = SaveManager.getInstance().GetAlarm(m_alarmIndex);
+        Treatment editTreatment = SaveManager.getInstance().GetAlarm(m_alarmIndex);
         TextView medName = (TextView) findViewById(R.id.medNameTextInput);
         TextView dosage = (TextView) findViewById(R.id.DosageInput_Text);
         TextView notes = (TextView) findViewById(R.id.other_details);
@@ -471,13 +471,13 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
         RadioGroup alarmFrequency = (RadioGroup) findViewById(R.id.alarmFreq_RadioGroup);
 
 
-        medName.setText(editAlarm.GetMedName());
-        dosage.setText(editAlarm.GetDosage());
+        medName.setText(editTreatment.GetMedName());
+        dosage.setText(editTreatment.GetDosage());
         final Spinner perDaySpinner = (Spinner) findViewById(R.id.freq_perDay_spinner);
-        perDaySpinner.setSelection(editAlarm.m_dailyFrequency.size() - 1);
-        notes.setText(editAlarm.GetNote());
+        perDaySpinner.setSelection(editTreatment.m_dailyFrequency.size() - 1);
+        notes.setText(editTreatment.GetNote());
         SimpleDateFormat format = new SimpleDateFormat(m_context.getText(R.string.dateFormat).toString());
-        String startDateCal = format.format(editAlarm.GetStartCal().getTime());
+        String startDateCal = format.format(editTreatment.GetStartCal().getTime());
         startDate.setText(startDateCal);
 
         //Fixed or Continuous treatment
@@ -485,13 +485,13 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
         TextView alarmsNumber_Text = (TextView) findViewById(R.id.alarmsNumber_Text);
         Spinner treatmentLengthSpinner = (Spinner) findViewById(R.id.treatmentLengthSpinner);
 
-        fixedTimeTreatment.setChecked(editAlarm.IsFixedTimeTreatment());
+        fixedTimeTreatment.setChecked(editTreatment.IsFixedTimeTreatment());
         if(fixedTimeTreatment.isChecked())
         {
             alarmsNumber_Text.setVisibility(View.VISIBLE);
             treatmentLengthSpinner.setVisibility(View.VISIBLE);
-            alarmsNumber_Text.setText(Integer.toString(editAlarm.GetFixedFrequencyNumber()));
-            treatmentLengthSpinner.setSelection(editAlarm.GetFixedFrequencySpinnerPosition());
+            alarmsNumber_Text.setText(Integer.toString(editTreatment.GetFixedFrequencyNumber()));
+            treatmentLengthSpinner.setSelection(editTreatment.GetFixedFrequencySpinnerPosition());
         }
     }
 

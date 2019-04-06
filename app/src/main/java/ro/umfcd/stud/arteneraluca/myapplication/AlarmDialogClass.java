@@ -21,11 +21,11 @@ public class AlarmDialogClass extends Activity {
         super.onCreate(savedInstanceState);
         Intent thisIntent = getIntent();
         int alarmIndex = thisIntent.getIntExtra("treatmentIndex", -1);
-        Alarm alarm = SaveManager.getInstance().GetAlarm(alarmIndex);
+        Treatment treatment = SaveManager.getInstance().GetAlarm(alarmIndex);
 
-        String alarmDialogTitle = alarm.GetMedName();
-        String alarmDialogMessage = GetDialogMessage(alarm);
-        //Start Ringtone service to play alarm sound
+        String alarmDialogTitle = treatment.GetMedName();
+        String alarmDialogMessage = GetDialogMessage(treatment);
+        //Start Ringtone service to play treatment sound
         Intent startIntent = new Intent(context, RingtoneCustomService.class);
         context.startService(startIntent);
         newDialog = CreateAlertDialog(alarmDialogTitle,alarmDialogMessage);
@@ -109,13 +109,13 @@ public class AlarmDialogClass extends Activity {
         return builder.create();
     }
 
-    String GetDialogMessage(Alarm alarm)
+    String GetDialogMessage(Treatment treatment)
     {
         String dialogMessage = "E timpul să luați medicamentul!" + "\nDoză: ";
-        String buffer = alarm.GetDosage();
+        String buffer = treatment.GetDosage();
         dialogMessage += buffer;
         dialogMessage += "\n\nAlte detalii: \n";
-        buffer = alarm.GetNote();
+        buffer = treatment.GetNote();
         dialogMessage += buffer;
         return dialogMessage;
     }
