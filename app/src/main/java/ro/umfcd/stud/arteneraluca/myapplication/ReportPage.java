@@ -7,6 +7,6 @@ public class ReportPage extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.master_page_layout);
+        setContentView(R.layout.report_page_layout);
     }
 }
