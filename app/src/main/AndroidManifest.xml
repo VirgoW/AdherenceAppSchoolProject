@@ -20,7 +20,7 @@
         </activity>
         <activity android:name=".AlarmsPage" />
         <activity android:name=".AlarmSet" />
-        <activity android:name=".MasterPage" />
+        <activity android:name=".ReportPage" />
 
         <activity android:name=".AlarmDialogClass">
             <!--android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">-->
