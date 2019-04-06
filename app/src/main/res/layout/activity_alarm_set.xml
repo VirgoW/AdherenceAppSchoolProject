@@ -25,6 +25,20 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:id="@+id/errorInvalidForm"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/alarm_set_vertical_padding"
+                android:text="@string/errorMedNameMandatory"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="@dimen/project_text_size"
+                android:textStyle="italic"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
                 android:id="@+id/medNameText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -35,7 +49,7 @@
                 android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/errorInvalidForm" />
 
             <EditText
                 android:id="@+id/medNameTextInput"
@@ -295,7 +309,7 @@
 
             <Button
                 android:id="@+id/alarmSetButton"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/alarm_set_vertical_padding"
                 android:layout_marginEnd="@dimen/button_Horizontalpadding"
@@ -303,13 +317,14 @@
                 android:text="@string/alarmSaveButtonName"
                 android:visibility="visible"
                 android:textSize="@dimen/project_text_size"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/alarmDeleteButton"
                 app:layout_constraintTop_toBottomOf="@+id/other_details" />
 
             <Button
                 android:id="@+id/alarmDeleteButton"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/button_Horizontalpadding"
                 android:layout_marginLeft="@dimen/button_Horizontalpadding"
@@ -321,20 +336,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/other_details" />
 
-            <TextView
-                android:id="@+id/errorInvalidForm"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/alarm_set_vertical_padding"
-                android:text="@string/errorMedNameMandatory"
-                android:textColor="@android:color/holo_red_dark"
-                android:textSize="@dimen/project_text_size"
-                android:textStyle="italic"
-                android:visibility="invisible"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/alarmDeleteButton" />
+
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
