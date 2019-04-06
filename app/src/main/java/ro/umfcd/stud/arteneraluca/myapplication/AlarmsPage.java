@@ -3,7 +3,6 @@ package ro.umfcd.stud.arteneraluca.myapplication;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -181,20 +180,11 @@ public class AlarmsPage extends AppCompatActivity {
     private void InstantiateCalToCurrentDay()
     {
         m_cal = Calendar.getInstance();
-        int calMonth;
-        calMonth = m_cal.get(Calendar.MONTH);
-        String[] monthNames = getResources().getStringArray(R.array.monthNames);
-        ((TextView) findViewById(R.id.currentDisplayedMonth)).setText(monthNames[calMonth]);
-
-        //The 4 lines above aren't the same thing as the UpdateMonthTextView function?
-        //If so, these 4 lines are repeated when the updateFragments is called
-
         UpdateFragments();
 
         int dayOfWeek = SaveManager.getInstance().GetDayOfWeek(m_cal);
         TabLayout.Tab tab = m_tabLayout.getTabAt(dayOfWeek);
         tab.select();
-
     }
 
     @Override
