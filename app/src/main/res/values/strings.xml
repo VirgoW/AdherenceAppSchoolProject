@@ -1,8 +1,11 @@
 <resources>
     <string name="app_name">My Application</string>
 
-    <string name="start_button_text">Start</string>
-    <string name="generate_report_button_text">Descarca raport</string>
+    <string name="start_button_text">Spre pagina de alarme</string>
+    <string name="generate_report_button_text">Informații despre medicamentele luate</string>
+
+    <string name="download_file_btn">Descarcă fișier</string>
+    <string name="reportPage_header">Informații despre medicamentele luate</string>
 
     <string name="returnToToday">Întoarce-te la ziua curentă</string>
     <string name="setNewAlarm">Setează Alarma</string>
