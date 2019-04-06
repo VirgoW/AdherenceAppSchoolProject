@@ -18,6 +18,9 @@ public class Treatment implements Serializable {
     public ArrayList<String> m_dailyFrequency;
     public ArrayList<Boolean> m_weeklyDayFrequency;
     public int m_id;
+    private int m_AlarmConfirmedCount;
+    private int m_AlarmDeniedCount;
+    private int m_AlarmDelayCount;
 
     public Treatment()
     {
@@ -31,6 +34,9 @@ public class Treatment implements Serializable {
         m_EndCal = null;
         m_weeklyDayFrequency = new ArrayList<>();
         m_dailyFrequency = new ArrayList<>();
+        m_AlarmConfirmedCount = 0;
+        m_AlarmDeniedCount = 0;
+        m_AlarmDelayCount = 0;
         for(int i=0; i<7;i++)
         {
             m_weeklyDayFrequency.add(false);
@@ -123,6 +129,23 @@ public class Treatment implements Serializable {
     public void setId(int id) {
         m_id = id;
     }
+
+    public int GetConfirmedCount(){return m_AlarmConfirmedCount;}
+    public int GetDeniedCount(){return m_AlarmDeniedCount;}
+
+    public void IncreaseConfirmedCount()
+    {
+        m_AlarmConfirmedCount++;
+        m_AlarmDelayCount = 0;
+    }
+    public void IncreaseDeniedCount()
+    {
+        m_AlarmDeniedCount++;
+        m_AlarmDelayCount = 0;
+    }
+
+    public boolean IsAlarmDelayable(){return m_AlarmDelayCount < 3;}
+    public void IncreaseDelayedCount(){m_AlarmDelayCount++;}
 
     public int GetFixedFrequencyNumber() { return m_fixedFrequencyNumber;}
     public void SetFixedFrequencyNumber(int number) { m_fixedFrequencyNumber = number;}
