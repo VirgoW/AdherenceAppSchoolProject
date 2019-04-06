@@ -349,6 +349,8 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
         if(!IsFormValid())
         {
             ((ScrollView) m_view.findViewById(R.id.scroll_bar)).fullScroll(View.FOCUS_UP);
+            TextView formValidError = (TextView) m_view.findViewById(R.id.errorInvalidForm);
+            formValidError.setVisibility(View.VISIBLE);
         }
         else
         {
@@ -439,8 +441,6 @@ public class AlarmSet extends AppCompatActivity implements DatePickerDialog.OnDa
         }
         else
         {
-            TextView formValidError = (TextView) m_view.findViewById(R.id.errorInvalidForm);
-            formValidError.setVisibility(View.VISIBLE);
             return false;
         }
     }
