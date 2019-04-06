@@ -485,61 +485,11 @@ public class SaveManager {
         //Set an event to schedule alerts for this treatment
         Intent intent = new Intent(context, AlarmReceiver.class);
         intent.putExtra("alarmType", R.string.alarmSet);
+        intent.putExtra("treatmentIndex", alarmIndex);
         //Manual serialize object
-        SerializeAlarmIntoIntent(intent, alarm);
         PendingIntent pendingAlarmIntent = PendingIntent.getBroadcast(context, alarmIndex, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Calendar todayCal = Calendar.getInstance();
         alarmMgr.set(AlarmManager.RTC_WAKEUP, todayCal.getTimeInMillis(), pendingAlarmIntent);
     }
-
-    void SerializeAlarmIntoIntent(Intent intent, Alarm alarm)
-    {
-        intent.putExtra("medName", alarm.GetMedName());
-        intent.putExtra("dailyHours", alarm.m_dailyFrequency.size());
-        for(int i=0; i< alarm.m_dailyFrequency.size(); i++)
-        {
-            String extraString = "hourString" + i;
-            intent.putExtra(extraString, alarm.m_dailyFrequency.get(i));
-        }
-        intent.putExtra("alarmId", alarm.getId());
-        intent.putExtra("alarmDetails",alarm.GetNote());    //not sure if i really need these for showing them in the dialog
-        intent.putExtra("medDosage",alarm.GetDosage());     //i thought that i need to send them to intent so i can get them out
-        for(int i=0; i< 7; i++)
-        {
-            String extraString = "dayBoolean" + i;
-            intent.putExtra(extraString, alarm.m_weeklyDayFrequency.get(i));
-        }
-        intent.putExtra("dailyFrequency", alarm.IsDailyTreatment());
-    }
-
-    Boolean DeserializeAlarmFromIntent(Intent intent, Alarm alarm)
-    {
-        String medName = intent.getStringExtra("medName");
-        alarm.SetMedName(medName);
-        int dailyHours = intent.getIntExtra("dailyHours", -1);
-        for(int i=0; i < dailyHours; i++)
-        {
-            String extraString = "hourString" + i;
-            String hour = intent.getStringExtra(extraString);
-            alarm.m_dailyFrequency.add(hour);
-        }
-        for(int i=0; i < 7; i++)
-        {
-            String extraString = "dayBoolean" + i;
-            Boolean weekChecked = intent.getBooleanExtra(extraString, false);
-            alarm.m_weeklyDayFrequency.set(i, weekChecked);
-        }
-        int alarmId = intent.getIntExtra("alarmId", -1);
-        alarm.setId(alarmId);
-        boolean dailyFrequency = intent.getBooleanExtra("dailyFrequency", false);
-        alarm.SetDailyTreatment(dailyFrequency);
-        if(alarmId >= 0 && !medName.isEmpty())
-        {
-            return true;
-        }
-        return false;
-    }
-
-
 }

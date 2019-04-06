@@ -20,8 +20,11 @@ public class AlarmDialogClass extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent thisIntent = getIntent();
-        String alarmDialogTitle = thisIntent.getStringExtra("medName");
-        String alarmDialogMessage = GetDialogMessage(thisIntent);
+        int alarmIndex = thisIntent.getIntExtra("treatmentIndex", -1);
+        Alarm alarm = SaveManager.getInstance().GetAlarm(alarmIndex);
+
+        String alarmDialogTitle = alarm.GetMedName();
+        String alarmDialogMessage = GetDialogMessage(alarm);
         //Start Ringtone service to play alarm sound
         Intent startIntent = new Intent(context, RingtoneCustomService.class);
         context.startService(startIntent);
@@ -106,13 +109,13 @@ public class AlarmDialogClass extends Activity {
         return builder.create();
     }
 
-    String GetDialogMessage(Intent intent)
+    String GetDialogMessage(Alarm alarm)
     {
         String dialogMessage = "E timpul să luați medicamentul!" + "\nDoză: ";
-        String buffer = intent.getStringExtra("medDosage");
+        String buffer = alarm.GetDosage();
         dialogMessage += buffer;
         dialogMessage += "\n\nAlte detalii: \n";
-        buffer = intent.getStringExtra("alarmDetails");
+        buffer = alarm.GetNote();
         dialogMessage += buffer;
         return dialogMessage;
     }
@@ -125,7 +128,7 @@ public class AlarmDialogClass extends Activity {
         dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setEnabled(false);
 
         ((TextView) dialog.findViewById(android.R.id.message))
-                .setTextSize(getResources().getDimensionPixelSize(R.dimen.dialog_text_size)); //possible bug
+                .setTextSize(getResources().getDimensionPixelSize(R.dimen.dialog_text_size));
 
     }
 
