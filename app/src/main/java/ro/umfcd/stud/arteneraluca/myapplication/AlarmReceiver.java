@@ -24,6 +24,8 @@ public class AlarmReceiver extends BroadcastReceiver {
         if(alarmType == R.string.alarmActivate)
         {
             Intent alarmIntent = new Intent("android.intent.action.DIALOG");
+            int alarmID = intent.getIntExtra("alarmID",-1);
+            alarmIntent.putExtra("alarmID",alarmID);
             ActivateAlarm(context, alarmIntent, treatmentIndex);
         }
         else
@@ -103,6 +105,7 @@ public class AlarmReceiver extends BroadcastReceiver {
             newIntent.putExtra("treatmentIndex", treatmentIndex);
 
             String hourString = treatment.m_dailyFrequency.get(indexHour);
+
             int hour = Integer.parseInt(hourString.substring(0,2));
             int minute = Integer.parseInt(hourString.substring(3));
 
@@ -119,6 +122,9 @@ public class AlarmReceiver extends BroadcastReceiver {
             }
 
             alarmId = treatmentIndex * 10 + indexHour;
+            newIntent.putExtra("alarmID",alarmId);
+
+
             pendingAlarmIntent = PendingIntent.getBroadcast(context, alarmId, newIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             alarmMgr.set(AlarmManager.RTC_WAKEUP, alertCalendar.getTimeInMillis(), pendingAlarmIntent);
         }
@@ -189,6 +195,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                     //Set treatment
                     alarmId = treatmentIndex * 10 + indexDay;
                     alarmId = alarmId * 10 + indexHour;
+                    alarmIntent.putExtra("alarmID",alarmId);
                     pendingAlarmIntent = PendingIntent.getBroadcast(context, alarmId, alarmIntent, 0);
                     alarmMgr.set(AlarmManager.RTC_WAKEUP, alarmCal.getTimeInMillis(), pendingAlarmIntent);
                 }
