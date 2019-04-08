@@ -109,7 +109,7 @@
     <string name="blankFragmentName">Gol</string>
 
     //Files - Storage
-    <string name="testSave">Fisier02</string>
+    <string name="treatmentSaveFileName">Fisier02</string>
     <string name="medNameTag">MedName</string>
     <string name="dosageTag">Dosage</string>
     <string name="frequencyTag">Frequency</string>
@@ -121,6 +121,8 @@
     <string name="weeklyFrequencyDayTag">WeeklyDayFreq</string>
     <string name="fixedFrequencyNumber">FixedFrquencyNumber</string>
     <string name="fixedFrequencySpinnerPosition">FixedFrquencySpinnerPosition</string>
+    <string name="confirmedCountTag">AlarmConfirmedCount</string>
+    <string name="deniedCountTag">AlarmDeniedCount</string>
 
     <string name="dateFormat">dd MMM yyy</string>
     <string name="hourFormat">HH:mm</string>
