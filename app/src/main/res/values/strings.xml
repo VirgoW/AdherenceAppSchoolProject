@@ -6,6 +6,10 @@
 
     <string name="download_file_btn">Descarcă fișier</string>
     <string name="reportPage_header">Informații despre medicamentele luate</string>
+    <string name="startDateTextView">Tratament început din data:</string>
+    <string name="confirmedDosesTextView">Doze administrate:</string>
+    <string name="missedDosesTextView">Doze neadministrate:</string>
+    <string name="reportDateTextView">Afișat la data de </string>
 
     <string name="returnToToday">Întoarce-te la ziua curentă</string>
     <string name="setNewAlarm">Setează Alarma</string>
