@@ -114,6 +114,7 @@
 
     //Files - Storage
     <string name="treatmentSaveFileName">Fisier02</string>
+    <string name="reportSaveFileName">RaportAlarme.txt</string>
     <string name="medNameTag">MedName</string>
     <string name="dosageTag">Dosage</string>
     <string name="frequencyTag">Frequency</string>
@@ -127,6 +128,9 @@
     <string name="fixedFrequencySpinnerPosition">FixedFrquencySpinnerPosition</string>
     <string name="confirmedCountTag">AlarmConfirmedCount</string>
     <string name="deniedCountTag">AlarmDeniedCount</string>
+
+    <string name="ReportFileStart">Raport Alarme:</string>
+    <string name="ReportTreatmentTag">Tratament:</string>
 
     <string name="dateFormat">dd MMM yyy</string>
     <string name="hourFormat">HH:mm</string>

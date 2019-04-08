@@ -37,10 +37,8 @@ public class ReportPage extends Activity {
             */
             @Override
             public void onClick(View v) {
-                String fileName = getText(R.string.treatmentSaveFileName).toString();
-                //TODO Create new file with summary of treatments.
-                File path = getFilesDir();
-                File requestFile = new File(path, fileName);
+                String fileName = getText(R.string.reportSaveFileName).toString();
+                File requestFile =  AlarmHelperClass.CreateReportFile(context, fileName);
                 Uri fileUri = null;
                 try
                 {
