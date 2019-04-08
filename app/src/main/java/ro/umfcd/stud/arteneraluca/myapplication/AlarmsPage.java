@@ -95,7 +95,9 @@ public class AlarmsPage extends AppCompatActivity {
         SimpleDateFormat format = new SimpleDateFormat("hh:mm:ss");
         String date1 = format.format(m_cal.getTime());
         SetupView();
-
+        //This should change tab text color
+        //First color is the default one, second one is selected tab color
+        //m_tabLayout.setTabTextColors(getResources().getColor(R.color.tab_item_text_color), getResources().getColor(R.color.colorAccentDark));
         m_lastTabIndex = SaveManager.getInstance().GetDayOfWeek(m_cal);
 
     }
@@ -137,6 +139,7 @@ public class AlarmsPage extends AppCompatActivity {
 
         InstantiateCalToCurrentDay();
 
+
     }
 
     private void AddMonth(int plus) {
@@ -174,6 +177,7 @@ public class AlarmsPage extends AppCompatActivity {
             TabLayout.Tab tab = m_tabLayout.getTabAt(index);
             tab.setCustomView(m_alarmPageAdapter.getTabView(index));
         }
+
     }
 
 

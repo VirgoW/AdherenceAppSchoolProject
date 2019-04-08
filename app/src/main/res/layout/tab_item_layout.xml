@@ -11,13 +11,11 @@
         android:layout_height="wrap_content"
         android:text="@string/testDate"
         android:textSize="@dimen/project_text_size"
-        android:textColor="@color/tab_item_text_color"
         android:gravity="center" />
     <TextView
         android:id="@+id/dayNameTabItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/tab_item_text_color"
         android:textSize="@dimen/project_text_size"
         android:text="@string/testDay"
         android:gravity="center"/>
