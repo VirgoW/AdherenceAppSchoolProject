@@ -37,7 +37,7 @@ public class ReportPage extends Activity {
             */
             @Override
             public void onClick(View v) {
-                String fileName = getText(R.string.testSave).toString();
+                String fileName = getText(R.string.treatmentSaveFileName).toString();
                 //TODO Create new file with summary of treatments.
                 File path = getFilesDir();
                 File requestFile = new File(path, fileName);
