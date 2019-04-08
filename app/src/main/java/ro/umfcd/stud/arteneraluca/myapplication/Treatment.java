@@ -144,6 +144,9 @@ public class Treatment implements Serializable {
         m_AlarmDelayCount = 0;
     }
 
+    public void SetConfirmedCount(int confirmedCount){ m_AlarmConfirmedCount = confirmedCount;}
+    public void SetDeniedCount(int deniedCount){ m_AlarmDeniedCount = deniedCount;}
+
     public boolean IsAlarmDelayable(){return m_AlarmDelayCount < 3;}
     public void IncreaseDelayedCount(){m_AlarmDelayCount++;}
 

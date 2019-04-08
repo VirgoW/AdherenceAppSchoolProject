@@ -58,7 +58,7 @@ public class SaveManager {
 
     public void InitSave(Context context)
     {
-        m_saveFile = context.getText(R.string.testSave).toString();
+        m_saveFile = context.getText(R.string.treatmentSaveFileName).toString();
 
         File path = context.getFilesDir();
         File file = new File(path, m_saveFile);
@@ -157,12 +157,15 @@ public class SaveManager {
                 }
 
                 if(!treatment.IsDailyTreatment())
-                for(int i = 0; i< treatment.m_weeklyDayFrequency.size(); i++)
                 {
-                    AddNewTag(serializer, context.getText(R.string.weeklyFrequencyDayTag).toString(),"index", Integer.toString(i));
-                    AddNewTag(serializer, context.getText(R.string.weeklyFrequencyDayTag).toString(),"name", Boolean.toString(treatment.m_weeklyDayFrequency.get(i)));
+                    for(int i = 0; i< treatment.m_weeklyDayFrequency.size(); i++)
+                    {
+                        AddNewTag(serializer, context.getText(R.string.weeklyFrequencyDayTag).toString(),"index", Integer.toString(i));
+                        AddNewTag(serializer, context.getText(R.string.weeklyFrequencyDayTag).toString(),"name", Boolean.toString(treatment.m_weeklyDayFrequency.get(i)));
+                    }
                 }
-
+                AddNewTag(serializer, context.getText(R.string.confirmedCountTag).toString(), "name", Integer.toString(treatment.GetConfirmedCount()));
+                AddNewTag(serializer, context.getText(R.string.deniedCountTag).toString(), "name", Integer.toString(treatment.GetDeniedCount()));
                 serializer.endTag("","Treatment");
             }
             serializer.endDocument();
@@ -263,6 +266,15 @@ public class SaveManager {
                                 newTreatment.m_weeklyDayFrequency.set(weeklyIndex, Boolean.parseBoolean(m_XmlParser.getAttributeValue(null, "name")));
                             }
                         }
+                        if(name.equals(context.getText(R.string.confirmedCountTag).toString()))
+                        {
+                            newTreatment.SetConfirmedCount(Integer.parseInt(m_XmlParser.getAttributeValue(null, "name")));
+                        }
+                        if(name.equals(context.getText(R.string.deniedCountTag).toString()))
+                        {
+                            newTreatment.SetDeniedCount(Integer.parseInt(m_XmlParser.getAttributeValue(null, "name")));
+                        }
+
                         if(name.equals("Treatment") && newTreatment.IsValid())
                         {
                             newTreatment.setId(m_treatmentList.size());
