@@ -8,10 +8,12 @@
 
     <Button
         android:id="@+id/startBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/start_button_text"
         android:textSize="@dimen/project_text_size"
+        android:textAllCaps="false"
+        app:layout_constraintVertical_chainStyle="spread"
         app:layout_constraintBottom_toTopOf="@+id/GenerateReportBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,10 +21,11 @@
 
     <Button
         android:id="@+id/GenerateReportBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/generate_report_button_text"
         android:textSize="@dimen/project_text_size"
+        android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

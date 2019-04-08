@@ -9,6 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:isScrollContainer="true"
+        android:background="@color/grid_background"
+        android:verticalSpacing="@dimen/dividerStroke"
         tools:listitem="@layout/grid_view_item_trial">
 
 

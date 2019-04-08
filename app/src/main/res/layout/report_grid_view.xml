@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/infoMedName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/alarm_set_vertical_padding"
+        android:textAlignment="center"
+        android:text="@string/testMedName"
+        android:textSize="@dimen/project_text_size"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/stringStartDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/alarm_set_vertical_padding"
+        android:text="@string/startDateTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/infoMedName" />
+
+    <TextView
+        android:id="@+id/infoStartDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/alarm_set_vertical_padding"
+        android:text="@string/testDate"
+        app:layout_constraintStart_toEndOf="@+id/stringStartDate"
+        app:layout_constraintTop_toBottomOf="@+id/infoMedName" />
+
+    <TextView
+        android:id="@+id/stringConfirmedDoses"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/alarm_set_vertical_padding"
+        android:text="@string/confirmedDosesTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stringStartDate" />
+
+    <TextView
+        android:id="@+id/infoConfirmedDoses"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/alarm_set_vertical_padding"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/infoStartDate" />
+
+    <TextView
+        android:id="@+id/stringMissedDoses"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/alarm_set_vertical_padding"
+        android:text="@string/missedDosesTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stringConfirmedDoses" />
+
+    <TextView
+        android:id="@+id/infoMissedDoses"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/alarm_set_vertical_padding"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/stringMissedDoses"
+        app:layout_constraintTop_toBottomOf="@+id/infoConfirmedDoses" />
+
+</android.support.constraint.ConstraintLayout>

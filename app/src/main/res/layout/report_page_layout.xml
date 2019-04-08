@@ -10,10 +10,15 @@
         android:id="@+id/headerTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/black"
+        android:textAlignment="center"
         android:text="@string/reportPage_header"
-        android:textSize="@dimen/project_text_size"/>
+        android:textSize="@dimen/project_text_size"
+        android:textStyle="bold"
+        android:padding="@dimen/alarm_set_vertical_padding"/>
 
-    <ScrollView
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,12 +29,16 @@
         <GridView
             android:id="@+id/reportPageGridView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:isScrollContainer="true"
+            android:verticalSpacing="@dimen/alarm_set_vertical_padding"
+            android:numColumns="1"
+            tools:listitem="@layout/report_grid_view">
 
 
         </GridView>
 
-    </ScrollView>
+    </FrameLayout>
 
     <android.support.constraint.Barrier
         android:id="@+id/downloadBtnBarrier"
@@ -42,12 +51,33 @@
         android:id="@+id/downloadReportButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/buttonScreenMargin"
         android:textSize="@dimen/project_text_size"
         android:text="@string/download_file_btn"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf = "@id/reportCurrentDate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/downloadBtnBarrier"/>
+
+    <TextView
+        android:id="@+id/reportCurrentDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:text="@string/reportDateTextView"
+        android:layout_marginBottom="@dimen/alarm_set_vertical_padding"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/reportCurrentDateValue"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@+id/downloadReportButton" />
+
+    <TextView
+        android:id="@+id/reportCurrentDateValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/testDate"
+        android:layout_marginBottom="@dimen/alarm_set_vertical_padding"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/downloadReportButton"
+        app:layout_constraintStart_toEndOf="@id/reportCurrentDate" />
 
 </android.support.constraint.ConstraintLayout>

@@ -8,8 +8,12 @@ import android.os.Bundle;
 import android.support.v4.content.FileProvider;
 import android.view.View;
 import android.widget.Button;
+import android.widget.GridView;
+import android.widget.TextView;
 
 import java.io.File;
+import java.text.DateFormat;
+import java.util.Calendar;
 
 
 public class ReportPage extends Activity {
@@ -20,6 +24,9 @@ public class ReportPage extends Activity {
         Button shareReportBtn = findViewById(R.id.downloadReportButton);
         final Context context = getApplicationContext();
 
+        GridView gridView = (GridView) findViewById(R.id.reportPageGridView);
+        ReportAdapter gridViewAdapter = new ReportAdapter(context);
+        gridView.setAdapter(gridViewAdapter);
 
         shareReportBtn.setOnClickListener(new View.OnClickListener() {
             /*
@@ -58,5 +65,15 @@ public class ReportPage extends Activity {
             }
         });
 
+
+        TextView reportCurrentDateValue = (TextView) findViewById(R.id.reportCurrentDateValue);
+
+        Calendar currentDate = Calendar.getInstance(); // the value to be formatted
+        java.text.DateFormat formatter = java.text.DateFormat.getDateInstance(
+                DateFormat.SHORT); // one of SHORT, MEDIUM, LONG, FULL, or DEFAULT
+        formatter.setTimeZone(currentDate.getTimeZone());
+        String formatted = formatter.format(currentDate.getTime());
+
+        reportCurrentDateValue.setText(" " + formatted);
     }
 }

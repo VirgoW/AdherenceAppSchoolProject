@@ -2,7 +2,9 @@
 <resources>
     <!--Project dimensions-->
     <dimen name="project_text_size">22sp</dimen>
+    <dimen name="titles_text_size">30sp</dimen>
     <dimen name="dialog_text_size">10sp</dimen>
+    <dimen name="object_padding">5dp</dimen>
 
     <!--AlarmSet page -->
     <dimen name="alarm_set_vertical_padding">10dp</dimen>

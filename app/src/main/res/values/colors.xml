@@ -7,9 +7,12 @@
     <color name="old_accent">#000000</color>
 
     //my Theme colors
-    <color name="colorPrimary">#8ffff5</color>
-    <color name="colorPrimaryDark">#00ced1</color>
-    <color name="colorAccent">#ffa8a8</color>
+    <color name="colorPrimary">#b3e5fc</color>
+    <color name="colorPrimaryDark">#82b3c9</color>
+    <color name="colorPrimaryLight">#e6ffff</color>
+    <color name="colorAccent">#ffab91</color>
+    <color name="colorAccentDark">#c97b63</color>
+    <color name="colorAccentLight">#ffdad6</color>
 
     //other colors
     <color name="white">#FFFFFF</color>
@@ -21,21 +24,28 @@
     <color name="light_blue">#dcfffc</color>
     <color name="blue">#8ffff5</color>
     <color name="yellow">#ffd600</color>
-    <color name="dark_yellow">#9f8500</color>
+    <color name="dark_yellow">#d1af00</color>
 
     //my app colors
-    <color name="alarm_set_background">@color/light_blue</color>
-    <color name="tab_backgroundSelected">@color/colorPrimary</color>
+    <color name="app_background">@color/colorPrimaryLight</color>
+
+    <color name="borders_color">@color/colorPrimaryDark</color>
+    <color name="switch_thumb">@color/colorAccentLight</color>
+    <color name="switch_track">@color/colorPrimaryDark</color>
+    <color name="custom_checkbox">@color/colorAccentLight</color>
+    <color name="custom_checkbox_contrast">@color/colorAccent</color>
+    <color name="spinner_dropdown">@color/colorAccentLight</color>
+
+    <color name="tab_backgroundSelected">@color/colorPrimaryLight</color>
     <color name="tab_backgroundUnelected">@color/colorPrimaryDark</color>
+    <color name="tab_item_text_color">@color/colorPrimaryLight</color>
+    <color name="tab_item_selected_text_color">@color/colorAccentDark</color>
+    <color name="tab_indicator_color">@color/tab_backgroundUnelected</color>
 
-    <color name="tab_item_text_color">@color/black</color>
+    <color name="grid_item_background">@color/colorPrimaryLight</color>
+    <color name="grid_background">@color/colorPrimaryDark</color>
 
-    <color name="switch_thumb">@color/faded_pink</color>
-    <color name="switch_track">@color/light_grey</color>
-    <color name="custom_checkbox">@color/yellow</color>
-    <color name="custom_checkbox_contrast">@color/dark_yellow</color>
-
-    <color name="spinner_dropdown">@color/faded_pink</color>
+    <color name="headerFooter_color">@color/colorPrimary</color>
 
 
 </resources>

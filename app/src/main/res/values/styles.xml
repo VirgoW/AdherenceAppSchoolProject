@@ -1,18 +1,18 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowFullscreen">true</item>
-        <item name="android:colorBackground">@color/light_blue</item>
-        <item name="colorButtonNormal">@color/dusty_pink</item>
+        <item name="android:colorBackground">@color/app_background</item>
+        <item name="colorButtonNormal">@color/colorAccent</item>
     </style>
 
 //Buttons style - not used for now
-    <style name="MyButtonStyle" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="MyButtonStyle" parent="Theme.AppCompat.Light">
         <item name="android:textAllCaps">false</item>
         <item name="android:textColor">@color/dark_yellow</item>    //color used just for debug
         <item name="android:textSize">@dimen/project_text_size</item>
@@ -23,7 +23,6 @@
         <item name="android:textSize">@dimen/project_text_size</item>
         <!-- <item name="android:textColor">@color/colorAccent</item> -->
         <item name="textAllCaps">false</item>
-        <!-- <item name="android:layout_height">wrap_content</item> -->
     </style>
 
 //Switch style
@@ -36,7 +35,7 @@
 //Spinner style
     <style name="CustomSpinner_ItemTheme" parent="@android:style/TextAppearance.Widget.TextView.SpinnerItem">
         <item name="android:textSize">@dimen/project_text_size</item>
-        <item name="android:textAlignment">center</item>
+        <item name="android:gravity">center</item>
     </style>
     <style name="CustomSpinner_dropdownTheme" parent="TextAppearance.AppCompat.Widget.TextView.SpinnerItem">
         <item name="android:textSize">@dimen/project_text_size</item>

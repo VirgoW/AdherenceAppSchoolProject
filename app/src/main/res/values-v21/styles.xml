@@ -7,7 +7,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowFullscreen">true</item>
-        <item name="android:colorBackground">@color/light_blue</item>
+        <item name="android:colorBackground">@color/app_background</item>
         <item name="colorButtonNormal">@color/dusty_pink</item>
         <item name="android:statusBarColor">@android:color/black</item>
 
