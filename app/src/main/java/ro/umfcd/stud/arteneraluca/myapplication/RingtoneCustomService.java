@@ -47,9 +47,7 @@ public class RingtoneCustomService extends Service {
     {
         if (Build.VERSION.SDK_INT >= 26)
         {
-            int[] amplitudePattern = {VibrationEffect.DEFAULT_AMPLITUDE};
-            vibrator.vibrate(VibrationEffect.createWaveform(vibratePattern,amplitudePattern,0));
-
+            vibrator.vibrate(VibrationEffect.createWaveform(vibratePattern,0));
         }
         else
         {

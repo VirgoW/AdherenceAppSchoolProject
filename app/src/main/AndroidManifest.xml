@@ -3,6 +3,7 @@
     package="ro.umfcd.stud.arteneraluca.myapplication">
 
     <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <application
         android:name=".NotificationsApp"
         android:allowBackup="true"

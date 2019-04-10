@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.support.v7.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import java.util.Calendar;
@@ -24,6 +26,23 @@ public class AlarmDialogClass extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //This will make the dialog to appear on the screen even if the phone is locked
+        //It does not make the dialog appear when app is closed
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
+                |WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
+                |WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
+                |WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        //uses permission in android manifest
+        if(Build.VERSION.SDK_INT >= 26) //This doesn't do anything from what I notice
+        {
+            getWindow().setType(WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY);
+        }
+        else
+        {
+            getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+        }
+
         Intent thisIntent = getIntent();
         int treatmentIndex = thisIntent.getIntExtra("treatmentIndex", -1);
         Treatment treatment = SaveManager.getInstance().GetAlarm(treatmentIndex);
@@ -120,6 +139,7 @@ public class AlarmDialogClass extends Activity {
         }
         Calendar currentCal = Calendar.getInstance();
         long snoozeTime = currentCal.getTimeInMillis() + TimeUnit.SECONDS.toMillis(10);
+        //TODO increase snoozeTime to 30 minutes for the release version
 
         PendingIntent snoozePendInt = PendingIntent.getBroadcast(context, alarmID, intent, PendingIntent.FLAG_UPDATE_CURRENT); 
         AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
