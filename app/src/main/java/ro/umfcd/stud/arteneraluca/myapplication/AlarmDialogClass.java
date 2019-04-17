@@ -9,18 +9,19 @@ import android.support.v7.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.TypedValue;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
 public class AlarmDialogClass extends Activity {
-    //AlertDialog.Builder mAlertDlgBuilder;
-    //AlertDialog mAlertDialog;
+
     AlertDialog newDialog;
-    //View mDialogView = null;
-    //Button mOKBtn, mCancelBtn;
     final Context context = this;
 
     @Override
@@ -47,25 +48,29 @@ public class AlarmDialogClass extends Activity {
         int treatmentIndex = thisIntent.getIntExtra("treatmentIndex", -1);
         Treatment treatment = SaveManager.getInstance().GetAlarm(treatmentIndex);
 
-        String alarmDialogTitle = treatment.GetMedName();
+        //String alarmDialogTitle = treatment.GetMedName();
+        String alarmDialogTitle = GetTitleMessage(treatment);
         String alarmDialogMessage = GetDialogMessage(treatment);
         //Start Ringtone service to play treatment sound
         Intent startIntent = new Intent(context, RingtoneCustomService.class);
         context.startService(startIntent);
 
-        newDialog = CreateAlertDialog(alarmDialogTitle,alarmDialogMessage,treatment,thisIntent);
+        newDialog = CreateAlertDialog(treatment,thisIntent);
         newDialog.show();
+        SetDialogTitle(newDialog,treatment);
         ModifyDialogProperties(newDialog,treatment);
 
 
     }
 
-    AlertDialog CreateAlertDialog(String title, String message, final Treatment treatment, final Intent intent){
+    AlertDialog CreateAlertDialog(final Treatment treatment, final Intent intent){
         // Build the dialog and set up the button click handlers
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        builder.setTitle(title);
-        builder.setMessage(message);
+        //Inflate a title template
+        LayoutInflater inflater = this.getLayoutInflater();
+        builder.setCustomTitle(inflater.inflate(R.layout.alarm_dialog_title,null));
+        builder.setMessage(GetDialogMessage(treatment));
 
         builder.setPositiveButton(R.string.confirmButton, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
@@ -91,7 +96,6 @@ public class AlarmDialogClass extends Activity {
                 Intent stopIntent = new Intent(context, RingtoneCustomService.class);
                 context.stopService(stopIntent);
                 treatment.IncreaseDelayedCount();
-                //TODO snooze functionality
                 Snooze(intent);
                 newDialog.dismiss();
                 finish();
@@ -100,9 +104,17 @@ public class AlarmDialogClass extends Activity {
         return builder.create();
     }
 
+    void SetDialogTitle(AlertDialog dialog, Treatment treatment)
+    {
+        TextView titleTextView = (TextView) dialog.findViewById(R.id.dialogTitleView);
+        titleTextView.setText(GetTitleMessage(treatment));
+        titleTextView.setTextSize(getResources().getDimensionPixelSize(R.dimen.dialog_text_size));
+    }
+
     String GetDialogMessage(Treatment treatment)
     {
-        String dialogMessage = "E timpul să luați medicamentul!" + "\nDoză: ";
+        //String dialogMessage = "E timpul să luați medicamentul!" + "\nDoză: ";
+        String dialogMessage = "\nDoză: ";
         String buffer = treatment.GetDosage();
         dialogMessage += buffer;
         dialogMessage += "\n\nAlte detalii: \n";
@@ -111,12 +123,18 @@ public class AlarmDialogClass extends Activity {
         return dialogMessage;
     }
 
+    String GetTitleMessage(Treatment treatment)
+    {
+        String titleMessage = " E timpul să luați \n";
+        String buffer = treatment.GetMedName();
+        titleMessage += buffer;
+        return titleMessage;
+    }
+
     void ModifyDialogProperties(AlertDialog dialog, Treatment treatment)
     {
         dialog.setCanceledOnTouchOutside(false);
         dialog.setCancelable(false);
-        ((TextView) dialog.findViewById(android.R.id.message))
-                .setTextSize(getResources().getDimensionPixelSize(R.dimen.dialog_text_size));
 
         if(treatment.IsAlarmDelayable()) {
             dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setEnabled(true);
@@ -125,6 +143,22 @@ public class AlarmDialogClass extends Activity {
             dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setEnabled(false);
         }
 
+        //TODO set the size from resources
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextSize(TypedValue.COMPLEX_UNIT_SP, 25.0f);
+        dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextSize(TypedValue.COMPLEX_UNIT_SP, 25.0f);
+        dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setTextSize(TypedValue.COMPLEX_UNIT_SP, 25.0f);
+
+        TextView messageTextView = (TextView) dialog.findViewById(android.R.id.message);
+        messageTextView.setTextSize(getResources().getDimensionPixelSize(R.dimen.dialog_text_size));
+
+        ImageButton stopSoundBtn = (ImageButton) dialog.findViewById(R.id.soundOffBtn);
+        stopSoundBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent stopIntent = new Intent(context, RingtoneCustomService.class);
+                context.stopService(stopIntent);
+            }
+        });
     }
 
     void Snooze(Intent intent){

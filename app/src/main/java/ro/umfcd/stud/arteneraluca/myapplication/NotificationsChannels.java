@@ -5,7 +5,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.os.Build;
 
-public class NotificationsApp extends Application {
+public class NotificationsChannels extends Application {
 
     public static final String CHANNEL_1_ID = "alarms";
 
@@ -26,7 +26,7 @@ public class NotificationsApp extends Application {
 
             );
             channel1.enableVibration(true);
-            channel1.setDescription("this is for the alarms notifications");
+            channel1.setDescription("This is for the alarms notifications");
             channel1.enableLights(true);
 
             NotificationManager manager = getSystemService(NotificationManager.class);

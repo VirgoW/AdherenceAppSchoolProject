@@ -9,7 +9,7 @@
     //my Theme colors
     <color name="colorPrimary">#b3e5fc</color>
     <color name="colorPrimaryDark">#82b3c9</color>
-    <color name="colorPrimaryLight">#e6ffff</color>
+    <color name="colorPrimaryLight">#e9fcff</color>
     <color name="colorAccent">#ffab91</color>
     <color name="colorAccentDark">#c97b63</color>
     <color name="colorAccentLight">#ffdad6</color>

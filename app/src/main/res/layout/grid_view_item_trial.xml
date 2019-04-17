@@ -25,6 +25,8 @@
         android:padding="@dimen/object_padding"
         android:text="@string/testMedName"
         android:textSize="@dimen/titles_text_size"
+        android:textStyle="bold|italic"
+        android:textColor="@color/colorAccentDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
