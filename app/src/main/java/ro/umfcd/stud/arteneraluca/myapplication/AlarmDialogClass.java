@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,23 +49,23 @@ public class AlarmDialogClass extends Activity {
         int treatmentIndex = thisIntent.getIntExtra("treatmentIndex", -1);
         Treatment treatment = SaveManager.getInstance().GetAlarm(treatmentIndex);
 
-        //String alarmDialogTitle = treatment.GetMedName();
-        String alarmDialogTitle = GetTitleMessage(treatment);
-        String alarmDialogMessage = GetDialogMessage(treatment);
-        //Start Ringtone service to play treatment sound
-        Intent startIntent = new Intent(context, RingtoneCustomService.class);
-        context.startService(startIntent);
 
         newDialog = CreateAlertDialog(treatment,thisIntent);
         newDialog.show();
         SetDialogTitle(newDialog,treatment);
         ModifyDialogProperties(newDialog,treatment);
 
+        //Start Ringtone service to play treatment sound
+        if(newDialog != null)
+        {
+            Intent startIntent = new Intent(context, RingtoneCustomService.class);
+            context.startService(startIntent);
+        }
 
     }
-
+    // Build the dialog and set up the button click handlers
     AlertDialog CreateAlertDialog(final Treatment treatment, final Intent intent){
-        // Build the dialog and set up the button click handlers
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         //Inflate a title template
@@ -172,7 +173,7 @@ public class AlarmDialogClass extends Activity {
             return;
         }
         Calendar currentCal = Calendar.getInstance();
-        long snoozeTime = currentCal.getTimeInMillis() + TimeUnit.SECONDS.toMillis(10);
+        long snoozeTime = currentCal.getTimeInMillis() + TimeUnit.SECONDS.toMillis(20);
         //TODO increase snoozeTime to 30 minutes for the release version
 
         PendingIntent snoozePendInt = PendingIntent.getBroadcast(context, alarmID, intent, PendingIntent.FLAG_UPDATE_CURRENT); 
