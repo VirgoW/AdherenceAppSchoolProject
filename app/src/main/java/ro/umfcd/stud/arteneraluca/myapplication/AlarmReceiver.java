@@ -22,6 +22,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         alarmType = intent.getIntExtra("alarmType", -1);
         treatmentIndex = intent.getIntExtra("treatmentIndex", -1);
 
+
         //Make sure the app has the data loaded when trying to set or activate alarms.
         if(SaveManager.getInstance().GetAlarmCount() == 0)
         {
@@ -32,8 +33,10 @@ public class AlarmReceiver extends BroadcastReceiver {
             Intent alarmIntent = new Intent("android.intent.action.DIALOG");
             int alarmID = intent.getIntExtra("alarmID", -1);
             alarmIntent.putExtra("alarmID", alarmID);
+
             ActivateAlarm(context, alarmIntent, treatmentIndex);
-        } else {
+        }
+        else {
             SetAlarms(context, treatmentIndex);
         }
     }
