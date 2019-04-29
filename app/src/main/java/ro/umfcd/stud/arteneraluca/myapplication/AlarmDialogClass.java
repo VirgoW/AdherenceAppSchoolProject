@@ -116,7 +116,6 @@ public class AlarmDialogClass extends Activity {
 
     String GetDialogMessage(Treatment treatment)
     {
-        //String dialogMessage = "E timpul să luați medicamentul!" + "\nDoză: ";
         String dialogMessage = "\nDoză: ";
         String buffer = treatment.GetDosage();
         dialogMessage += buffer;

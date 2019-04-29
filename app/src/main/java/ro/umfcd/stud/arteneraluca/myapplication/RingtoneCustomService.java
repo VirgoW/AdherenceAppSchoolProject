@@ -6,6 +6,7 @@ import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Handler;
 import android.os.IBinder;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
@@ -13,6 +14,7 @@ import android.os.Vibrator;
 public class RingtoneCustomService extends Service {
     private Ringtone ringtone;
     private Vibrator vibrator;
+    private Handler ringingHandler;
     long [] vibratePattern = {0,500,1000};
 
 
@@ -33,13 +35,22 @@ public class RingtoneCustomService extends Service {
         this.ringtone = RingtoneManager.getRingtone(this, uri);
         ringtone.play();
         Vibrate();
+        int ringingTimeout = getApplicationContext().getResources().getInteger(R.integer.AlarmDialogRingTimeoutMillis);
+        ringingHandler = new Handler();
+        ringingHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                StopRinging();
+            }
+        }, ringingTimeout);
         return START_NOT_STICKY;
     }
 
     @Override
-    public void onDestroy() {
-        ringtone.stop();
-        stopVibrating();
+    public void onDestroy()
+    {
+        ringingHandler.removeCallbacksAndMessages(null);
+        StopRinging();
     }
 
 
@@ -55,9 +66,9 @@ public class RingtoneCustomService extends Service {
         }
     }
 
-    public void stopVibrating()
+    public void StopRinging()
     {
+        ringtone.stop();
         vibrator.cancel();
     }
-
 }
