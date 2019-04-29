@@ -33,7 +33,11 @@ public class AlarmReceiver extends BroadcastReceiver {
             alarmIntent.putExtra("alarmID", alarmID);
 
 //if myApp is closed, then open it
-            if(!isAppRunning(context,"ro.umfcd.stud.arteneraluca.myapplication")) {
+            if(isAppRunning(context,"ro.umfcd.stud.arteneraluca.myapplication")) {
+                //Do nothing
+            }
+            else
+            {
                 Intent i = context.getPackageManager().getLaunchIntentForPackage("ro.umfcd.stud.arteneraluca.myapplication");
                 context.startActivity(i);
             }

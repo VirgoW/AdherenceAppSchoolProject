@@ -166,6 +166,7 @@ public class SaveManager {
                 }
                 AddNewTag(serializer, context.getText(R.string.confirmedCountTag).toString(), "name", Integer.toString(treatment.GetConfirmedCount()));
                 AddNewTag(serializer, context.getText(R.string.deniedCountTag).toString(), "name", Integer.toString(treatment.GetDeniedCount()));
+                //TODO: Add the delayed count here and in ParseXmlFile
                 serializer.endTag("","Treatment");
             }
             serializer.endDocument();
