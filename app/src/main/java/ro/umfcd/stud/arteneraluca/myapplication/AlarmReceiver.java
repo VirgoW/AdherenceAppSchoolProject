@@ -1,17 +1,12 @@
 package ro.umfcd.stud.arteneraluca.myapplication;
 
-import android.app.ActivityManager;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Bundle;
-import android.util.Log;
 
 import java.util.Calendar;
-import java.util.List;
 
 public class AlarmReceiver extends BroadcastReceiver {
     /*
@@ -27,20 +22,16 @@ public class AlarmReceiver extends BroadcastReceiver {
         alarmType = intent.getIntExtra("alarmType", -1);
         treatmentIndex = intent.getIntExtra("treatmentIndex", -1);
 
+        //Make sure the app has the data loaded when trying to set or activate alarms.
+        if(SaveManager.getInstance().GetAlarmCount() == 0)
+        {
+            SaveManager.getInstance().InitSave(context);
+        }
+
         if (alarmType == R.string.alarmActivate) {
             Intent alarmIntent = new Intent("android.intent.action.DIALOG");
             int alarmID = intent.getIntExtra("alarmID", -1);
             alarmIntent.putExtra("alarmID", alarmID);
-
-//if myApp is closed, then open it
-            if(isAppRunning(context,"ro.umfcd.stud.arteneraluca.myapplication")) {
-                //Do nothing
-            }
-            else
-            {
-                Intent i = context.getPackageManager().getLaunchIntentForPackage("ro.umfcd.stud.arteneraluca.myapplication");
-                context.startActivity(i);
-            }
             ActivateAlarm(context, alarmIntent, treatmentIndex);
         } else {
             SetAlarms(context, treatmentIndex);
@@ -198,19 +189,4 @@ public class AlarmReceiver extends BroadcastReceiver {
             }
         }
     }
-
-
-    private static boolean isAppRunning(final Context context, final String packageName) {
-        final ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        final List<ActivityManager.RunningAppProcessInfo> procInfos = activityManager.getRunningAppProcesses();
-        if (procInfos != null) {
-            for (final ActivityManager.RunningAppProcessInfo processInfo : procInfos) {
-                if (processInfo.processName.equals(packageName)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
 }

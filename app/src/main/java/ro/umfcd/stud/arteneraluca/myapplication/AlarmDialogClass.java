@@ -3,13 +3,12 @@ package ro.umfcd.stud.arteneraluca.myapplication;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.content.DialogInterface;
-import android.os.Build;
-import android.support.v7.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AlertDialog;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -79,6 +78,7 @@ public class AlarmDialogClass extends Activity {
                 Intent stopIntent = new Intent(context, RingtoneCustomService.class);
                 context.stopService(stopIntent);
                 treatment.IncreaseConfirmedCount();
+                SaveManager.getInstance().SaveDataToXml(context);
                 newDialog.dismiss();
                 finish();
             }
@@ -88,6 +88,7 @@ public class AlarmDialogClass extends Activity {
                 Intent stopIntent = new Intent(context, RingtoneCustomService.class);
                 context.stopService(stopIntent);
                 treatment.IncreaseDeniedCount();
+                SaveManager.getInstance().SaveDataToXml(context);
                 newDialog.cancel();
                 finish();
             }
@@ -97,6 +98,7 @@ public class AlarmDialogClass extends Activity {
                 Intent stopIntent = new Intent(context, RingtoneCustomService.class);
                 context.stopService(stopIntent);
                 treatment.IncreaseDelayedCount();
+                SaveManager.getInstance().SaveDataToXml(context);
                 Snooze(intent);
                 newDialog.dismiss();
                 finish();

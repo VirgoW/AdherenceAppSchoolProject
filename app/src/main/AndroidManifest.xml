@@ -32,7 +32,9 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <receiver android:name=".AlarmReceiver"/>
+        <receiver
+                android:name=".AlarmReceiver"
+                android:enabled="true"/>
         <service android:name=".RingtoneCustomService"/>
 
         <provider
