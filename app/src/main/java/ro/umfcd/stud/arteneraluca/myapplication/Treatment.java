@@ -153,6 +153,9 @@ public class Treatment implements Serializable {
     public int GetFixedFrequencyNumber() { return m_fixedFrequencyNumber;}
     public void SetFixedFrequencyNumber(int number) { m_fixedFrequencyNumber = number;}
 
+    public void SetDelayedCount(int delayedCount){m_AlarmDelayCount = delayedCount;}
+    public int GetDelayedCount(){ return m_AlarmDelayCount;}
+
     public int GetFixedFrequencySpinnerPosition() { return m_fixedFrequencySpinnerPosition;}
     public void SetFixedFrequencySpinnerPosition(int position){m_fixedFrequencySpinnerPosition = position;}
 }

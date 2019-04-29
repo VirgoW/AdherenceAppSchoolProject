@@ -128,6 +128,7 @@
     <string name="fixedFrequencySpinnerPosition">FixedFrquencySpinnerPosition</string>
     <string name="confirmedCountTag">AlarmConfirmedCount</string>
     <string name="deniedCountTag">AlarmDeniedCount</string>
+    <string name="delayedCountTag">AlarmDelayedCount</string>
 
     <string name="ReportFileStart">Raport Alarme:</string>
     <string name="ReportTreatmentTag">Tratament:</string>

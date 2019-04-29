@@ -55,7 +55,6 @@ public class SaveManager {
         {
             Log.e("ArteneApp", "Exception occurred in SaveManager constructor: ", e);
         }
-
     }
 
     public void InitSave(Context context)
@@ -87,7 +86,7 @@ public class SaveManager {
 
     void AddNewAlarm(Context context, View view)
     {
-        Treatment newTreatment = CompactAlarm(context, view, m_treatmentList.size());
+        Treatment newTreatment = CompactTreatment(context, view, m_treatmentList.size(), true);
         m_treatmentList.add(newTreatment);
         AddSystemAlarms(m_treatmentList.size() - 1, context);
         SaveDataToXml(context);
@@ -99,7 +98,7 @@ public class SaveManager {
 
     void SaveAlarm(int treatmentIndex, Context context, View view)
     {
-        Treatment newTreatment = CompactAlarm(context, view, treatmentIndex);
+        Treatment newTreatment = CompactTreatment(context, view, treatmentIndex, false);
         m_treatmentList.set(treatmentIndex, newTreatment);
 
         ClearSystemAlarms(treatmentIndex, context);
@@ -178,7 +177,7 @@ public class SaveManager {
                 }
                 AddNewTag(serializer, context.getText(R.string.confirmedCountTag).toString(), "name", Integer.toString(treatment.GetConfirmedCount()));
                 AddNewTag(serializer, context.getText(R.string.deniedCountTag).toString(), "name", Integer.toString(treatment.GetDeniedCount()));
-                //TODO: Add the delayed count here and in ParseXmlFile
+                AddNewTag(serializer, context.getText(R.string.delayedCountTag).toString(), "name", Integer.toString(treatment.GetDelayedCount()));
                 serializer.endTag("","Treatment");
             }
             serializer.endDocument();
@@ -187,7 +186,6 @@ public class SaveManager {
 
             OutputStreamWriter  os = new OutputStreamWriter (context.openFileOutput(m_saveFile, MODE_PRIVATE));
             os.write(result);
-            System.out.println("Wrote xml file with value: " + result);
             os.close();
         }
         catch (Exception e)
@@ -287,6 +285,10 @@ public class SaveManager {
                         {
                             newTreatment.SetDeniedCount(Integer.parseInt(m_XmlParser.getAttributeValue(null, "name")));
                         }
+                        if(name.equals(context.getText(R.string.delayedCountTag).toString()))
+                        {
+                            newTreatment.SetDelayedCount(Integer.parseInt(m_XmlParser.getAttributeValue(null, "name")));
+                        }
 
                         if(name.equals("Treatment") && newTreatment.IsValid())
                         {
@@ -340,7 +342,7 @@ public class SaveManager {
         return m_treatmentList.size();
     }
 
-    private Treatment CompactAlarm(Context context, View view, int id)
+    private Treatment CompactTreatment(Context context, View view, int id, boolean isNewTreatment)
     {
         Treatment newTreatment = new Treatment();
 
@@ -439,6 +441,15 @@ public class SaveManager {
         {
             newTreatment.SetFixedTimeTreatment(false);
         }
+
+        if(!isNewTreatment)
+        {
+            Treatment oldTreatment = GetAlarmByIndex(id);
+            newTreatment.SetConfirmedCount(oldTreatment.GetConfirmedCount());
+            newTreatment.SetDeniedCount(oldTreatment.GetDeniedCount());
+            newTreatment.SetDelayedCount(oldTreatment.GetDelayedCount());
+        }
+
         return newTreatment;
     }
 
