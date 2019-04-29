@@ -2,8 +2,10 @@ package ro.umfcd.stud.arteneraluca.myapplication;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.util.Log;
 
 import java.io.BufferedWriter;
@@ -113,5 +115,32 @@ public class AlarmHelperClass {
         }
 
         return reportFile;
+    }
+
+    public static void EnableBootReceiver(Context context)
+    {
+
+        ComponentName componentName = new ComponentName(context, BootReceiver.class);
+        PackageManager packageManager = context.getPackageManager();
+        if(packageManager.getComponentEnabledSetting(componentName) != PackageManager.COMPONENT_ENABLED_STATE_ENABLED)
+        {
+            packageManager.setComponentEnabledSetting(componentName,
+                    PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                    PackageManager.DONT_KILL_APP);
+            Log.i("ArteneApp","BootReceiver enabled");
+        }
+
+
+    }
+
+    public static void DisableBootReceiver(Context context)
+    {
+            ComponentName componentName = new ComponentName(context, BootReceiver.class);
+            PackageManager packageManager = context.getPackageManager();
+            packageManager.setComponentEnabledSetting(componentName,
+                    PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                    PackageManager.DONT_KILL_APP);
+
+        Log.i("ArteneApp","BootReceiver disabled");
     }
 }

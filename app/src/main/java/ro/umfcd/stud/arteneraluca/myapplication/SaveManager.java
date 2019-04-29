@@ -2,8 +2,10 @@ package ro.umfcd.stud.arteneraluca.myapplication;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.util.Log;
 import android.util.Xml;
 import android.view.View;
@@ -89,6 +91,10 @@ public class SaveManager {
         m_treatmentList.add(newTreatment);
         AddSystemAlarms(m_treatmentList.size() - 1, context);
         SaveDataToXml(context);
+
+        //This enables the BootReceiver when the first alarm is set
+        AlarmHelperClass.EnableBootReceiver(context);
+
     }
 
     void SaveAlarm(int treatmentIndex, Context context, View view)
@@ -99,11 +105,17 @@ public class SaveManager {
         ClearSystemAlarms(treatmentIndex, context);
         AddSystemAlarms(treatmentIndex, context);
         SaveDataToXml(context);
+        AlarmHelperClass.EnableBootReceiver(context);
     }
 
     void DeleteAlarm(int treatmentIndex, Context context)
     {
         ClearSystemAlarms(treatmentIndex, context);
+        //This disables BootReceiver if the alarm we are going to delete, is the last alarm that the app has
+        if(m_treatmentList.size()==1)
+        {
+            AlarmHelperClass.DisableBootReceiver(context);
+        }
         m_treatmentList.remove(treatmentIndex);
 
         for(int i = 0; i< m_treatmentList.size(); i++)

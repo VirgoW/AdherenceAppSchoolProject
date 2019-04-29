@@ -27,22 +27,26 @@ public class AlarmReceiver extends BroadcastReceiver {
         alarmType = intent.getIntExtra("alarmType", -1);
         treatmentIndex = intent.getIntExtra("treatmentIndex", -1);
 
-        if (alarmType == R.string.alarmActivate) {
+        if (alarmType == R.string.alarmActivate)
+        {
             Intent alarmIntent = new Intent("android.intent.action.DIALOG");
             int alarmID = intent.getIntExtra("alarmID", -1);
             alarmIntent.putExtra("alarmID", alarmID);
 
 //if myApp is closed, then open it
-            if(isAppRunning(context,"ro.umfcd.stud.arteneraluca.myapplication")) {
+            if(isAppRunning(context,"ro.umfcd.stud.arteneraluca.myapplication"))
+            {
                 //Do nothing
             }
             else
             {
                 Intent i = context.getPackageManager().getLaunchIntentForPackage("ro.umfcd.stud.arteneraluca.myapplication");
                 context.startActivity(i);
+
             }
             ActivateAlarm(context, alarmIntent, treatmentIndex);
-        } else {
+        }
+        else {
             SetAlarms(context, treatmentIndex);
         }
     }
