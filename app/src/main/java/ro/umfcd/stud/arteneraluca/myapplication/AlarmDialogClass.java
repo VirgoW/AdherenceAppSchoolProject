@@ -28,11 +28,21 @@ public class AlarmDialogClass extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //This will make the dialog to appear on the screen even if the phone is locked
-        //It does not make the dialog appear when app is closed
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
+
+       /*getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
                 |WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
                 |WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
                 |WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+       */
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN |
+                        WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD |
+                        WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
+                        WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN |
+                        WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD |
+                        WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
+                        WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
 
         //uses permission in android manifest
         if(Build.VERSION.SDK_INT >= 26) //This doesn't do anything from what I notice
@@ -174,7 +184,7 @@ public class AlarmDialogClass extends Activity {
             return;
         }
         Calendar currentCal = Calendar.getInstance();
-        long snoozeTime = currentCal.getTimeInMillis() + TimeUnit.SECONDS.toMillis(20);
+        long snoozeTime = currentCal.getTimeInMillis() + TimeUnit.MINUTES.toMillis(30);
         //TODO increase snoozeTime to 30 minutes for the release version
 
         PendingIntent snoozePendInt = PendingIntent.getBroadcast(context, alarmID, intent, PendingIntent.FLAG_UPDATE_CURRENT); 

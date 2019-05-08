@@ -1,7 +1,8 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Calendar medicamente</string>
+    <string name="package_name">ro.umfcd.stud.arteneraluca.myapplication</string>
 
-    <string name="start_button_text">Spre pagina de alarme</string>
+    <string name="start_button_text">Spre calendarul cu medicamente</string>
     <string name="generate_report_button_text">Informații despre medicamentele luate</string>
 
     <string name="download_file_btn">Descarcă fișier</string>
