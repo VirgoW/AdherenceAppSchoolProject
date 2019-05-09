@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import java.util.Calendar;
 
@@ -85,11 +86,12 @@ public class AlarmReceiver extends BroadcastReceiver {
         newIntent.putExtra("alarmType", R.string.alarmSet);
         newIntent.putExtra("treatmentIndex", treatment.getId());
 
-        PendingIntent pendingAlarmIntent = PendingIntent.getBroadcast(context, treatmentIndex, newIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingAlarmIntent = PendingIntent.getBroadcast(context, AlarmHelperClass.GetTreatmentAlarmId(treatmentIndex), newIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         Calendar nextMidnight = Calendar.getInstance();
         nextMidnight.add(Calendar.DATE, 1);
         nextMidnight.set(Calendar.HOUR_OF_DAY, 0);
         nextMidnight.set(Calendar.MINUTE, 0);
+        nextMidnight.set(Calendar.SECOND, 1);
         boolean fixedTreatment = treatment.IsFixedTimeTreatment();
         if (!(fixedTreatment && AlarmHelperClass.CalendarAAfterCalendarB(nextMidnight, treatment.GetEndCal()))) {
             alarmMgr.set(AlarmManager.RTC_WAKEUP, nextMidnight.getTimeInMillis(), pendingAlarmIntent);
@@ -118,7 +120,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                 continue;
             }
 
-            alarmId = treatmentIndex * 10 + indexHour;
+            alarmId = AlarmHelperClass.GetTreatmentHourAlarmId(treatmentIndex,indexHour);
             newIntent.putExtra("alarmID", alarmId);
 
 
@@ -151,7 +153,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         nextMondayCal.set(Calendar.HOUR_OF_DAY, 0);
         nextMondayCal.set(Calendar.MINUTE, 0);
 
-        PendingIntent pendingAlarmIntent = PendingIntent.getBroadcast(context, treatmentIndex, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingAlarmIntent = PendingIntent.getBroadcast(context, AlarmHelperClass.GetTreatmentAlarmId(treatmentIndex), alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         if (!(fixedTreatment && AlarmHelperClass.CalendarAAfterCalendarB(nextMondayCal, treatment.GetEndCal()))) {
             alarmMgr.set(AlarmManager.RTC_WAKEUP, nextMondayCal.getTimeInMillis(), pendingAlarmIntent);
         }
@@ -183,8 +185,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                     }
 
                     //Set treatment
-                    alarmId = treatmentIndex * 10 + indexDay;
-                    alarmId = alarmId * 10 + indexHour;
+                    alarmId = AlarmHelperClass.GetTreatmentWeekDayAlarmId(treatmentIndex, indexDay, indexHour);
                     alarmIntent.putExtra("alarmID", alarmId);
                     pendingAlarmIntent = PendingIntent.getBroadcast(context, alarmId, alarmIntent, 0);
                     alarmMgr.set(AlarmManager.RTC_WAKEUP, alarmCal.getTimeInMillis(), pendingAlarmIntent);

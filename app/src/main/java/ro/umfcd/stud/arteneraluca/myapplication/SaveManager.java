@@ -2,10 +2,8 @@ package ro.umfcd.stud.arteneraluca.myapplication;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.util.Log;
 import android.util.Xml;
 import android.view.View;
@@ -109,7 +107,13 @@ public class SaveManager {
 
     void DeleteAlarm(int treatmentIndex, Context context)
     {
-        ClearSystemAlarms(treatmentIndex, context);
+        for(int i = 0; i< m_treatmentList.size(); i++)
+        {
+            if(m_treatmentList.get(i).getId() != i)
+            {
+                ClearSystemAlarms(i, context);
+            }
+        }
         //This disables BootReceiver if the alarm we are going to delete, is the last alarm that the app has
         if(m_treatmentList.size()==1)
         {
@@ -119,13 +123,10 @@ public class SaveManager {
 
         for(int i = 0; i< m_treatmentList.size(); i++)
         {
-            if(m_treatmentList.get(i).getId() != i)
-            {
-                m_treatmentList.get(i).setId(i);
-                ClearSystemAlarms(i, context);
-                //AddSystemAlarms(i, context);
-            }
+            m_treatmentList.get(i).setId(i);
+            AddSystemAlarms(i, context);
         }
+
         SaveDataToXml(context);
     }
 
@@ -472,10 +473,10 @@ public class SaveManager {
         //Daily treatment
         if (treatment.IsDailyTreatment())
         {
-            AlarmHelperClass.CancelIntentWithId(context, treatmentIndex, intent);
+            AlarmHelperClass.CancelIntentWithId(context, AlarmHelperClass.GetTreatmentAlarmId(treatmentIndex), intent);
             for(int indexHour = 0; indexHour < treatment.m_dailyFrequency.size(); indexHour++)
             {
-                alarmId = treatmentIndex * 10 + indexHour;
+                alarmId = AlarmHelperClass.GetTreatmentHourAlarmId(treatmentIndex, indexHour);
                 AlarmHelperClass.CancelIntentWithId(context, alarmId, intent);
             }
 
@@ -484,15 +485,14 @@ public class SaveManager {
         else
         {
             //Clear the setter for this week
-            AlarmHelperClass.CancelIntentWithId(context, treatmentIndex, intent);
+            AlarmHelperClass.CancelIntentWithId(context, AlarmHelperClass.GetTreatmentAlarmId(treatmentIndex), intent);
             for(int indexDay = 0; indexDay < 7; indexDay++)
             {
                 if(treatment.m_weeklyDayFrequency.get(indexDay))
                 {
                     for(int indexHour = 0; indexHour < treatment.m_dailyFrequency.size(); indexHour++)
                     {
-                        alarmId = treatmentIndex * 10 + indexDay;
-                        alarmId = alarmId * 10 + indexHour;
+                        alarmId = AlarmHelperClass.GetTreatmentWeekDayAlarmId(treatmentIndex, indexDay,indexHour);
                         AlarmHelperClass.CancelIntentWithId(context, alarmId, intent);
                     }
                 }
@@ -515,8 +515,7 @@ public class SaveManager {
         Intent intent = new Intent(context, AlarmReceiver.class);
         intent.putExtra("alarmType", R.string.alarmSet);
         intent.putExtra("treatmentIndex", treatmentIndex);
-        //Manual serialize object
-        PendingIntent pendingAlarmIntent = PendingIntent.getBroadcast(context, treatmentIndex, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingAlarmIntent = PendingIntent.getBroadcast(context, AlarmHelperClass.GetTreatmentAlarmId(treatmentIndex), intent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Calendar todayCal = Calendar.getInstance();
         alarmMgr.set(AlarmManager.RTC_WAKEUP, todayCal.getTimeInMillis(), pendingAlarmIntent);

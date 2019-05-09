@@ -143,4 +143,19 @@ public class AlarmHelperClass {
 
         Log.i("ArteneApp","BootReceiver disabled");
     }
+
+    public static int GetTreatmentAlarmId(int treatmentIndex)
+    {
+        return treatmentIndex+1;
+    }
+
+    public static int GetTreatmentHourAlarmId(int treatmentIndex, int hourIndex)
+    {
+        return (treatmentIndex + 1) * 1000 + hourIndex;
+    }
+
+    public static int GetTreatmentWeekDayAlarmId(int treatmentIndex, int weekDayIndex, int hourIndex)
+    {
+        return ((treatmentIndex + 1) * 1000 + weekDayIndex) * 1000 + hourIndex;
+    }
 }
