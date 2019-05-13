@@ -67,8 +67,11 @@ public class AlarmDialogClass extends Activity {
         //Start Ringtone service to play treatment sound
         if(newDialog != null)
         {
-            Intent startIntent = new Intent(context, RingtoneCustomService.class);
-            context.startService(startIntent);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                context.startForegroundService(new Intent(context, RingtoneCustomService.class));
+            } else {
+                context.startService(new Intent(context, RingtoneCustomService.class));
+            }
         }
 
     }

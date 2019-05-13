@@ -1,6 +1,10 @@
 package ro.umfcd.stud.arteneraluca.myapplication;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -10,6 +14,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.support.v4.app.NotificationCompat;
 
 public class RingtoneCustomService extends Service {
     private Ringtone ringtone;
@@ -22,6 +27,19 @@ public class RingtoneCustomService extends Service {
     public void onCreate() {
         super.onCreate();
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+        if (Build.VERSION.SDK_INT >= 26) {
+            String CHANNEL_ID = "my_channel_01";
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID,
+                    "Channel human readable title",
+                    NotificationManager.IMPORTANCE_DEFAULT);
+
+            ((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE)).createNotificationChannel(channel);
+
+            Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                    .setContentTitle("")
+                    .setContentText("").build();
+            startForeground(1, notification);
+        }
     }
 
     @Override
@@ -33,6 +51,10 @@ public class RingtoneCustomService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
         this.ringtone = RingtoneManager.getRingtone(this, uri);
+        if(Build.VERSION.SDK_INT >= 28)
+        {
+            ringtone.setLooping(true);
+        }
         ringtone.play();
         Vibrate();
         int ringingTimeout = getApplicationContext().getResources().getInteger(R.integer.AlarmDialogRingTimeoutMillis);
