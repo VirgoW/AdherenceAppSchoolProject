@@ -22,7 +22,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".AlarmsPage" />
-        <activity android:name=".AlarmSet" />
+        <activity android:name=".AlarmSet"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
         <activity android:name=".ReportPage" />
 
         <activity android:name=".AlarmDialogClass"

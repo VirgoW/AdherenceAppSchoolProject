@@ -7,339 +7,376 @@
     android:background="@color/app_background"
     tools:context=".AlarmSet">
 
-    <ScrollView
-        android:id="@+id/scroll_bar"
+    <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/footerBarrier"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ScrollView
+            android:id="@+id/scroll_bar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/scroll_padding"
+            android:layout_marginTop="@dimen/scroll_padding"
+            android:layout_marginRight="@dimen/scroll_padding"
+            android:layout_marginBottom="@dimen/scroll_padding"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/errorInvalidForm"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/alarm_set_vertical_padding"
+                    android:text="@string/errorMedNameMandatory"
+                    android:textColor="@android:color/holo_red_dark"
+                    android:textSize="@dimen/project_text_size"
+                    android:textStyle="italic"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/medNameText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/alarm_set_vertical_padding"
+                    android:text="@string/medName_text"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/project_text_size"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/errorInvalidForm" />
+
+                <EditText
+                    android:id="@+id/medNameTextInput"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/alarm_set_vertical_padding"
+                    android:background="@drawable/alarm_set_borders"
+                    android:hint="@string/medName_hint"
+                    android:singleLine="true"
+                    android:textSize="@dimen/project_text_size"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/medNameText" />
+
+                <TextView
+                    android:id="@+id/dosage_textView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/alarm_set_vertical_padding"
+                    android:text="@string/dosage_txt"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/project_text_size"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/medNameTextInput" />
+
+                <EditText
+                    android:id="@+id/DosageInput_Text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/alarm_set_vertical_padding"
+                    android:background="@drawable/alarm_set_borders"
+                    android:hint="@string/dosageHint"
+                    android:singleLine="true"
+                    android:textSize="@dimen/project_text_size"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/dosage_textView" />
+
+                <TextView
+                    android:id="@+id/switch_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/alarm_set_vertical_padding"
+                    android:text="@string/alarmDuration"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/project_text_size"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/DosageInput_Text" />
+
+                <Switch
+                    android:id="@+id/alarmDuration_switch"
+                    style="@style/CustomSwitchTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/alarm_set_vertical_padding"
+                    android:showText="true"
+                    android:switchTextAppearance="@style/CustomSwitchTheme"
+                    android:textOff="@string/durationOff"
+                    android:textOn="@string/durationOn"
+                    android:visibility="visible"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/switch_text"
+                    tools:checked="false" />
+
+                <EditText
+                    android:id="@+id/alarmsNumber_Text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/alarm_set_vertical_padding"
+                    android:background="@drawable/alarm_set_borders"
+                    android:hint="@string/alarmsNum"
+                    android:inputType="number"
+                    android:singleLine="true"
+                    android:textSize="@dimen/project_text_size"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toStartOf="@+id/treatmentLengthSpinner"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/alarmDuration_switch" />
+
+                <Spinner
+                    android:id="@+id/treatmentLengthSpinner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/alarm_set_horizontal_padding"
+                    android:layout_marginLeft="@dimen/alarm_set_horizontal_padding"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@+id/alarmsNumber_Text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_weight="2"
+                    app:layout_constraintStart_toEndOf="@+id/alarmsNumber_Text"
+                    app:layout_constraintTop_toTopOf="@+id/alarmsNumber_Text" />
+
+                <android.support.constraint.Barrier
+                    android:id="@+id/alarmDuration_barrier"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:barrierDirection="bottom"
+                    app:constraint_referenced_ids="treatmentLengthSpinner,alarmsNumber_Text" />
+
+                <TextView
+                    android:id="@+id/startDate_textView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/alarm_set_vertical_padding"
+                    android:text="@string/startDate"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/project_text_size"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/alarmDuration_barrier" />
+
+                <TextView
+                    android:id="@+id/startDateSelection"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/alarm_set_vertical_padding"
+                    android:background="@drawable/alarm_set_borders"
+                    android:hint="@string/startDate_hint"
+                    android:singleLine="true"
+                    android:textSize="@dimen/project_text_size"
+                    android:visibility="visible"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/startDate_textView" />
+
+                <TextView
+                    android:id="@+id/alarmFreq_textView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/alarm_set_vertical_padding"
+                    android:text="@string/alarmFreq"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/project_text_size"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/startDateSelection" />
+
+                <RadioGroup
+                    android:id="@+id/alarmFreq_RadioGroup"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:checkedButton="@+id/dailyRadioBtn"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/alarmFreq_textView">
+
+                    <RadioButton
+                        android:id="@+id/dailyRadioBtn"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/daily"
+                        android:textSize="@dimen/project_text_size" />
+
+                    <RadioButton
+                        android:id="@+id/weeklyRadioBtn"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/weekly"
+                        android:textSize="@dimen/project_text_size" />
+
+                </RadioGroup>
+
+                <LinearLayout
+                    android:id="@+id/checkboxes_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/alarmFreq_RadioGroup">
+
+                    <CheckBox
+                        android:id="@+id/checkBox_Mo"
+                        android:layout_width="@dimen/checkbox_square"
+                        android:layout_height="@dimen/checkbox_square" />
+
+                    <CheckBox
+                        android:id="@+id/checkBox_Tu"
+                        android:layout_width="@dimen/checkbox_square"
+                        android:layout_height="@dimen/checkbox_square" />
+
+                    <CheckBox
+                        android:id="@+id/checkBox_We"
+                        android:layout_width="@dimen/checkbox_square"
+                        android:layout_height="@dimen/checkbox_square" />
+
+                    <CheckBox
+                        android:id="@+id/checkBox_Th"
+                        android:layout_width="@dimen/checkbox_square"
+                        android:layout_height="@dimen/checkbox_square" />
+
+                    <CheckBox
+                        android:id="@+id/checkBox_Fr"
+                        android:layout_width="@dimen/checkbox_square"
+                        android:layout_height="@dimen/checkbox_square" />
+
+                    <CheckBox
+                        android:id="@+id/checkBox_Sa"
+                        android:layout_width="@dimen/checkbox_square"
+                        android:layout_height="@dimen/checkbox_square" />
+
+                    <CheckBox
+                        android:id="@+id/checkBox_Su"
+                        android:layout_width="@dimen/checkbox_square"
+                        android:layout_height="@dimen/checkbox_square" />
+
+                </LinearLayout>
+
+                <android.support.constraint.Barrier
+                    android:id="@+id/checkboxes_barrier"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:barrierDirection="bottom"
+                    app:constraint_referenced_ids="checkboxes_layout" />
+
+                <Spinner
+                    android:id="@+id/freq_perDay_spinner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/alarm_set_vertical_padding"
+                    android:entries="@array/perDay_freq"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/checkboxes_layout" />
+
+                <LinearLayout
+                    android:id="@+id/hourPickers_LinearLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/alarm_set_vertical_padding"
+                    android:orientation="vertical"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/freq_perDay_spinner" />
+
+                <EditText
+                    android:id="@+id/other_details"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/alarm_set_vertical_padding"
+                    android:background="@drawable/alarm_set_borders"
+                    android:hint="@string/other_details_hint"
+                    android:inputType="textMultiLine|textLongMessage"
+                    android:lineSpacingExtra="@dimen/otherDetails_spacing"
+                    android:singleLine="false"
+                    android:textSize="@dimen/project_text_size"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/hourPickers_LinearLayout" />
+
+
+            </android.support.constraint.ConstraintLayout>
+        </ScrollView>
+
+    </LinearLayout>
+
+    <!--android.support.constraint.Barrier
+        android:id="@+id/scroll_barrier"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/scroll_padding"
-        android:layout_marginTop="@dimen/scroll_padding"
-        android:layout_marginRight="@dimen/scroll_padding"
-        android:layout_marginBottom="@dimen/scroll_padding"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="scroll_bar"/-->
+
+    <android.support.constraint.Barrier
+        android:id="@+id/footerBarrier"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:barrierDirection="top"
+        app:constraint_referenced_ids="alarmSetButton, alarmDeleteButton" />
+
+    <ImageView
+        android:id="@+id/imageFooter"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:src="@color/headerFooter_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="@+id/footerBarrier" />
 
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+    <Button
+        android:id="@+id/alarmSetButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/alarm_set_vertical_padding"
+        android:layout_marginEnd="@dimen/button_Horizontalpadding"
+        android:layout_marginRight="@dimen/button_Horizontalpadding"
+        android:layout_marginBottom="@dimen/alarm_set_vertical_padding"
+        android:text="@string/alarmSaveButtonName"
+        android:visibility="visible"
+        android:textSize="@dimen/project_text_size"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/alarmDeleteButton"
+        app:layout_constraintTop_toBottomOf="@+id/footerBarrier"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
-            <TextView
-                android:id="@+id/errorInvalidForm"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/alarm_set_vertical_padding"
-                android:text="@string/errorMedNameMandatory"
-                android:textColor="@android:color/holo_red_dark"
-                android:textSize="@dimen/project_text_size"
-                android:textStyle="italic"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/medNameText"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/alarm_set_vertical_padding"
-                android:text="@string/medName_text"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/project_text_size"
-                android:visibility="visible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/errorInvalidForm" />
-
-            <EditText
-                android:id="@+id/medNameTextInput"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/alarm_set_vertical_padding"
-                android:background="@drawable/alarm_set_borders"
-                android:hint="@string/medName_hint"
-                android:textSize="@dimen/project_text_size"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/medNameText" />
-
-            <TextView
-                android:id="@+id/dosage_textView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/alarm_set_vertical_padding"
-                android:text="@string/dosage_txt"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/project_text_size"
-                android:visibility="visible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/medNameTextInput" />
-
-            <EditText
-                android:id="@+id/DosageInput_Text"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/alarm_set_vertical_padding"
-                android:background="@drawable/alarm_set_borders"
-                android:hint="@string/dosageHint"
-                android:textSize="@dimen/project_text_size"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/dosage_textView" />
-
-            <TextView
-                android:id="@+id/switch_text"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/alarm_set_vertical_padding"
-                android:text="@string/alarmDuration"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/project_text_size"
-                android:visibility="visible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/DosageInput_Text" />
-
-            <Switch
-                android:id="@+id/alarmDuration_switch"
-                style="@style/CustomSwitchTheme"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/alarm_set_vertical_padding"
-                android:showText="true"
-                android:switchTextAppearance="@style/CustomSwitchTheme"
-                android:textOff="@string/durationOff"
-                android:textOn="@string/durationOn"
-                android:visibility="visible"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/switch_text"
-                tools:checked="false" />
-
-            <EditText
-                android:id="@+id/alarmsNumber_Text"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/alarm_set_vertical_padding"
-                android:background="@drawable/alarm_set_borders"
-                android:hint="@string/alarmsNum"
-                android:inputType="number"
-                android:singleLine="true"
-                android:textSize="@dimen/project_text_size"
-                android:visibility="gone"
-                app:layout_constraintEnd_toStartOf="@+id/treatmentLengthSpinner"
-                app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/alarmDuration_switch" />
-
-            <Spinner
-                android:id="@+id/treatmentLengthSpinner"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/alarm_set_horizontal_padding"
-                android:layout_marginLeft="@dimen/alarm_set_horizontal_padding"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@+id/alarmsNumber_Text"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_weight="2"
-                app:layout_constraintStart_toEndOf="@+id/alarmsNumber_Text"
-                app:layout_constraintTop_toTopOf="@+id/alarmsNumber_Text" />
-
-            <android.support.constraint.Barrier
-                android:id="@+id/alarmDuration_barrier"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:barrierDirection="bottom"
-                app:constraint_referenced_ids="treatmentLengthSpinner,alarmsNumber_Text" />
-
-            <TextView
-                android:id="@+id/startDate_textView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/alarm_set_vertical_padding"
-                android:text="@string/startDate"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/project_text_size"
-                android:visibility="visible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/alarmDuration_barrier" />
-
-            <TextView
-                android:id="@+id/startDateSelection"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/alarm_set_vertical_padding"
-                android:background="@drawable/alarm_set_borders"
-                android:hint="@string/startDate_hint"
-                android:singleLine="true"
-                android:textSize="@dimen/project_text_size"
-                android:visibility="visible"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/startDate_textView" />
-
-            <TextView
-                android:id="@+id/alarmFreq_textView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/alarm_set_vertical_padding"
-                android:text="@string/alarmFreq"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/project_text_size"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/startDateSelection" />
-
-            <RadioGroup
-                android:id="@+id/alarmFreq_RadioGroup"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:checkedButton="@+id/dailyRadioBtn"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/alarmFreq_textView">
-
-                <RadioButton
-                    android:id="@+id/dailyRadioBtn"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/daily"
-                    android:textSize="@dimen/project_text_size" />
-
-                <RadioButton
-                    android:id="@+id/weeklyRadioBtn"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/weekly"
-                    android:textSize="@dimen/project_text_size" />
-
-            </RadioGroup>
-
-            <LinearLayout
-                android:id="@+id/checkboxes_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/alarmFreq_RadioGroup">
-
-                <CheckBox
-                    android:id="@+id/checkBox_Mo"
-                    android:layout_width="@dimen/checkbox_square"
-                    android:layout_height="@dimen/checkbox_square" />
-
-                <CheckBox
-                    android:id="@+id/checkBox_Tu"
-                    android:layout_width="@dimen/checkbox_square"
-                    android:layout_height="@dimen/checkbox_square" />
-
-                <CheckBox
-                    android:id="@+id/checkBox_We"
-                    android:layout_width="@dimen/checkbox_square"
-                    android:layout_height="@dimen/checkbox_square" />
-
-                <CheckBox
-                    android:id="@+id/checkBox_Th"
-                    android:layout_width="@dimen/checkbox_square"
-                    android:layout_height="@dimen/checkbox_square" />
-
-                <CheckBox
-                    android:id="@+id/checkBox_Fr"
-                    android:layout_width="@dimen/checkbox_square"
-                    android:layout_height="@dimen/checkbox_square" />
-
-                <CheckBox
-                    android:id="@+id/checkBox_Sa"
-                    android:layout_width="@dimen/checkbox_square"
-                    android:layout_height="@dimen/checkbox_square" />
-
-                <CheckBox
-                    android:id="@+id/checkBox_Su"
-                    android:layout_width="@dimen/checkbox_square"
-                    android:layout_height="@dimen/checkbox_square" />
-
-            </LinearLayout>
-
-            <android.support.constraint.Barrier
-                android:id="@+id/checkboxes_barrier"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:barrierDirection="bottom"
-                app:constraint_referenced_ids="checkboxes_layout" />
-
-            <Spinner
-                android:id="@+id/freq_perDay_spinner"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/alarm_set_vertical_padding"
-                android:entries="@array/perDay_freq"
-                android:visibility="visible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/checkboxes_layout" />
-
-            <LinearLayout
-                android:id="@+id/hourPickers_LinearLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/alarm_set_vertical_padding"
-                android:orientation="vertical"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/freq_perDay_spinner" />
-
-            <EditText
-                android:id="@+id/other_details"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/alarm_set_vertical_padding"
-                android:background="@drawable/alarm_set_borders"
-                android:hint="@string/other_details_hint"
-                android:inputType="textMultiLine|textLongMessage"
-                android:lineSpacingExtra="@dimen/otherDetails_spacing"
-                android:singleLine="false"
-                android:textSize="@dimen/project_text_size"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/hourPickers_LinearLayout" />
-
-            <Button
-                android:id="@+id/alarmSetButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/alarm_set_vertical_padding"
-                android:layout_marginEnd="@dimen/button_Horizontalpadding"
-                android:layout_marginRight="@dimen/button_Horizontalpadding"
-                android:text="@string/alarmSaveButtonName"
-                android:visibility="visible"
-                android:textSize="@dimen/project_text_size"
-                app:layout_constraintHorizontal_chainStyle="spread_inside"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/alarmDeleteButton"
-                app:layout_constraintTop_toBottomOf="@+id/other_details" />
-
-            <Button
-                android:id="@+id/alarmDeleteButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/button_Horizontalpadding"
-                android:layout_marginLeft="@dimen/button_Horizontalpadding"
-                android:layout_marginTop="@dimen/alarm_set_vertical_padding"
-                android:text="@string/delete_alarm_button_value"
-                android:visibility="invisible"
-                android:textSize="@dimen/project_text_size"
-                app:layout_constraintEnd_toStartOf="@+id/alarmSetButton"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/other_details" />
-
-
-
-        </android.support.constraint.ConstraintLayout>
-    </ScrollView>
+    <Button
+        android:id="@+id/alarmDeleteButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/button_Horizontalpadding"
+        android:layout_marginLeft="@dimen/button_Horizontalpadding"
+        android:layout_marginTop="@dimen/alarm_set_vertical_padding"
+        android:layout_marginBottom="@dimen/alarm_set_vertical_padding"
+        android:text="@string/delete_alarm_button_value"
+        android:visibility="invisible"
+        android:textSize="@dimen/project_text_size"
+        app:layout_constraintEnd_toStartOf="@+id/alarmSetButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/footerBarrier"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 
 </android.support.constraint.ConstraintLayout>
