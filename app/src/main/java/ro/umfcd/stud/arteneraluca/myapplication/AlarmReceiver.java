@@ -98,34 +98,39 @@ public class AlarmReceiver extends BroadcastReceiver {
         }
 
         //Schedule alarms for today
-        newIntent = new Intent(context, AlarmReceiver.class);
-        int alarmId;
-        for (int indexHour = 0; indexHour < treatment.m_dailyFrequency.size(); indexHour++) {
-            newIntent.putExtra("alarmType", R.string.alarmActivate);
-            newIntent.putExtra("treatmentIndex", treatmentIndex);
 
-            String hourString = treatment.m_dailyFrequency.get(indexHour);
+        Calendar alarmStartDate = treatment.GetStartCal();
+        Calendar todayCal = Calendar.getInstance();
 
-            int hour = Integer.parseInt(hourString.substring(0, 2));
-            int minute = Integer.parseInt(hourString.substring(3));
+        if(!AlarmHelperClass.CalendarAAfterCalendarB(alarmStartDate,todayCal)) {
+            newIntent = new Intent(context, AlarmReceiver.class);
+            int alarmId;
+            for (int indexHour = 0; indexHour < treatment.m_dailyFrequency.size(); indexHour++) {
+                newIntent.putExtra("alarmType", R.string.alarmActivate);
+                newIntent.putExtra("treatmentIndex", treatmentIndex);
 
-            Calendar alertCalendar = Calendar.getInstance();
-            alertCalendar.setTimeInMillis(System.currentTimeMillis());
-            alertCalendar.set(Calendar.HOUR_OF_DAY, hour);
-            alertCalendar.set(Calendar.MINUTE, minute);
-            alertCalendar.set(Calendar.SECOND, 0);
+                String hourString = treatment.m_dailyFrequency.get(indexHour);
 
-            Calendar todayCal = Calendar.getInstance();
-            if (AlarmHelperClass.CalendarAAfterCalendarB(todayCal, alertCalendar)) {
-                continue;
+                int hour = Integer.parseInt(hourString.substring(0, 2));
+                int minute = Integer.parseInt(hourString.substring(3));
+
+                Calendar alertCalendar = Calendar.getInstance();
+                alertCalendar.setTimeInMillis(System.currentTimeMillis());
+                alertCalendar.set(Calendar.HOUR_OF_DAY, hour);
+                alertCalendar.set(Calendar.MINUTE, minute);
+                alertCalendar.set(Calendar.SECOND, 0);
+
+                if (AlarmHelperClass.CalendarAAfterCalendarB(todayCal, alertCalendar)) {
+                    continue;
+                }
+
+                alarmId = AlarmHelperClass.GetTreatmentHourAlarmId(treatmentIndex, indexHour);
+                newIntent.putExtra("alarmID", alarmId);
+
+
+                pendingAlarmIntent = PendingIntent.getBroadcast(context, alarmId, newIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                alarmMgr.set(AlarmManager.RTC_WAKEUP, alertCalendar.getTimeInMillis(), pendingAlarmIntent);
             }
-
-            alarmId = AlarmHelperClass.GetTreatmentHourAlarmId(treatmentIndex,indexHour);
-            newIntent.putExtra("alarmID", alarmId);
-
-
-            pendingAlarmIntent = PendingIntent.getBroadcast(context, alarmId, newIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-            alarmMgr.set(AlarmManager.RTC_WAKEUP, alertCalendar.getTimeInMillis(), pendingAlarmIntent);
         }
     }
 
@@ -160,35 +165,42 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         //Set alarms for this week
         Calendar todayCal = Calendar.getInstance();
+        Calendar alarmStartDate = treatment.GetStartCal();
 
         int today = SaveManager.getInstance().GetDayOfWeek(todayCal);
         int alarmId;
         alarmIntent = new Intent(context, AlarmReceiver.class);
         for (int indexDay = today; indexDay < 7; indexDay++) {
             if (treatment.m_weeklyDayFrequency.get(indexDay)) {
-                for (int indexHour = 0; indexHour < treatment.m_dailyFrequency.size(); indexHour++) {
-                    alarmIntent.putExtra("alarmType", R.string.alarmActivate);
-                    alarmIntent.putExtra("treatmentIndex", treatmentIndex);
 
-                    Calendar alarmCal = Calendar.getInstance();
-                    String hourString = treatment.m_dailyFrequency.get(indexHour);
-                    alarmCal.setTimeInMillis(System.currentTimeMillis());
-                    int hour = Integer.parseInt(hourString.substring(0, 2));
-                    int minute = Integer.parseInt(hourString.substring(3));
-                    alarmCal.set(Calendar.HOUR_OF_DAY, hour);
-                    alarmCal.set(Calendar.MINUTE, minute);
-                    alarmCal.add(Calendar.DATE, indexDay - today);
+                Calendar indexDayCal = Calendar.getInstance();
+                indexDayCal.set(Calendar.DAY_OF_WEEK,indexDay);
 
-                    //Skip today's alarms
-                    if (today == indexDay && todayCal.after(alarmCal) || (fixedTreatment && AlarmHelperClass.CalendarAAfterCalendarB(todayCal, treatment.GetEndCal()))) {
-                        continue;
+                if(!AlarmHelperClass.CalendarAAfterCalendarB(alarmStartDate,indexDayCal)) {
+                    for (int indexHour = 0; indexHour < treatment.m_dailyFrequency.size(); indexHour++) {
+                        alarmIntent.putExtra("alarmType", R.string.alarmActivate);
+                        alarmIntent.putExtra("treatmentIndex", treatmentIndex);
+
+                        Calendar alarmCal = Calendar.getInstance();
+                        String hourString = treatment.m_dailyFrequency.get(indexHour);
+                        alarmCal.setTimeInMillis(System.currentTimeMillis());
+                        int hour = Integer.parseInt(hourString.substring(0, 2));
+                        int minute = Integer.parseInt(hourString.substring(3));
+                        alarmCal.set(Calendar.HOUR_OF_DAY, hour);
+                        alarmCal.set(Calendar.MINUTE, minute);
+                        alarmCal.add(Calendar.DATE, indexDay - today);
+
+                        //Skip today's alarms
+                        if (today == indexDay && todayCal.after(alarmCal) || (fixedTreatment && AlarmHelperClass.CalendarAAfterCalendarB(todayCal, treatment.GetEndCal()))) {
+                            continue;
+                        }
+
+                        //Set treatment
+                        alarmId = AlarmHelperClass.GetTreatmentWeekDayAlarmId(treatmentIndex, indexDay, indexHour);
+                        alarmIntent.putExtra("alarmID", alarmId);
+                        pendingAlarmIntent = PendingIntent.getBroadcast(context, alarmId, alarmIntent, 0);
+                        alarmMgr.set(AlarmManager.RTC_WAKEUP, alarmCal.getTimeInMillis(), pendingAlarmIntent);
                     }
-
-                    //Set treatment
-                    alarmId = AlarmHelperClass.GetTreatmentWeekDayAlarmId(treatmentIndex, indexDay, indexHour);
-                    alarmIntent.putExtra("alarmID", alarmId);
-                    pendingAlarmIntent = PendingIntent.getBroadcast(context, alarmId, alarmIntent, 0);
-                    alarmMgr.set(AlarmManager.RTC_WAKEUP, alarmCal.getTimeInMillis(), pendingAlarmIntent);
                 }
             }
         }
